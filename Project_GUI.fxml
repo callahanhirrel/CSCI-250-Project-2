@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="463.0" prefWidth="712.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MoneyManager.AccountController">
+   <children>
+      <TabPane prefHeight="463.0" prefWidth="712.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Project">
+               <content>
+                  <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="308.0" prefWidth="625.0" />
+               </content>
+            </Tab>
+            <Tab text="History">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="430.0" prefWidth="712.0">
+                           <children>
+                              <TableView prefHeight="431.0" prefWidth="712.0">
+                                 <columns>
+                                    <TableColumn prefWidth="99.0" text="Date" />
+                                    <TableColumn prefWidth="90.0" text="Time" />
+                                    <TableColumn prefWidth="522.0" text="Log" />
+                                 </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
