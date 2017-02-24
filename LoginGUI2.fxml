@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<Pane prefHeight="470.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox layoutY="-6.0" minHeight="389.0" minWidth="425.0" prefHeight="443.0" prefWidth="425.0" style="-fx-padding: 15;">
+         <children>
+            <HBox prefHeight="29.0" prefWidth="395.0">
+               <children>
+                  <HBox prefHeight="29.0" prefWidth="231.0" />
+                  <HBox prefHeight="29.0" prefWidth="8.0" />
+                  <Label prefHeight="24.0" prefWidth="126.0">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <HBox prefHeight="27.0" prefWidth="223.0" />
+               </children>
+            </HBox>
+            <Label prefHeight="37.0" prefWidth="107.0" text="Sign In">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label text="Username" />
+            <TextField prefHeight="27.0" prefWidth="132.0" />
+            <Label text="Password" />
+            <PasswordField />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Sign In" />
+                  <HBox prefHeight="27.0" prefWidth="267.0" />
+               </children>
+            </HBox>
+            <Separator maxHeight="20.0" minHeight="25.0" prefHeight="19.0" prefWidth="395.0" />
+            <Label prefHeight="30.0" prefWidth="255.0" text="Create New Account">
+               <font>
+                  <Font size="25.0" />
+               </font>
+            </Label>
+            <Label text="Create Username" />
+            <TextField />
+            <Label text="Create Password" />
+            <PasswordField />
+            <Label text="Confirm Password" />
+            <PasswordField />
+            <Button mnemonicParsing="false" text="Sign Up" />
+            <Separator minHeight="20.0" prefWidth="200.0" />
+            <TextField prefHeight="27.0" prefWidth="301.0" />
+         </children>
+      </VBox>
+   </children>
+</Pane>
