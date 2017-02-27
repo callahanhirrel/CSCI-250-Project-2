@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -10,7 +14,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane prefHeight="470.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="470.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="everythingElse.LoginGuiController">
    <children>
       <VBox layoutY="-6.0" minHeight="389.0" minWidth="425.0" prefHeight="443.0" prefWidth="425.0" style="-fx-padding: 15;">
          <children>
@@ -18,7 +22,7 @@
                <children>
                   <HBox prefHeight="29.0" prefWidth="231.0" />
                   <HBox prefHeight="29.0" prefWidth="8.0" />
-                  <Label prefHeight="24.0" prefWidth="126.0">
+                  <Label fx:id="currentUser" prefHeight="24.0" prefWidth="126.0">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -36,12 +40,12 @@
                </font>
             </Label>
             <Label text="Username" />
-            <TextField prefHeight="27.0" prefWidth="132.0" />
+            <TextField fx:id="username" prefHeight="27.0" prefWidth="132.0" />
             <Label text="Password" />
-            <PasswordField />
+            <PasswordField fx:id="password" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" text="Sign In" />
+                  <Button fx:id="signIn" mnemonicParsing="false" onAction="#SignIn" text="Sign In" />
                   <HBox prefHeight="27.0" prefWidth="267.0" />
                </children>
             </HBox>
@@ -52,14 +56,14 @@
                </font>
             </Label>
             <Label text="Create Username" />
-            <TextField />
+            <TextField fx:id="setUsername" />
             <Label text="Create Password" />
-            <PasswordField />
+            <PasswordField fx:id="setPassword" />
             <Label text="Confirm Password" />
-            <PasswordField />
-            <Button mnemonicParsing="false" text="Sign Up" />
+            <PasswordField fx:id="confirmPassword" />
+            <Button fx:id="signUp" mnemonicParsing="false" onAction="#SignUp" text="Sign Up" />
             <Separator minHeight="20.0" prefWidth="200.0" />
-            <TextField prefHeight="27.0" prefWidth="301.0" />
+            <TextField fx:id="Output" prefHeight="27.0" prefWidth="301.0" />
          </children>
       </VBox>
    </children>
