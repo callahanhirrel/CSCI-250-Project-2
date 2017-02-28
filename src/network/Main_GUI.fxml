@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="network.ClientController">
    <children>
-      <TabPane fx:id="accounts" layoutY="-1.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="projects" layoutY="-1.0" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
             <Tab text="Add New Project">
                <content>
@@ -27,7 +27,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField prefHeight="27.0" prefWidth="281.0" translateX="10.0" translateY="4.0" />
+                                    <TextField fx:id="projectName" prefHeight="27.0" prefWidth="281.0" translateX="10.0" translateY="4.0" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="56.0" prefWidth="600.0">
@@ -37,18 +37,18 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Label>
-                                    <TextField translateX="10.0" translateY="10.0" />
-                                    <Button mnemonicParsing="false" prefHeight="46.0" prefWidth="127.0" text="Connect with Collaborator" textAlignment="CENTER" translateX="15.0" wrapText="true" />
+                                    <TextField fx:id="ip" translateX="10.0" translateY="10.0" />
+                                    <Button fx:id="connect" mnemonicParsing="false" prefHeight="46.0" prefWidth="127.0" text="Connect with Collaborator" textAlignment="CENTER" translateX="15.0" wrapText="true" />
                                  </children>
                               </HBox>
                               <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="115.0" prefWidth="547.0" translateX="5.0">
                                  <children>
-                                    <Label text="You are now connected with (username)">
+                                    <Label fx:id="message" text="You are now connected with (username)">
                                        <font>
                                           <Font size="15.0" />
                                        </font>
                                     </Label>
-                                    <Button disable="true" mnemonicParsing="false" text="Create Project" />
+                                    <Button fx:id="createProject" mnemonicParsing="false" text="Create Project" />
                                  </children>
                               </VBox>
                            </children>
