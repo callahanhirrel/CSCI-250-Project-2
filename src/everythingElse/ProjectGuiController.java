@@ -45,6 +45,11 @@ public class ProjectGuiController {
 	ScrollPane hasAddedFile;
 	
 	@FXML
+	void rm_file() {
+		
+	}
+	
+	@FXML
 	void add_file() {
 		addFile.getScene().getWindow().hide();
 		try{
