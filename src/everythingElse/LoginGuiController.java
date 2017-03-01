@@ -1,11 +1,14 @@
 package everythingElse;
 
-
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 public class LoginGuiController {
 	
@@ -86,11 +89,31 @@ public class LoginGuiController {
 			if (users.containsUser(username.getText())) {
 				String signInPassword = password.getText();
 				String usernamePassword = username.getText();
+				
 				if (signInPassword.equals(usernamePassword)) {
 					currentUser.setText(username.getText());
 					Output.setText(username.getText() + " successfully logged in");
 					setSignInTextBlank();
+					Username = currentUser.getText();
+					try {
+						
+						FXMLLoader loader = new FXMLLoader();
+						loader.setLocation(LoginGuiMain.class.getResource("Main_GUI.fxml"));
+						AnchorPane root = (AnchorPane) loader.load();
+						ClientController Client = (ClientController) loader.getController();
+						Stage ClientStage = new Stage();
+						Scene scene = new Scene(root);
+						Client.setUsername(Username);
+						ClientStage.setScene(scene);
+						ClientStage.show();
+						
+					} catch (Exception exc) {
+						exc.printStackTrace();
+					}
 				}
+				setSignInTextBlank();
+				currentUser.setText("");
+				Output.setText("");
 
 			} else {
 				setSignInTextBlank();
