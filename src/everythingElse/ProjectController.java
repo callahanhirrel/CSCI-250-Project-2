@@ -1,3 +1,4 @@
+package everythingElse;
 // This probably won't be used
 //
 //package network;

@@ -1,4 +1,4 @@
-package network;
+package everythingElse;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -10,7 +10,7 @@ public class Server {
 
 	public static void main(String[] args) throws IOException {
 		Server s = new Server(8881); // gonna use 8881 as the port for now
-		s.listen(); // lol not a method yet but i like to live life in the fast lane
+		s.listen();
 	}
 
 	private ServerSocket accepter;
