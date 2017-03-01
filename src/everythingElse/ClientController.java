@@ -112,7 +112,7 @@ public class ClientController {
 			projectName.setText("");
 			ip.setText("");
 		}
-		
+
 		public void setUsername(String username) {
 			currentUsername = username;
 		}
