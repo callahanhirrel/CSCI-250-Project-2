@@ -1,4 +1,4 @@
-package FileTest;
+package everythingElse;
 
 import java.io.File;
 import java.io.FileWriter;

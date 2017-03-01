@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FileTest.ProjectGuiController">
    <children>
       <TabPane prefHeight="371.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -44,11 +44,14 @@
                               <VBox prefHeight="282.0" prefWidth="228.0" translateX="5.0">
                                  <children>
                                     <Label text="Files you have added:" />
-                                    <ScrollPane prefHeight="216.0" prefWidth="207.0" />
+                                    <ScrollPane fx:id="hasAddedFile" prefHeight="216.0" prefWidth="223.0">
+                                       <content>
+                                          <VBox fx:id="fileContainer" prefHeight="189.0" prefWidth="190.0" />
+                                       </content></ScrollPane>
                                     <HBox prefHeight="49.0" prefWidth="207.0">
                                        <children>
-                                          <Button mnemonicParsing="false" text="Add a File" />
-                                          <Button mnemonicParsing="false" text="Remove a File" />
+                                          <Button fx:id="addFile" mnemonicParsing="false" onAction="#add_file" text="Add a File" />
+                                          <Button fx:id="rmFile" mnemonicParsing="false" text="Remove a File" />
                                        </children>
                                     </HBox>
                                  </children>
