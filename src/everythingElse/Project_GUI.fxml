@@ -41,13 +41,13 @@
                         </HBox>
                         <HBox prefHeight="285.0" prefWidth="600.0">
                            <children>
-                              <VBox prefHeight="282.0" prefWidth="228.0" translateX="5.0">
+                              <VBox fx:id="fileContainer" prefHeight="282.0" prefWidth="228.0" translateX="5.0">
                                  <children>
                                     <Label text="Files you have added:" />
-                                    <ScrollPane prefHeight="216.0" prefWidth="207.0" />
+                                    <ScrollPane fx:id="hasAddedFile" prefHeight="216.0" prefWidth="207.0" />
                                     <HBox prefHeight="49.0" prefWidth="207.0">
                                        <children>
-                                          <Button mnemonicParsing="false" text="Add a File" />
+                                          <Button fx:id="addFile" mnemonicParsing="false" onMouseClicked="#add_file" text="Add a File" />
                                           <Button mnemonicParsing="false" text="Remove a File" />
                                        </children>
                                     </HBox>
