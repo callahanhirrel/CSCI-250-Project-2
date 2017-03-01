@@ -1,6 +1,9 @@
 package everythingElse;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -25,20 +28,41 @@ public class Server {
 			Socket s = accepter.accept(); // waiting and waiting
 			SocketCommunicationThread communicator = new SocketCommunicationThread(s);
 			System.out.println("Server: Connection accepted from " + s.getInetAddress());
-			communicator.start(); 
+			communicator.start();
 		}
 	}
 
 	private class SocketCommunicationThread extends Thread {
-		
+
 		private Socket socket;
-		
+
 		public SocketCommunicationThread(Socket socket) {
 			this.socket = socket;
 		}
-		
+
 		public void run() {
-			
+			try {
+				PrintWriter writer = new PrintWriter(socket.getOutputStream());
+				sendGreeting(writer);
+				String msg = getMessage();
+				System.out.println("Server: Received [" + msg + "]");
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		private void sendGreeting(PrintWriter writer) {
+			writer.println("Connection open");
+		}
+
+		private String getMessage() throws IOException {
+			BufferedReader responses = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			String toReturn = "";
+			while(!responses.ready()) {}
+			while(responses.ready()) {
+				toReturn += responses.readLine() + "\n";
+			}
+			return toReturn;
 		}
 	}
 

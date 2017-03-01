@@ -26,8 +26,9 @@ public class ClientController {
 		@FXML Label message;
 		@FXML TabPane projects;
 		String currentUsername = "";
-		static int PORT = 81;
+		static int PORT = 8881;
 		ArrayBlockingQueue<String> dataCollection = new ArrayBlockingQueue<>(20);
+		String yourUsername;
 
 		@FXML
 		public void initialize() {
@@ -37,7 +38,8 @@ public class ClientController {
 				for (;;) {
 					try {
 						String username = dataCollection.take();
-						Platform.runLater(() -> {message.setText("You are now connected with " + username);});
+						Platform.runLater(() -> {message.setText("You are now connected with " + username);
+						createProject.setDisable(false);});
 					} catch(Exception e) {
 						//TODO Platform.runLater(() -> alert method?);
 						e.printStackTrace();
@@ -100,10 +102,15 @@ public class ClientController {
 			}
 		}
 
-		//@FXML // TODO: come back to this after jack finishes project controller class
+// TODO: come back to this after jack finishes project controller class
+//		@FXML
 //		void newProjectSetup(ProjectController projCtrl) {
 //
 //		}
+
+		public void setYourUsername(String name) {
+			this.yourUsername = name;
+		}
 
 		@FXML
 		private void resetGUI() {
