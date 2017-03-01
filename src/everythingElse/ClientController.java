@@ -25,6 +25,7 @@ public class ClientController {
 		@FXML TextField ip;
 		@FXML Label message;
 		@FXML TabPane projects;
+		String currentUsername = "";
 		static int PORT = 81;
 		ArrayBlockingQueue<String> dataCollection = new ArrayBlockingQueue<>(20);
 
@@ -110,5 +111,9 @@ public class ClientController {
 			message.setText("");
 			projectName.setText("");
 			ip.setText("");
+		}
+
+		public void setUsername(String username) {
+			currentUsername = username;
 		}
 }
