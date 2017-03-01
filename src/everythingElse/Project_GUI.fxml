@@ -27,7 +27,7 @@
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <Label text="(username/none)" translateX="5.0">
+                              <Label text="lol none right now" translateX="5.0">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -36,7 +36,7 @@
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label text="You can play back any audio file listed by simply clicking on it." translateX="5.0" />
+                              <Label text="You can play back any audio file listed by simply clicking on it. (except not)" translateX="5.0" />
                            </children>
                         </HBox>
                         <HBox prefHeight="285.0" prefWidth="600.0">

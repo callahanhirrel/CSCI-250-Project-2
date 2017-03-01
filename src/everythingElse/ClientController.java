@@ -32,8 +32,8 @@ public class ClientController {
 
 		@FXML
 		public void initialize() {
-			resetGUI();
-			connect.setOnAction(event -> connect());
+			// resetGUI();
+			// connect.setOnAction(event -> connect());
 			new Thread(() -> {
 				for (;;) {
 					try {
@@ -89,24 +89,24 @@ public class ClientController {
 				loader.setLocation(ClientController.class.getResource("Project_GUI.fxml"));
 				AnchorPane root = (AnchorPane)loader.load();
 
-				// ProjectController projCtrl = (ProjectController)loader.getController();
+				ProjectGuiController projCtrl = (ProjectGuiController)loader.getController();
 
 				Tab newProject = new Tab();
 				newProject.setText(projectName.getText());
 				newProject.setContent(root);
 				projects.getTabs().add(projects.getTabs().size() - 1, newProject);
 				resetGUI();
-				// newProjectSetup(projCtrl);
+				newProjectSetup(projCtrl);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 
 // TODO: come back to this after jack finishes project controller class
-//		@FXML
-//		void newProjectSetup(ProjectController projCtrl) {
-//
-//		}
+		@FXML
+		void newProjectSetup(ProjectGuiController projCtrl) {
+			
+		}
 
 		public void setYourUsername(String name) {
 			this.yourUsername = name;
