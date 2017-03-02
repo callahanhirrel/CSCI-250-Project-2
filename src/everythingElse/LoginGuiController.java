@@ -49,8 +49,8 @@ public class LoginGuiController {
 	User users = new User();
 	
 	public void initialize() {
+		users = User.loadUsers();
 		Output.setEditable(false);
-		
 	}
 	
 	@FXML
@@ -78,6 +78,7 @@ public class LoginGuiController {
 				} else {
 					Output.setText("Passwords don't match");
 				}
+				User.saveUsers(users);
 				setSignUpTextBlank();
 			}
 		}
