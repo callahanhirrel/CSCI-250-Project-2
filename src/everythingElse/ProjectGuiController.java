@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -57,17 +58,22 @@ public class ProjectGuiController {
 			}
 			*/
 			FXMLLoader loader = new FXMLLoader();
+			FXMLLoader loader2 = new FXMLLoader();
 			loader.setLocation(ProjectGuiMain.class.getResource("Project_GUI.fxml"));
+			loader2.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
+			AnchorPane root2 = (AnchorPane) loader2.load();
 			AnchorPane root = (AnchorPane) loader.load();
 			
-			everythingElse.ProjectGuiController pgc = (everythingElse.ProjectGuiController)loader.getController();
+			ProjectGuiController pgc = (ProjectGuiController)loader.getController();
+			ClientController Client = (ClientController)loader2.getController();
 			/*
 			for (File files : arrays) {
 				pgc.arrays.add(files);
 			}
 			*/
+			Client.new_tab(root);
 			Stage stage = new Stage();
-			Scene scene = new Scene(root, 600, 371);
+			Scene scene = new Scene(root2);
 			stage.setScene(scene);
 			stage.show();
 			

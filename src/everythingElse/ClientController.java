@@ -102,6 +102,12 @@ public class ClientController {
 			}
 		}
 
+		public void new_tab(AnchorPane root) {
+			Tab newProject = new Tab();
+			newProject.setText(projectName.getText());
+			newProject.setContent(root);
+			projects.getTabs().add(projects.getTabs().size() - 1, newProject);
+		}
 // TODO: come back to this after jack finishes project controller class
 		@FXML
 		void newProjectSetup(ProjectGuiController projCtrl) {
