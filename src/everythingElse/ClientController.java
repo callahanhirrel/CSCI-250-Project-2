@@ -83,15 +83,16 @@ public class ClientController {
 			}
 		}
 
-		@FXML
-		void createNewProject() {
+	@FXML
+	void createNewProject() {
+		if (!projectName.getText().equals("")) {
 			try {
 				System.out.println("made it this far");
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(ClientController.class.getResource("Project_GUI.fxml"));
-				AnchorPane root = (AnchorPane)loader.load();
+				AnchorPane root = (AnchorPane) loader.load();
 
-				ProjectGuiController projCtrl = (ProjectGuiController)loader.getController();
+				ProjectGuiController projCtrl = (ProjectGuiController) loader.getController();
 				System.out.println("created da gui");
 				Tab newProject = new Tab();
 				newProject.setText(projectName.getText());
@@ -102,19 +103,21 @@ public class ClientController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-		}
+		} else {
 
-		public void new_tab(AnchorPane root) {
-			Tab newProject = new Tab();
-			if (!projectName.getText().equals("")) {
+			Alert alert = new Alert(AlertType.ERROR, "invalid project name", ButtonType.OK);
+			alert.showAndWait();
+
+		}
+	}
+
+	public void new_tab(AnchorPane root) {
+		Tab newProject = new Tab();
 			newProject.setText(projectName.getText());
 			newProject.setContent(root);
 			projects.getTabs().add(projects.getTabs().size() - 1, newProject);
-			} else {
-				Alert alert = new Alert(AlertType.ERROR, "invalid project name", ButtonType.OK);
-				alert.showAndWait();
-			}
-		}
+		
+	}
 // TODO: come back to this after jack finishes project controller class
 		@FXML
 		void newProjectSetup(ProjectGuiController projCtrl) {
