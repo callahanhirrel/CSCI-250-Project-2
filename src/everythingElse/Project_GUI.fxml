@@ -22,7 +22,7 @@
                      <children>
                         <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="479.0" translateX="5.0" translateY="5.0">
                            <children>
-                              <Label text="Collaborator:" underline="true">
+                              <Label text="Collaborators:" underline="true">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -41,10 +41,13 @@
                         </HBox>
                         <HBox prefHeight="285.0" prefWidth="600.0">
                            <children>
-                              <VBox fx:id="fileContainer" prefHeight="282.0" prefWidth="228.0" translateX="5.0">
+                              <VBox prefHeight="282.0" prefWidth="228.0" translateX="5.0">
                                  <children>
                                     <Label text="Files you have added:" />
-                                    <ScrollPane fx:id="hasAddedFile" prefHeight="216.0" prefWidth="207.0" />
+                                    <ScrollPane fx:id="hasAddedFile" prefHeight="216.0" prefWidth="207.0">
+                                       <content>
+                                          <VBox fx:id="fileContainer" prefHeight="200.0" prefWidth="210.0" />
+                                       </content></ScrollPane>
                                     <HBox prefHeight="49.0" prefWidth="207.0">
                                        <children>
                                           <Button fx:id="addFile" mnemonicParsing="false" onMouseClicked="#add_file" text="Add a File" />
