@@ -10,7 +10,10 @@ import java.util.concurrent.ArrayBlockingQueue;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -32,8 +35,6 @@ public class ClientController {
 
 		@FXML
 		public void initialize() {
-			// resetGUI();
-			// connect.setOnAction(event -> connect());
 			new Thread(() -> {
 				for (;;) {
 					try {
@@ -105,9 +106,14 @@ public class ClientController {
 
 		public void new_tab(AnchorPane root) {
 			Tab newProject = new Tab();
+			if (!projectName.getText().equals("")) {
 			newProject.setText(projectName.getText());
 			newProject.setContent(root);
 			projects.getTabs().add(projects.getTabs().size() - 1, newProject);
+			} else {
+				Alert alert = new Alert(AlertType.ERROR, "invalid project name", ButtonType.OK);
+				alert.showAndWait();
+			}
 		}
 // TODO: come back to this after jack finishes project controller class
 		@FXML

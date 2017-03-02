@@ -16,8 +16,11 @@ public class User implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	public static final String UserLoginFile = "User_Pass.txt";
+	
+	public static final String dirName = "Documents";
+	public static final String UserLoginF = "User_Pass.pass";
+	File dir = new File (dirName);
+	static File UserLoginFile = new File (dirName, UserLoginF);
 	
 	HashMap<String, String> users;
 	
@@ -68,6 +71,6 @@ public class User implements Serializable {
 	}
 	
 	public static boolean fileExists() {
-		return new File(UserLoginFile).isFile();
+		return UserLoginFile.isFile();
 	}
 }

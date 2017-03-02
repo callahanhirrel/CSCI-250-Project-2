@@ -25,5 +25,4 @@ public class LoginGuiMain extends Application {
 		Server s = new Server(8881); // gonna use 8881 as the port for now
 		s.listen();
 	}
-	
 }

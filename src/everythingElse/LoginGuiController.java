@@ -50,6 +50,7 @@ public class LoginGuiController {
 	
 	public void initialize() {
 		users = User.loadUsers();
+		System.out.println(users.getHashMap());
 		Output.setEditable(false);
 	}
 	
