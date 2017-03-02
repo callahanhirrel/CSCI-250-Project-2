@@ -12,7 +12,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< HEAD
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FileTest.ProjectGuiController">
+=======
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="everythingElse.ProjectGuiController">
+>>>>>>> master
    <children>
       <TabPane prefHeight="371.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
@@ -22,12 +26,12 @@
                      <children>
                         <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="479.0" translateX="5.0" translateY="5.0">
                            <children>
-                              <Label text="Collaborator:" underline="true">
+                              <Label text="Collaborators:" underline="true">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <Label text="(username/none)" translateX="5.0">
+                              <Label text="lol none right now" translateX="5.0">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -36,7 +40,7 @@
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label text="You can play back any audio file listed by simply clicking on it." translateX="5.0" />
+                              <Label text="You can play back any audio file listed by simply clicking on it. (except not)" translateX="5.0" />
                            </children>
                         </HBox>
                         <HBox prefHeight="285.0" prefWidth="600.0">
@@ -44,6 +48,7 @@
                               <VBox prefHeight="282.0" prefWidth="228.0" translateX="5.0">
                                  <children>
                                     <Label text="Files you have added:" />
+<<<<<<< HEAD
                                     <ScrollPane fx:id="hasAddedFile" prefHeight="216.0" prefWidth="223.0">
                                        <content>
                                           <VBox fx:id="fileContainer" prefHeight="189.0" prefWidth="190.0" />
@@ -52,6 +57,16 @@
                                        <children>
                                           <Button fx:id="addFile" mnemonicParsing="false" onAction="#add_file" text="Add a File" />
                                           <Button fx:id="rmFile" mnemonicParsing="false" text="Remove a File" />
+=======
+                                    <ScrollPane fx:id="hasAddedFile" prefHeight="216.0" prefWidth="207.0">
+                                       <content>
+                                          <VBox fx:id="fileContainer" prefHeight="200.0" prefWidth="210.0" />
+                                       </content></ScrollPane>
+                                    <HBox prefHeight="49.0" prefWidth="207.0">
+                                       <children>
+                                          <Button fx:id="addFile" mnemonicParsing="false" onMouseClicked="#add_file" text="Add a File" />
+                                          <Button mnemonicParsing="false" text="Remove a File" />
+>>>>>>> master
                                        </children>
                                     </HBox>
                                  </children>

@@ -49,8 +49,8 @@ public class LoginGuiController {
 	User users = new User();
 	
 	public void initialize() {
+		users = User.loadUsers();
 		Output.setEditable(false);
-		
 	}
 	
 	@FXML
@@ -78,6 +78,7 @@ public class LoginGuiController {
 				} else {
 					Output.setText("Passwords don't match");
 				}
+				User.saveUsers(users);
 				setSignUpTextBlank();
 			}
 		}
@@ -98,9 +99,9 @@ public class LoginGuiController {
 					try {
 						
 						FXMLLoader loader = new FXMLLoader();
-						loader.setLocation(LoginGuiMain.class.getResource("Main_GUI.fxml"));
+						loader.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
 						AnchorPane root = (AnchorPane) loader.load();
-						ClientController Client = (ClientController) loader.getController();
+						everythingElse.ClientController Client = (everythingElse.ClientController) loader.getController();
 						Stage ClientStage = new Stage();
 						Scene scene = new Scene(root);
 						Client.setUsername(Username);

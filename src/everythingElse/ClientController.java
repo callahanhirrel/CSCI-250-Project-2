@@ -26,18 +26,20 @@ public class ClientController {
 		@FXML Label message;
 		@FXML TabPane projects;
 		String currentUsername = "";
-		static int PORT = 81;
+		static int PORT = 8881;
 		ArrayBlockingQueue<String> dataCollection = new ArrayBlockingQueue<>(20);
+		String yourUsername;
 
 		@FXML
 		public void initialize() {
-			resetGUI();
-			connect.setOnAction(event -> connect());
+			// resetGUI();
+			// connect.setOnAction(event -> connect());
 			new Thread(() -> {
 				for (;;) {
 					try {
 						String username = dataCollection.take();
-						Platform.runLater(() -> {message.setText("You are now connected with " + username);});
+						Platform.runLater(() -> {message.setText("You are now connected with " + username);
+						createProject.setDisable(false);});
 					} catch(Exception e) {
 						//TODO Platform.runLater(() -> alert method?);
 						e.printStackTrace();
@@ -87,23 +89,28 @@ public class ClientController {
 				loader.setLocation(ClientController.class.getResource("Project_GUI.fxml"));
 				AnchorPane root = (AnchorPane)loader.load();
 
-				// ProjectController projCtrl = (ProjectController)loader.getController();
+				ProjectGuiController projCtrl = (ProjectGuiController)loader.getController();
 
 				Tab newProject = new Tab();
 				newProject.setText(projectName.getText());
 				newProject.setContent(root);
 				projects.getTabs().add(projects.getTabs().size() - 1, newProject);
 				resetGUI();
-				// newProjectSetup(projCtrl);
+				newProjectSetup(projCtrl);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 
-		//@FXML // TODO: come back to this after jack finishes project controller class
-//		void newProjectSetup(ProjectController projCtrl) {
-//
-//		}
+// TODO: come back to this after jack finishes project controller class
+		@FXML
+		void newProjectSetup(ProjectGuiController projCtrl) {
+			
+		}
+
+		public void setYourUsername(String name) {
+			this.yourUsername = name;
+		}
 
 		@FXML
 		private void resetGUI() {
