@@ -59,7 +59,7 @@ public class ProjectGuiController {
 			loader.setLocation(ProjectGuiMain.class.getResource("Project_GUI.fxml"));
 			AnchorPane root = (AnchorPane) loader.load();
 			
-			everythingElse.ProjectGuiController pgc = (everythingElse.ProjectGuiController)loader.getController();
+			ProjectGuiController pgc = (ProjectGuiController)loader.getController();
 			/*
 			for (File files : arrays) {
 				pgc.arrays.add(files);
