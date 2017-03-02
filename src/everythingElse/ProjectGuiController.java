@@ -19,6 +19,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 
+
 public class ProjectGuiController {
 	//public List<File> arrays = new ArrayList<>();
 	//private ArrayList<String> transfer = new ArrayList<>();
@@ -59,7 +60,7 @@ public class ProjectGuiController {
 			loader.setLocation(ProjectGuiMain.class.getResource("Project_GUI.fxml"));
 			AnchorPane root = (AnchorPane) loader.load();
 			
-			ProjectGuiController pgc = (ProjectGuiController)loader.getController();
+			everythingElse.ProjectGuiController pgc = (everythingElse.ProjectGuiController)loader.getController();
 			/*
 			for (File files : arrays) {
 				pgc.arrays.add(files);
