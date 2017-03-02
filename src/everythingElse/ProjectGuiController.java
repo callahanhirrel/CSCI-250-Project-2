@@ -13,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
+//import javafx.scene.control.Tab;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -63,22 +63,8 @@ public class ProjectGuiController {
 			}
 			*/
 			FXMLLoader loader = new FXMLLoader();
-<<<<<<< HEAD
-			loader.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
-			AnchorPane root = (AnchorPane) loader.load();
-			
-			ClientController Client = (ClientController) loader.getController();
-			Client.new_Tab();
-			
-			Stage ClientStage = new Stage();
-			Scene scene = new Scene(root);
-			Client.setUsername("Username");
-			ClientStage.setScene(scene);
-			ClientStage.show();
-			
-=======
 			FXMLLoader loader2 = new FXMLLoader();
-			loader.setLocation(ProjectGuiMain.class.getResource("Project_GUI.fxml"));
+			loader.setLocation(ProjectGuiController.class.getResource("Project_GUI.fxml"));
 			loader2.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
 			AnchorPane root2 = (AnchorPane) loader2.load();
 			AnchorPane root = (AnchorPane) loader.load();
@@ -95,7 +81,6 @@ public class ProjectGuiController {
 			Scene scene = new Scene(root2);
 			stage.setScene(scene);
 			stage.show();
->>>>>>> master
 			
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle(addFile.getText());
@@ -112,7 +97,7 @@ public class ProjectGuiController {
 				trans2.add(trans.get(x));
 			}
 			*/
-			List<File> list = fileChooser.showOpenMultipleDialog(ClientStage);
+			List<File> list = fileChooser.showOpenMultipleDialog(stage);
 			
 			if (list != null) {
 				//add.add(file.getName());
@@ -137,7 +122,7 @@ public class ProjectGuiController {
 					while (input.hasNextLine()) { 
 						String line = input.nextLine();
 						//System.out.print(line);
-						//Client.show_file(line);
+						pgc.show_file(line);
 					}
 				
 					input.close();
