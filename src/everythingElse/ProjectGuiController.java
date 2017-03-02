@@ -61,7 +61,7 @@ public class ProjectGuiController {
 			}
 			*/
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(ProjectGuiMain.class.getResource("Project_GUI.fxml"));
+			loader.setLocation(LoginGuiMain.class.getResource("Project_GUI.fxml"));
 			AnchorPane root = (AnchorPane) loader.load();
 			
 			ProjectGuiController pgc = (ProjectGuiController)loader.getController();
