@@ -13,7 +13,11 @@
 <?import javafx.scene.text.Font?>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="FileTest.ProjectGuiController">
+=======
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="everythingElse.ProjectGuiController">
+>>>>>>> master
 =======
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="everythingElse.ProjectGuiController">
 >>>>>>> master
@@ -49,6 +53,7 @@
                                  <children>
                                     <Label text="Files you have added:" />
 <<<<<<< HEAD
+<<<<<<< HEAD
                                     <ScrollPane fx:id="hasAddedFile" prefHeight="216.0" prefWidth="223.0">
                                        <content>
                                           <VBox fx:id="fileContainer" prefHeight="189.0" prefWidth="190.0" />
@@ -58,6 +63,8 @@
                                           <Button fx:id="addFile" mnemonicParsing="false" onAction="#add_file" text="Add a File" />
                                           <Button fx:id="rmFile" mnemonicParsing="false" text="Remove a File" />
 =======
+=======
+>>>>>>> master
                                     <ScrollPane fx:id="hasAddedFile" prefHeight="216.0" prefWidth="207.0">
                                        <content>
                                           <VBox fx:id="fileContainer" prefHeight="200.0" prefWidth="210.0" />
