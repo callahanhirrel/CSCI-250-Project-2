@@ -1,13 +1,2 @@
-playdate planner.py
 renamer.py
-mad hacks.py
-mad hacks.py
-<<<<<<< Updated upstream
-renamer.py
-=======
-<<<<<<< HEAD
-UserInformation.java
-=======
-renamer.py
->>>>>>> origin/master
->>>>>>> Stashed changes
+joon.py

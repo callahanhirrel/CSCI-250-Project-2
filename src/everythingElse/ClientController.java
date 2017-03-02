@@ -32,8 +32,8 @@ public class ClientController {
 
 		@FXML
 		public void initialize() {
-			resetGUI();
-			connect.setOnAction(event -> connect());
+			// resetGUI();
+			// connect.setOnAction(event -> connect());
 			new Thread(() -> {
 				for (;;) {
 					try {
@@ -85,12 +85,13 @@ public class ClientController {
 		@FXML
 		void createNewProject() {
 			try {
+				System.out.println("made it this far");
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(ClientController.class.getResource("Project_GUI.fxml"));
 				AnchorPane root = (AnchorPane)loader.load();
 
 				ProjectGuiController projCtrl = (ProjectGuiController)loader.getController();
-
+				System.out.println("created da gui");
 				Tab newProject = new Tab();
 				newProject.setText(projectName.getText());
 				newProject.setContent(root);
@@ -111,7 +112,7 @@ public class ClientController {
 // TODO: come back to this after jack finishes project controller class
 		@FXML
 		void newProjectSetup(ProjectGuiController projCtrl) {
-			
+
 		}
 
 		public void setYourUsername(String name) {
