@@ -32,8 +32,8 @@ public class ClientController {
 
 		@FXML
 		public void initialize() {
-			// resetGUI();
-			// connect.setOnAction(event -> connect());
+			resetGUI();
+			connect.setOnAction(event -> connect());
 			new Thread(() -> {
 				for (;;) {
 					try {
@@ -108,6 +108,7 @@ public class ClientController {
 				loader.setLocation(ClientController.class.getResource("Project_GUI.fxml"));
 				AnchorPane root = (AnchorPane)loader.load();
 
+<<<<<<< HEAD
 				ProjectGuiController projCtrl = (ProjectGuiController)loader.getController();
 
 				Tab newProject = new Tab();
@@ -119,6 +120,13 @@ public class ClientController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+=======
+		public void new_tab(AnchorPane root) {
+			Tab newProject = new Tab();
+			newProject.setText(projectName.getText());
+			newProject.setContent(root);
+			projects.getTabs().add(projects.getTabs().size() - 1, newProject);
+>>>>>>> master
 		}
 // TODO: come back to this after jack finishes project controller class
 		@FXML
