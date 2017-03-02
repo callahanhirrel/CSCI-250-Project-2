@@ -61,19 +61,18 @@ public class ProjectGuiController {
 			}
 			*/
 			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(LoginGuiMain.class.getResource("Project_GUI.fxml"));
+			loader.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
 			AnchorPane root = (AnchorPane) loader.load();
 			
-			everythingElse.ProjectGuiController pgc = (everythingElse.ProjectGuiController)loader.getController();
-			/*
-			for (File files : arrays) {
-				pgc.arrays.add(files);
-			}
-			*/
-			Stage stage = new Stage();
-			Scene scene = new Scene(root, 600, 371);
-			stage.setScene(scene);
-			stage.show();
+			ClientController Client = (ClientController) loader.getController();
+			Client.new_Tab();
+			
+			Stage ClientStage = new Stage();
+			Scene scene = new Scene(root);
+			Client.setUsername("Username");
+			ClientStage.setScene(scene);
+			ClientStage.show();
+			
 			
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle(addFile.getText());
@@ -90,7 +89,7 @@ public class ProjectGuiController {
 				trans2.add(trans.get(x));
 			}
 			*/
-			List<File> list = fileChooser.showOpenMultipleDialog(stage);
+			List<File> list = fileChooser.showOpenMultipleDialog(ClientStage);
 			
 			if (list != null) {
 				//add.add(file.getName());
@@ -115,7 +114,7 @@ public class ProjectGuiController {
 					while (input.hasNextLine()) { 
 						String line = input.nextLine();
 						//System.out.print(line);
-						pgc.show_file(line);
+						//Client.show_file(line);
 					}
 				
 					input.close();
