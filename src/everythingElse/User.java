@@ -17,10 +17,8 @@ public class User implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	public static final String dirName = "Documents";
 	public static final String UserLoginF = "User_Pass.pass";
-	File dir = new File (dirName);
-	static File UserLoginFile = new File (dirName, UserLoginF);
+	static File UserLoginFile = new File (UserLoginF);
 	
 	HashMap<String, String> users;
 	
