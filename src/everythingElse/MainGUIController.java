@@ -22,7 +22,7 @@ public class MainGUIController {
 		@FXML Button createProject;
 		@FXML TextField projectName;
 		@FXML TabPane projects;
-		static int PORT = 8881; // gonna use 8881 as the port for now
+		static int PORT = 81; // gonna use 8881 as the port for now
 
 		@FXML
 		public void initialize() throws IOException {
