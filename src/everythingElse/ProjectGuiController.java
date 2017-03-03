@@ -1,12 +1,18 @@
 package everythingElse;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.Socket;
 //import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ArrayBlockingQueue;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -24,28 +31,74 @@ import javafx.stage.Stage;
 public class ProjectGuiController {
 	//public List<File> arrays = new ArrayList<>();
 	//private ArrayList<String> transfer = new ArrayList<>();
-	
+
+	@FXML VBox fileContainer;
+	@FXML Button addFile;
+	@FXML Button rmFile;
+	@FXML ScrollPane hasAddedFile;
+	@FXML TextField ip;
+	@FXML Label message;
+	@FXML Button connect;
+	String currentUsername = "";
+	static int PORT = 8881;
+	ArrayBlockingQueue<String> dataCollection = new ArrayBlockingQueue<>(20);
+	String yourUsername;
+
+
 	public void initialize() {
-		
+		new Thread(() -> {
+			for (;;) {
+				try {
+					String username = dataCollection.take();
+					Platform.runLater(() -> {message.setText("You are now connected with " + username);});
+				} catch(Exception e) {
+					//TODO Platform.runLater(() -> alert method?);
+					e.printStackTrace();
+				}
+			}
+		}).start();
 	}
-	
+
+	public void connect() {
+		new Thread(() -> {
+			try {
+				Socket target = new Socket(ip.getText(), ProjectGuiController.PORT);
+				requestConnection(target);
+				confirmConnection(target);
+				target.close();
+			} catch (Exception e) {
+				//TODO Platform.runLater(() -> alert method?);
+				e.printStackTrace();
+			}
+		}).start();
+	}
+
+	void requestConnection(Socket target) throws IOException {
+		PrintWriter sockout = new PrintWriter(target.getOutputStream());
+		sockout.println("Requesting connection");
+		sockout.flush();
+	}
+
+	void confirmConnection(Socket target) throws IOException {
+		BufferedReader sockin = new BufferedReader(new InputStreamReader(target.getInputStream()));
+		while (!sockin.ready()) {}
+		while (sockin.ready()) {
+			try {
+				String data = sockin.readLine();
+				dataCollection.add(data);
+			} catch(Exception e) {
+				//TODO Platform.runLater(() -> alert method?);
+				e.printStackTrace();
+			}
+		}
+	}
+
 	public void show_file(String filename) {
 		Label label = new Label(filename);
 		fileContainer.getChildren().add(label);
 	}
-	
-	@FXML
-	VBox fileContainer;
-	
-	@FXML
-	Button addFile;
-	
-	@FXML
-	Button rmFile;
-	
-	@FXML
-	ScrollPane hasAddedFile;
-	
+
+	// TODO split this method up into smaller helper methods
 	@FXML
 	void add_file() {
 		addFile.getScene().getWindow().hide();
@@ -63,9 +116,9 @@ public class ProjectGuiController {
 			loader2.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
 			AnchorPane root2 = (AnchorPane) loader2.load();
 			AnchorPane root = (AnchorPane) loader.load();
-			
+
 			ProjectGuiController pgc = (ProjectGuiController)loader.getController();
-			ClientController Client = (ClientController)loader2.getController();
+			MainGUIController Client = (MainGUIController)loader2.getController();
 			/*
 			for (File files : arrays) {
 				pgc.arrays.add(files);
@@ -76,7 +129,7 @@ public class ProjectGuiController {
 			Scene scene = new Scene(root2);
 			stage.setScene(scene);
 			stage.show();
-			
+
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle(addFile.getText());
 			fileChooser.getExtensionFilters().addAll(
@@ -84,7 +137,7 @@ public class ProjectGuiController {
 					//new ExtensionFilter("MP3", "*.mp3"),
 					//new ExtensionFilter("WAV", "*.wav")
 					);
-			
+
 			//ArrayList<String> trans2 = new ArrayList<>();
 			//addFile.setText("Test");
 			/*
@@ -93,7 +146,7 @@ public class ProjectGuiController {
 			}
 			*/
 			List<File> list = fileChooser.showOpenMultipleDialog(stage);
-			
+
 			if (list != null) {
 				//add.add(file.getName());
 				/*
@@ -103,29 +156,29 @@ public class ProjectGuiController {
 				*/
 				File f = new File("store_message.txt");
 				PrintWriter printer = new PrintWriter(new FileWriter(f, true));
-				
+
 				for (File file : list) {
 					printer.println(file.getName());
-					
+
 				}
-				
+
 				printer.close();
-				
+
 				try {
 					Scanner input = new Scanner(f);
 					//System.out.print(f.getName());
-					while (input.hasNextLine()) { 
+					while (input.hasNextLine()) {
 						String line = input.nextLine();
 						//System.out.print(line);
 						pgc.show_file(line);
 					}
-				
+
 					input.close();
-					
+
 				} catch (Exception exc) {
 					exc.printStackTrace();
 				}
-			}					
+			}
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}

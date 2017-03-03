@@ -17,7 +17,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
-public class ClientController {
+public class MainGUIController {
 
 		@FXML Button createProject;
 		@FXML Button connect;
@@ -34,24 +34,13 @@ public class ClientController {
 		public void initialize() {
 			// resetGUI();
 			// connect.setOnAction(event -> connect());
-			new Thread(() -> {
-				for (;;) {
-					try {
-						String username = dataCollection.take();
-						Platform.runLater(() -> {message.setText("You are now connected with " + username);
-						createProject.setDisable(false);});
-					} catch(Exception e) {
-						//TODO Platform.runLater(() -> alert method?);
-						e.printStackTrace();
-					}
-				}
-			}).start();
+
 		}
 
 		void connect() {
 			new Thread(() -> {
 				try {
-					Socket target = new Socket(ip.getText(), ClientController.PORT);
+					Socket target = new Socket(ip.getText(), MainGUIController.PORT);
 					requestConnection(target);
 					confirmConnection(target);
 					target.close();
@@ -85,13 +74,12 @@ public class ClientController {
 		@FXML
 		void createNewProject() {
 			try {
-				System.out.println("made it this far");
 				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(ClientController.class.getResource("Project_GUI.fxml"));
+				loader.setLocation(MainGUIController.class.getResource("Project_GUI.fxml"));
 				AnchorPane root = (AnchorPane)loader.load();
 
 				ProjectGuiController projCtrl = (ProjectGuiController)loader.getController();
-				System.out.println("created da gui");
+
 				Tab newProject = new Tab();
 				newProject.setText(projectName.getText());
 				newProject.setContent(root);

@@ -101,7 +101,7 @@ public class LoginGuiController {
 						FXMLLoader loader = new FXMLLoader();
 						loader.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
 						AnchorPane root = (AnchorPane) loader.load();
-						everythingElse.ClientController Client = (everythingElse.ClientController) loader.getController();
+						everythingElse.MainGUIController Client = (everythingElse.MainGUIController) loader.getController();
 						Stage ClientStage = new Stage();
 						Scene scene = new Scene(root);
 						Client.setUsername(Username);
