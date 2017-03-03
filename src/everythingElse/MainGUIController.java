@@ -26,8 +26,16 @@ public class MainGUIController {
 
 		@FXML
 		public void initialize() throws IOException {
-			Server s = new Server(MainGUIController.PORT);
-			s.listen();
+			new Thread(() -> {
+				Server s;
+				try {
+					s = new Server(MainGUIController.PORT);
+					s.listen();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}).start();
+
 		}
 
 
@@ -44,7 +52,7 @@ public class MainGUIController {
 				newProject.setText(projectName.getText());
 				newProject.setContent(root);
 				projects.getTabs().add(projects.getTabs().size() - 1, newProject);
-				resetGUI();
+				//resetGUI();
 				newProjectSetup(projCtrl);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -63,19 +71,19 @@ public class MainGUIController {
 
 		}
 
-		public void setYourUsername(String name) {
-			this.yourUsername = name;
-		}
-
-		@FXML
-		private void resetGUI() {
-			createProject.setDisable(true);
-			message.setText("");
-			projectName.setText("");
-			ip.setText("");
-		}
-
-		public void setUsername(String username) {
-			currentUsername = username;
-		}
+//		public void setYourUsername(String name) {
+//			this.yourUsername = name;
+//		}
+//
+//		@FXML
+//		private void resetGUI() {
+//			createProject.setDisable(true);
+//			message.setText("");
+//			projectName.setText("");
+//			ip.setText("");
+//		}
+//
+//		public void setUsername(String username) {
+//			currentUsername = username;
+//		}
 }

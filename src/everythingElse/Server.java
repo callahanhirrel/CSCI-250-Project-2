@@ -26,7 +26,7 @@ public class Server {
 		for (;;) {
 			Socket s = accepter.accept(); // waiting and waiting
 			SocketCommunicationThread communicator = new SocketCommunicationThread(s);
-			System.out.println("Server: Connection accepted from " + s.getInetAddress());
+			System.out.println("Server: Connection request from " + s.getInetAddress());
 			communicator.start();
 		}
 	}

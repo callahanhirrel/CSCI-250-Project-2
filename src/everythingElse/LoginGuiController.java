@@ -104,7 +104,7 @@ public class LoginGuiController {
 						everythingElse.MainGUIController Client = (everythingElse.MainGUIController) loader.getController();
 						Stage ClientStage = new Stage();
 						Scene scene = new Scene(root);
-						Client.setUsername(Username);
+						//Client.setUsername(Username);
 						ClientStage.setScene(scene);
 						ClientStage.show();
 						
