@@ -26,7 +26,7 @@ public class Server {
 		for (;;) {
 			Socket s = accepter.accept(); // waiting and waiting
 			SocketCommunicationThread communicator = new SocketCommunicationThread(s);
-			System.out.println("Server: Connection request from " + s.getInetAddress());
+			System.out.println("Server: Request from " + s.getInetAddress());
 			communicator.start();
 		}
 	}
@@ -52,6 +52,7 @@ public class Server {
 
 		private void sendGreeting(PrintWriter writer) {
 			writer.println("Connection open");
+			writer.flush();
 		}
 
 		private String getMessage() throws IOException {
@@ -61,7 +62,7 @@ public class Server {
 			while(responses.ready()) {
 				toReturn += responses.readLine() + "\n";
 			}
-			return toReturn;
+			return toReturn.substring(0, toReturn.length() - 1); // to get rid of the last newline
 		}
 	}
 

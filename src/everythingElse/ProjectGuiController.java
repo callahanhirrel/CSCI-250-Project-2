@@ -82,6 +82,7 @@ public class ProjectGuiController {
 		while (sockin.ready()) {
 			try {
 				String data = sockin.readLine();
+				System.out.println(data);
 				dataCollection.add(data);
 			} catch(Exception e) {
 				//TODO Platform.runLater(() -> alert method?);
