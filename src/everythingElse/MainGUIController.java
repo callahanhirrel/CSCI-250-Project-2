@@ -20,56 +20,16 @@ import javafx.scene.layout.AnchorPane;
 public class MainGUIController {
 
 		@FXML Button createProject;
-		@FXML Button connect;
 		@FXML TextField projectName;
-		@FXML TextField ip;
-		@FXML Label message;
 		@FXML TabPane projects;
-		String currentUsername = "";
-		static int PORT = 8881;
-		ArrayBlockingQueue<String> dataCollection = new ArrayBlockingQueue<>(20);
-		String yourUsername;
+		static int PORT = 8881; // gonna use 8881 as the port for now
 
 		@FXML
-		public void initialize() {
-			// resetGUI();
-			// connect.setOnAction(event -> connect());
-
+		public void initialize() throws IOException {
+			Server s = new Server(MainGUIController.PORT);
+			s.listen();
 		}
 
-		void connect() {
-			new Thread(() -> {
-				try {
-					Socket target = new Socket(ip.getText(), MainGUIController.PORT);
-					requestConnection(target);
-					confirmConnection(target);
-					target.close();
-				} catch (Exception e) {
-					//TODO Platform.runLater(() -> alert method?);
-					e.printStackTrace();
-				}
-			}).start();
-		}
-
-		void requestConnection(Socket target) throws IOException {
-			PrintWriter sockout = new PrintWriter(target.getOutputStream());
-			sockout.println("Requesting connection");
-			sockout.flush();
-		}
-
-		void confirmConnection(Socket target) throws IOException {
-			BufferedReader sockin = new BufferedReader(new InputStreamReader(target.getInputStream()));
-			while (!sockin.ready()) {}
-			while (sockin.ready()) {
-				try {
-					String data = sockin.readLine();
-					dataCollection.add(data);
-				} catch(Exception e) {
-					//TODO Platform.runLater(() -> alert method?);
-					e.printStackTrace();
-				}
-			}
-		}
 
 		@FXML
 		void createNewProject() {

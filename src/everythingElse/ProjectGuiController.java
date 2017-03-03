@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-//import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -19,7 +18,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -39,13 +37,10 @@ public class ProjectGuiController {
 	@FXML TextField ip;
 	@FXML Label message;
 	@FXML Button connect;
-	String currentUsername = "";
-	static int PORT = 8881;
 	ArrayBlockingQueue<String> dataCollection = new ArrayBlockingQueue<>(20);
-	String yourUsername;
 
 
-	public void initialize() {
+	public void initialize() throws IOException {
 		new Thread(() -> {
 			for (;;) {
 				try {
@@ -62,7 +57,7 @@ public class ProjectGuiController {
 	public void connect() {
 		new Thread(() -> {
 			try {
-				Socket target = new Socket(ip.getText(), ProjectGuiController.PORT);
+				Socket target = new Socket(ip.getText(), MainGUIController.PORT);
 				requestConnection(target);
 				confirmConnection(target);
 				target.close();
