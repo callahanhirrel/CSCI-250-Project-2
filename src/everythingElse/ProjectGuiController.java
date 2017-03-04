@@ -64,7 +64,7 @@ public class ProjectGuiController {
 	 * @param data	the next piece of data from the blocking queue
 	 */
 	private void useData(String data) {
-		if (data.equals("connection open")) {
+		if (data.toLowerCase().equals("connection open")) {
 			Platform.runLater(() -> {message.setText(confirmConnection());});
 		}
 	}
@@ -107,12 +107,26 @@ public class ProjectGuiController {
 		}).start();
 	}
 
+	/**
+	 * Sends a request to a peer's server
+	 *
+	 * @param target	the peer's socket
+	 * @param request	the data/request being sent
+	 * @throws IOException
+	 */
 	private void sendRequest(Socket target, String request) throws IOException {
 		PrintWriter sockout = new PrintWriter(target.getOutputStream());
 		sockout.println(request);
 		sockout.flush();
 	}
 
+	/**
+	 * Waits for a response from a peer's server, then adds the server data
+	 * to a blocking queue.
+	 *
+	 * @param target	the peer's socket
+	 * @throws IOException
+	 */
 	private void receiveData(Socket target) throws IOException {
 		BufferedReader sockin = new BufferedReader(new InputStreamReader(target.getInputStream()));
 		while (!sockin.ready()) {}

@@ -45,7 +45,7 @@ public class Server {
 			try {
 				PrintWriter writer = new PrintWriter(socket.getOutputStream());
 				String data = getData();
-				System.out.println("Server: Received [" + data + "]");
+				printToConsole(true, data);
 				sendData(writer, data);
 			} catch(Exception e) {
 				e.printStackTrace();
@@ -55,9 +55,23 @@ public class Server {
 		private void sendData(PrintWriter writer, String justReceived) {
 			if (justReceived.equals("requesting connection")) {
 				writer.println("connection open");
+				printToConsole(false, "connection open");
+
 				writer.println(username);
+				printToConsole(false, username);
 			}
 			writer.flush();
+		}
+
+		private void printToConsole(boolean received, String txt) {
+			String toPrint = "Server: ";
+			if (received) {
+				toPrint += "Received ";
+			} else {
+				toPrint += "Sent ";
+			}
+			toPrint += "[" + txt + "]";
+			System.out.println(toPrint);
 		}
 
 		private String getData() throws IOException {
