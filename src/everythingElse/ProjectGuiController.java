@@ -182,7 +182,7 @@ public class ProjectGuiController {
 		}
 
 	}
-	
+
 	public void playAudioFile(String fileName) {
 		Media media = new Media(new File(fileName).toURI().toString());
 		MediaPlayer mediaPlayer = new MediaPlayer(media);

@@ -62,7 +62,7 @@ public class Server {
 			while(responses.ready()) {
 				toReturn += responses.readLine() + "\n";
 			}
-			return toReturn.substring(0, toReturn.length() - 1); // to get rid of the last newline
+			return toReturn.trim(); // to get rid of the last newline
 		}
 	}
 
