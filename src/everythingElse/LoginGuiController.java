@@ -95,7 +95,7 @@ public class LoginGuiController {
 					currentUser.setText(username.getText());
 					Output.setText(username.getText() + " successfully logged in");
 					setSignInTextBlank();
-					Username = currentUser.getText();
+					Username = username.getText();
 					try {
 
 						FXMLLoader loader = new FXMLLoader();

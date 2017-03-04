@@ -118,6 +118,7 @@ public class ProjectGuiController {
 		PrintWriter sockout = new PrintWriter(target.getOutputStream());
 		sockout.println(request);
 		sockout.flush();
+		System.out.println("Client: Sent [" + request + "]");
 	}
 
 	/**
