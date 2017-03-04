@@ -22,15 +22,16 @@ public class MainGUIController {
 		@FXML Button createProject;
 		@FXML TextField projectName;
 		@FXML TabPane projects;
+		String username;
+		Server server;
 		static int PORT = 8881; // gonna use 8881 as the port for now
 
 		@FXML
 		public void initialize() throws IOException {
 			new Thread(() -> {
-				Server s;
 				try {
-					s = new Server(MainGUIController.PORT);
-					s.listen();
+					server = new Server(MainGUIController.PORT, this.username);
+					server.listen();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -52,7 +53,7 @@ public class MainGUIController {
 				newProject.setText(projectName.getText());
 				newProject.setContent(root);
 				projects.getTabs().add(projects.getTabs().size() - 1, newProject);
-				//resetGUI();
+				projectName.setText("");
 				newProjectSetup(projCtrl);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -71,19 +72,7 @@ public class MainGUIController {
 
 		}
 
-//		public void setYourUsername(String name) {
-//			this.yourUsername = name;
-//		}
-//
-//		@FXML
-//		private void resetGUI() {
-//			createProject.setDisable(true);
-//			message.setText("");
-//			projectName.setText("");
-//			ip.setText("");
-//		}
-//
-//		public void setUsername(String username) {
-//			currentUsername = username;
-//		}
+		public void setUsername(String username) {
+			this.username = username;
+		}
 }

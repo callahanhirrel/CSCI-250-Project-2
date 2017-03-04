@@ -16,8 +16,10 @@ public class Server {
 	}
 
 	private ServerSocket accepter;
+	private String username;
 
-	public Server(int port) throws IOException {
+	public Server(int port, String username) throws IOException {
+		this.username = username;
 		accepter = new ServerSocket(port);
 		System.out.println("Server: IP Address: " + accepter.getInetAddress() + " (" + port + ")");
 	}
@@ -42,20 +44,23 @@ public class Server {
 		public void run() {
 			try {
 				PrintWriter writer = new PrintWriter(socket.getOutputStream());
-				sendGreeting(writer);
-				String msg = getMessage();
-				System.out.println("Server: Received [" + msg + "]");
+				String data = getData();
+				System.out.println("Server: Received [" + data + "]");
+				sendData(writer, data);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 
-		private void sendGreeting(PrintWriter writer) {
-			writer.println("Connection open");
+		private void sendData(PrintWriter writer, String justReceived) {
+			if (justReceived.equals("requesting connection")) {
+				writer.println("connection open");
+				writer.println(username);
+			}
 			writer.flush();
 		}
 
-		private String getMessage() throws IOException {
+		private String getData() throws IOException {
 			BufferedReader responses = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String toReturn = "";
 			while(!responses.ready()) {}

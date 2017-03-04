@@ -11,48 +11,48 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class LoginGuiController {
-	
+
 	@FXML
 	Button logOut;
-	
+
 	@FXML
 	Label currentUser;
-	
+
 	String Username = "";
-	
+
 	boolean userLoggedIn;
-	
+
 	@FXML
 	TextField Output;
-	
+
 	@FXML
 	TextField username;
-	
+
 	@FXML
 	PasswordField password;
-	
+
 	@FXML
 	TextField setUsername;
-	
+
 	@FXML
 	PasswordField setPassword;
-	
+
 	@FXML
 	PasswordField confirmPassword;
-	
+
 	@FXML
 	Button signIn;
-	
+
 	@FXML
 	Button signUp;
-	
+
 	User users = new User();
-	
+
 	public void initialize() {
 		users = User.loadUsers();
 		Output.setEditable(false);
 	}
-	
+
 	@FXML
 	void LogOut() {
 		if (currentUser.getText().equals("")) {
@@ -62,7 +62,7 @@ public class LoginGuiController {
 			currentUser.setText("");
 		}
 	}
-	
+
 	@FXML
 	void SignUp() {
 		if (setUsername.getText().equals("")) {
@@ -83,31 +83,31 @@ public class LoginGuiController {
 			}
 		}
 	}
-	
+
 	@FXML
 	void SignIn() {
 		if (!userSignedIn()) {
 			if (users.containsUser(username.getText())) {
 				String signInPassword = password.getText();
 				String usernamePassword = username.getText();
-				
+
 				if (signInPassword.equals(usernamePassword)) {
 					currentUser.setText(username.getText());
 					Output.setText(username.getText() + " successfully logged in");
 					setSignInTextBlank();
 					Username = currentUser.getText();
 					try {
-						
+
 						FXMLLoader loader = new FXMLLoader();
 						loader.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
 						AnchorPane root = (AnchorPane) loader.load();
 						everythingElse.MainGUIController Client = (everythingElse.MainGUIController) loader.getController();
 						Stage ClientStage = new Stage();
 						Scene scene = new Scene(root);
-						//Client.setUsername(Username);
+						Client.setUsername(Username);
 						ClientStage.setScene(scene);
 						ClientStage.show();
-						
+
 					} catch (Exception exc) {
 						exc.printStackTrace();
 					}
@@ -124,20 +124,20 @@ public class LoginGuiController {
 			Output.setText("User already signed in");
 		}
 	}
-	
+
 	public boolean userSignedIn() {
 		return !currentUser.getText().equals("");
 	}
-	
+
 	public void setSignInTextBlank() {
 		username.setText("");
 		password.setText("");
 	}
-	
+
 	public void setSignUpTextBlank() {
 		setUsername.setText("");
 		setPassword.setText("");
 		confirmPassword.setText("");
 	}
-	
+
 }

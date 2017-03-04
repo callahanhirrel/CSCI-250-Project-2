@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -40,52 +41,88 @@ public class ProjectGuiController {
 	@FXML Label message;
 	@FXML Button connect;
 	ArrayBlockingQueue<String> dataCollection = new ArrayBlockingQueue<>(20);
+	HashMap<String, String> users = new HashMap(); // maps usernames to the IP addresses they came from
 
 
 	public void initialize() throws IOException {
 		new Thread(() -> {
 			for (;;) {
 				try {
-					String username = dataCollection.take();
-					Platform.runLater(() -> {message.setText("You are now connected with " + username);});
+					String data = dataCollection.take();
+					useData(data);
 				} catch(Exception e) {
-					//TODO Platform.runLater(() -> alert method?);
+					// TODO Platform.runLater(() -> alert method?);
 					e.printStackTrace();
 				}
 			}
 		}).start();
 	}
 
+	/**
+	 * Determines what to do with the data received by peers
+	 *
+	 * @param data	the next piece of data from the blocking queue
+	 */
+	private void useData(String data) {
+		if (data.equals("connection open")) {
+			Platform.runLater(() -> {message.setText(confirmConnection());});
+		}
+	}
+
+	/**
+	 * This method is called upon initial connection with a peer.
+	 * The peer's username and IP address are added to a HashMap field
+	 *
+	 * @return	a confirmation message to be displayed in the GUI
+	 */
+	private String confirmConnection() {
+		String message = "ERROR: PLEASE TRY AGAIN";
+		String connectedWith;
+		try {
+			connectedWith = dataCollection.take();
+			message = "You are now connected with " + connectedWith;
+			users.put(connectedWith, ip.getText()); // save the username and IP for later use
+		} catch (InterruptedException e) {
+			// TODO Platform.runLater(() -> alert method?);
+			e.printStackTrace();
+		}
+		return message;
+	}
+
+	/**
+	 * First method that is called when a user tries to connect with a peer
+	 */
+	@FXML
 	public void connect() {
 		new Thread(() -> {
 			try {
 				Socket target = new Socket(ip.getText(), MainGUIController.PORT);
-				requestConnection(target);
-				confirmConnection(target);
+				sendRequest(target, "requesting connection");
+				receiveData(target);
 				target.close();
 			} catch (Exception e) {
-				//TODO Platform.runLater(() -> alert method?);
+				// TODO Platform.runLater(() -> alert method?);
 				e.printStackTrace();
 			}
 		}).start();
 	}
 
-	void requestConnection(Socket target) throws IOException {
+	private void sendRequest(Socket target, String request) throws IOException {
 		PrintWriter sockout = new PrintWriter(target.getOutputStream());
-		sockout.println("Requesting connection");
+		sockout.println(request);
 		sockout.flush();
 	}
 
-	void confirmConnection(Socket target) throws IOException {
+	private void receiveData(Socket target) throws IOException {
 		BufferedReader sockin = new BufferedReader(new InputStreamReader(target.getInputStream()));
 		while (!sockin.ready()) {}
 		while (sockin.ready()) {
 			try {
 				String data = sockin.readLine();
-				System.out.println(data);
+				System.out.println("Client: Received [" + data + "]");
 				dataCollection.add(data);
 			} catch(Exception e) {
-				//TODO Platform.runLater(() -> alert method?);
+				// TODO Platform.runLater(() -> alert method?);
 				e.printStackTrace();
 			}
 		}
