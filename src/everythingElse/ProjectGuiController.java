@@ -20,7 +20,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 <<<<<<< HEAD
+<<<<<<< HEAD
 //import javafx.scene.control.Tab;
+=======
+import javafx.scene.control.TextField;
+>>>>>>> master
 =======
 import javafx.scene.control.TextField;
 >>>>>>> master
@@ -153,11 +157,14 @@ public class ProjectGuiController {
 	}
 
 	// TODO split this method up into smaller helper methods
+<<<<<<< HEAD
 	@FXML
 	void rm_file() {
 		
 	}
 	
+=======
+>>>>>>> master
 	@FXML
 	void add_file() {
 		addFile.getScene().getWindow().hide();
