@@ -63,6 +63,7 @@ public class ProjectGuiController {
 	 * @param data	the next piece of data from the blocking queue
 	 */
 	private void useData(String data) {
+		System.out.print(data);
 		if (data.toLowerCase().equals("connection open")) {
 			Platform.runLater(() -> {message.setText(confirmConnection());});
 		}

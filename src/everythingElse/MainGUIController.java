@@ -14,6 +14,8 @@ import java.util.Scanner;
 //import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 //import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -45,14 +47,15 @@ public class MainGUIController {
 		}
 
 
-		@FXML
-		void createNewProject() {
+	@FXML
+	void createNewProject() {
+		if (!projectName.getText().equals("")) {
 			try {
 				FXMLLoader loader = new FXMLLoader();
 				loader.setLocation(MainGUIController.class.getResource("Project_GUI.fxml"));
-				AnchorPane root = (AnchorPane)loader.load();
+				AnchorPane root = (AnchorPane) loader.load();
 
-				ProjectGuiController projCtrl = (ProjectGuiController)loader.getController();
+				ProjectGuiController projCtrl = (ProjectGuiController) loader.getController();
 
 				Tab newProject = new Tab();
 				
@@ -69,13 +72,18 @@ public class MainGUIController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		} else {
+			Alert alert = new Alert(AlertType.ERROR, "Invalid Project Name");
+			alert.showAndWait();
 		}
+	}
 
-		public void new_tab(AnchorPane root) {
-			Tab newProject = new Tab();
+	public void new_tab(AnchorPane root) {
+		Tab newProject = new Tab();
 			newProject.setText(projectName.getText());
 			newProject.setContent(root);
 			projects.getTabs().add(projects.getTabs().size() - 1, newProject);
+<<<<<<< HEAD
 		}
 		
 		public Scanner get_tabs() throws FileNotFoundException {
@@ -84,6 +92,10 @@ public class MainGUIController {
 				//System.out.print(f.getName());
 			return input;
 		}
+=======
+	}
+
+>>>>>>> master
 // TODO: come back to this after jack finishes project controller class
 		@FXML
 		void newProjectSetup(ProjectGuiController projCtrl) {
