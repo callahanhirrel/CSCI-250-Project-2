@@ -47,7 +47,7 @@ public class LoginGuiController {
 	Button signUp;
 
 	User users = new User();
-
+	
 	public void initialize() {
 		users = User.loadUsers();
 		Output.setEditable(false);
@@ -96,10 +96,6 @@ public class LoginGuiController {
 					Output.setText(username.getText() + " successfully logged in");
 					Username = username.getText();
 					setSignInTextBlank();
-<<<<<<< HEAD
-					Username = username.getText();
-=======
->>>>>>> master
 					try {
 
 						FXMLLoader loader = new FXMLLoader();

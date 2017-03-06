@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
-
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,15 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-<<<<<<< HEAD
-<<<<<<< HEAD
-//import javafx.scene.control.Tab;
-=======
 import javafx.scene.control.TextField;
->>>>>>> master
-=======
-import javafx.scene.control.TextField;
->>>>>>> master
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -157,14 +148,7 @@ public class ProjectGuiController {
 	}
 
 	// TODO split this method up into smaller helper methods
-<<<<<<< HEAD
-	@FXML
-	void rm_file() {
-		
-	}
 	
-=======
->>>>>>> master
 	@FXML
 	void add_file() {
 		addFile.getScene().getWindow().hide();
@@ -176,21 +160,19 @@ public class ProjectGuiController {
 				trans.add(arrays.get(j));
 			}
 			*/
-			FXMLLoader loader = new FXMLLoader();
+			
 			FXMLLoader loader2 = new FXMLLoader();
-			loader.setLocation(ProjectGuiController.class.getResource("Project_GUI.fxml"));
+			
 			loader2.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
 			AnchorPane root2 = (AnchorPane) loader2.load();
-			AnchorPane root = (AnchorPane) loader.load();
+			
 
-			ProjectGuiController pgc = (ProjectGuiController)loader.getController();
 			MainGUIController Client = (MainGUIController)loader2.getController();
 			/*
 			for (File files : arrays) {
 				pgc.arrays.add(files);
 			}
 			*/
-			Client.new_tab(root);
 			Stage stage = new Stage();
 			Scene scene = new Scene(root2);
 			stage.setScene(scene);
@@ -220,30 +202,43 @@ public class ProjectGuiController {
 					arrays.add(trans2.get(k));
 				}
 				*/
-				File f = new File("store_message.txt");
-				PrintWriter printer = new PrintWriter(new FileWriter(f, true));
+				Scanner scan = Client.get_tabs();
+				while (scan.hasNextLine()) {
+					//System.out.print(line);
+					FXMLLoader loader = new FXMLLoader();
+					loader.setLocation(ProjectGuiController.class.getResource("Project_GUI.fxml"));
+					AnchorPane root = (AnchorPane) loader.load();
+					ProjectGuiController pgc = (ProjectGuiController)loader.getController();
+					Client.new_tab(root);
+					
+					File f = new File(Client.get_tabs() + ".txt");
+					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
 
-				for (File file : list) {
-					printer.println(file.getName());
+					for (File file : list) {
+						printer.println(file.getName());
 
-				}
-
-				printer.close();
-
-				try {
-					Scanner input = new Scanner(f);
-					//System.out.print(f.getName());
-					while (input.hasNextLine()) {
-						String line = input.nextLine();
-						//System.out.print(line);
-						pgc.show_file(line);
 					}
 
-					input.close();
+					printer.close();
 
-				} catch (Exception exc) {
-					exc.printStackTrace();
+					try {
+						Scanner input = new Scanner(f);
+						//System.out.print(f.getName());
+						while (input.hasNextLine()) {
+							String x = input.nextLine();
+							//System.out.print(line);
+							pgc.show_file(x);
+						}
+
+						input.close();
+
+					} catch (Exception exc) {
+						exc.printStackTrace();
+					}
+					
 				}
+				
+				
 			}
 		} catch (Exception exc) {
 			exc.printStackTrace();

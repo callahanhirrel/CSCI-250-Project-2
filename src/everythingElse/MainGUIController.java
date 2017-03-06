@@ -1,17 +1,21 @@
 package everythingElse;
 
-import java.io.BufferedReader;
+//import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
+//import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.concurrent.ArrayBlockingQueue;
+//import java.net.Socket;
+//import java.util.concurrent.ArrayBlockingQueue;
+import java.util.Scanner;
 
-import javafx.application.Platform;
+//import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+//import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
@@ -51,6 +55,12 @@ public class MainGUIController {
 				ProjectGuiController projCtrl = (ProjectGuiController)loader.getController();
 
 				Tab newProject = new Tab();
+				
+				File f = new File("Test_Store.txt");
+				PrintWriter printer = new PrintWriter(new FileWriter(f, true));
+				printer.println(projectName.getText());
+				printer.close();
+				
 				newProject.setText(projectName.getText());
 				newProject.setContent(root);
 				projects.getTabs().add(projects.getTabs().size() - 1, newProject);
@@ -66,6 +76,13 @@ public class MainGUIController {
 			newProject.setText(projectName.getText());
 			newProject.setContent(root);
 			projects.getTabs().add(projects.getTabs().size() - 1, newProject);
+		}
+		
+		public Scanner get_tabs() throws FileNotFoundException {
+			File f = new File("Test_Store.txt");
+			Scanner input = new Scanner(f);
+				//System.out.print(f.getName());
+			return input;
 		}
 // TODO: come back to this after jack finishes project controller class
 		@FXML
