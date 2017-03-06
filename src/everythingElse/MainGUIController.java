@@ -27,9 +27,10 @@ public class MainGUIController {
 		static int PORT = 8881; // gonna use 8881 as the port for now
 
 		@FXML
-		public void initialize() throws IOException {
+		public void initialize(String username) throws IOException {
 			new Thread(() -> {
 				try {
+					this.username = username;
 					server = new Server(MainGUIController.PORT, this.username);
 					server.listen();
 				} catch (IOException e) {

@@ -41,7 +41,7 @@ public class ProjectGuiController {
 	@FXML Label message;
 	@FXML Button connect;
 	ArrayBlockingQueue<String> dataCollection = new ArrayBlockingQueue<>(20);
-	HashMap<String, String> users = new HashMap(); // maps usernames to the IP addresses they came from
+	HashMap<String, String> users = new HashMap<>(); // maps usernames to the IP addresses they came from
 
 
 	public void initialize() throws IOException {
