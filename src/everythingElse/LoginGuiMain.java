@@ -20,10 +20,7 @@ public class LoginGuiMain extends Application {
 		primaryStage.show();
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		launch(args);
-		Server s = new Server(8881); // gonna use 8881 as the port for now
-		s.listen();
 	}
-	
 }

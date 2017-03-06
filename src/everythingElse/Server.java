@@ -12,12 +12,14 @@ import java.net.Socket;
 public class Server {
 
 	public static void main(String[] args) throws IOException {
-		
+
 	}
 
 	private ServerSocket accepter;
+	private String username;
 
-	public Server(int port) throws IOException {
+	public Server(int port, String username) throws IOException {
+		this.username = username;
 		accepter = new ServerSocket(port);
 		System.out.println("Server: IP Address: " + accepter.getInetAddress() + " (" + port + ")");
 	}
@@ -26,7 +28,7 @@ public class Server {
 		for (;;) {
 			Socket s = accepter.accept(); // waiting and waiting
 			SocketCommunicationThread communicator = new SocketCommunicationThread(s);
-			System.out.println("Server: Connection accepted from " + s.getInetAddress());
+			System.out.println("Server: Request from " + s.getInetAddress());
 			communicator.start();
 		}
 	}
@@ -42,26 +44,44 @@ public class Server {
 		public void run() {
 			try {
 				PrintWriter writer = new PrintWriter(socket.getOutputStream());
-				sendGreeting(writer);
-				String msg = getMessage();
-				System.out.println("Server: Received [" + msg + "]");
+				String data = getData();
+				printToConsole(true, data);
+				sendData(writer, data);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 
-		private void sendGreeting(PrintWriter writer) {
-			writer.println("Connection open");
+		private void sendData(PrintWriter writer, String justReceived) {
+			if (justReceived.equals("requesting connection")) {
+				writer.println("connection open");
+				printToConsole(false, "connection open");
+
+				writer.println(username);
+				printToConsole(false, username);
+			}
+			writer.flush();
 		}
 
-		private String getMessage() throws IOException {
+		private void printToConsole(boolean received, String txt) {
+			String toPrint = "Server: ";
+			if (received) {
+				toPrint += "Received ";
+			} else {
+				toPrint += "Sent ";
+			}
+			toPrint += "[" + txt + "]";
+			System.out.println(toPrint);
+		}
+
+		private String getData() throws IOException {
 			BufferedReader responses = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			String toReturn = "";
 			while(!responses.ready()) {}
 			while(responses.ready()) {
 				toReturn += responses.readLine() + "\n";
 			}
-			return toReturn;
+			return toReturn.trim(); // to get rid of the last newline
 		}
 	}
 
