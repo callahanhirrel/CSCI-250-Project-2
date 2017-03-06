@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Set;
 
 
 public class User implements Serializable {
@@ -27,7 +29,11 @@ public class User implements Serializable {
 	}
 	
 	public void add(String username, String password) {
-		users.put(username, password);
+		if (users.containsKey(username)) {
+			throw new IllegalArgumentException("Username " + "'" + username + "'" + " is taken.");
+		} else {
+			users.put(username, password);
+		}
 	}
 	
 	public HashMap<String, String> getHashMap() {
@@ -36,6 +42,14 @@ public class User implements Serializable {
 	
 	public boolean containsUser(String username) {
 		return users.containsKey(username);
+	}
+	
+	public Set<String> getKeys() {
+		return users.keySet();
+	}
+	
+	public Collection<String> getValues() {
+		return users.values();
 	}
 	
 	public static void saveUsers(User users) {
