@@ -78,7 +78,9 @@ public class ProjectGuiController {
 		String message = "ERROR: PLEASE TRY AGAIN";
 		String connectedWith;
 		try {
+			System.out.print(dataCollection.toString());
 			connectedWith = dataCollection.take();
+			System.out.println("made it here");
 			message = "You are now connected with " + connectedWith;
 			users.put(connectedWith, ip.getText()); // save the username and IP for later use
 		} catch (InterruptedException e) {
@@ -135,6 +137,7 @@ public class ProjectGuiController {
 				String data = sockin.readLine();
 				System.out.println("Client: Received [" + data + "]");
 				dataCollection.add(data);
+				System.out.print(dataCollection.toString());
 			} catch(Exception e) {
 				// TODO Platform.runLater(() -> alert method?);
 				e.printStackTrace();
