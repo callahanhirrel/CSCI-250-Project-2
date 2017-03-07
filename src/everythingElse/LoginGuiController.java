@@ -47,7 +47,7 @@ public class LoginGuiController {
 	Button signUp;
 
 	User users = new User();
-
+	
 	public void initialize() {
 		users = User.loadUsers();
 		Output.setEditable(false);
