@@ -52,14 +52,14 @@ public class MainGUIController {
 
 	@FXML
 	void createNewProject() {
-		if (!projectName.getText().equals("") || !projects.getTabs().toString().contains(projectName.getText())) {
-			System.out.print(projects.getTabs().toString());
+		if (!projectName.getText().equals("")) {
 			try {
 				File f = new File("Test_Store.txt");
 				PrintWriter printer = new PrintWriter(new FileWriter(f, true));
 				//System.out.println(fileChecker.check_existence("Test_Store.txt", projectName.getText()));
 				if (fileChecker.check_existence("Test_Store.txt", projectName.getText()) == true) {
 					printer.close();
+					createAlert("Invalid Project Name");
 				} else {
 					printer.println(projectName.getText());
 					printer.close();
@@ -77,17 +77,17 @@ public class MainGUIController {
 					newProjectSetup(projCtrl);
 				}
 			} catch (IOException e) {
+				createAlert("Invalid Project Name");
 				e.printStackTrace();
 			}
 		} else {
-			Alert alert = createAlert("Invalid Project Name");
-			alert.showAndWait();
+			createAlert("Invalid Project Name");
 		}
 	}
 	
-	private Alert createAlert(String message) {
+	private void createAlert(String message) {
 		Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
-		return alert;
+		alert.showAndWait();
 	}
 
 	public void new_tab(AnchorPane root, String project_name) {
