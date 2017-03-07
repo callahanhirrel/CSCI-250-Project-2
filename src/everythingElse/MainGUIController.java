@@ -1,25 +1,30 @@
 package everythingElse;
 
-import java.io.BufferedReader;
+//import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
+//import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.concurrent.ArrayBlockingQueue;
+//import java.net.Socket;
+//import java.util.concurrent.ArrayBlockingQueue;
+import java.util.Scanner;
 
-import javafx.application.Platform;
+//import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+//import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
 public class MainGUIController {
+		FileChecker fileChecker = new FileChecker();
 
 		@FXML Button createProject;
 		@FXML TextField projectName;
@@ -47,18 +52,26 @@ public class MainGUIController {
 	void createNewProject() {
 		if (!projectName.getText().equals("")) {
 			try {
-				FXMLLoader loader = new FXMLLoader();
-				loader.setLocation(MainGUIController.class.getResource("Project_GUI.fxml"));
-				AnchorPane root = (AnchorPane) loader.load();
+				File f = new File("Test_Store.txt");
+				PrintWriter printer = new PrintWriter(new FileWriter(f, true));
+				if (fileChecker.check_existence("Test_Store.txt", projectName.getText()) == true) {
+					printer.close();
+				} else {
+					printer.println(projectName.getText());
+					printer.close();
+					FXMLLoader loader = new FXMLLoader();
+					loader.setLocation(MainGUIController.class.getResource("Project_GUI.fxml"));
+					AnchorPane root = (AnchorPane) loader.load();
 
-				ProjectGuiController projCtrl = (ProjectGuiController) loader.getController();
+					ProjectGuiController projCtrl = (ProjectGuiController) loader.getController();
 
-				Tab newProject = new Tab();
-				newProject.setText(projectName.getText());
-				newProject.setContent(root);
-				projects.getTabs().add(projects.getTabs().size() - 1, newProject);
-				projectName.setText("");
-				newProjectSetup(projCtrl);
+					Tab newProject = new Tab();
+					newProject.setText(projectName.getText());
+					newProject.setContent(root);
+					projects.getTabs().add(projects.getTabs().size() - 1, newProject);
+					projectName.setText("");
+					newProjectSetup(projCtrl);
+				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -68,20 +81,26 @@ public class MainGUIController {
 		}
 	}
 
-	public void new_tab(AnchorPane root) {
+	public void new_tab(AnchorPane root, String project_name) {
 		Tab newProject = new Tab();
-			newProject.setText(projectName.getText());
+			newProject.setText(project_name);
 			newProject.setContent(root);
 			projects.getTabs().add(projects.getTabs().size() - 1, newProject);
 	}
-
+		
+	public Scanner get_tabs() throws FileNotFoundException {
+		File f = new File("Test_Store.txt");
+		Scanner input = new Scanner(f);
+				//System.out.print(f.getName());
+		return input;
+	}
 // TODO: come back to this after jack finishes project controller class
-		@FXML
-		void newProjectSetup(ProjectGuiController projCtrl) {
+	@FXML
+	void newProjectSetup(ProjectGuiController projCtrl) {
 
-		}
+	}
 
-		public void setUsername(String username) {
-			this.username = username;
-		}
+	public void setUsername(String username) {
+		this.username = username;
+	}
 }
