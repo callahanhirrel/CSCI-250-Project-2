@@ -32,6 +32,18 @@ public class NetworkData implements Serializable {
 		}
 	}
 
+	public String getTag() {
+		return this.tag;
+	}
+
+	public String getMsg() {
+		return this.msg;
+	}
+
+	public File getFile() {
+		return this.file;
+	}
+
 //	private void convertToBytes(String data) {
 //		Path path = (Path) Paths.get(System.getProperty("user.dir"), "/new_folder/" + data);
 //		try {
