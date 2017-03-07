@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -200,6 +202,9 @@ public class ProjectGuiController {
 			List<File> list = fileChooser.showOpenMultipleDialog(stage);
 
 			if (list != null) {
+				File dir = new File("new_folder");
+				dir.mkdir();
+				System.out.println(dir);
 				//add.add(file.getName());
 				/*
 				for (int k = 0; k < trans2.size(); k++) {
@@ -209,16 +214,18 @@ public class ProjectGuiController {
 				Scanner scan = Client.get_tabs();
 				while (scan.hasNextLine()) {
 					//System.out.print(line);
+					String name = scan.nextLine();
 					FXMLLoader loader = new FXMLLoader();
 					loader.setLocation(ProjectGuiController.class.getResource("Project_GUI.fxml"));
 					AnchorPane root = (AnchorPane) loader.load();
 					ProjectGuiController pgc = (ProjectGuiController)loader.getController();
-					Client.new_tab(root);
+					Client.new_tab(root, name);
 					
-					File f = new File(Client.get_tabs() + ".txt");
+					File f = new File(name + ".txt");
 					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
 
 					for (File file : list) {
+						Files.copy(file.toPath(), (new File(dir.getPath() + "/" + file.getName())).toPath(), StandardCopyOption.COPY_ATTRIBUTES);
 						printer.println(file.getName());
 
 					}
