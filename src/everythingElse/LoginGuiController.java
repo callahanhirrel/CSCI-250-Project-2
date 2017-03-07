@@ -130,12 +130,12 @@ public class LoginGuiController {
 		return !currentUser.getText().equals("");
 	}
 
-	public void setSignInTextBlank() {
+	private void setSignInTextBlank() {
 		username.setText("");
 		password.setText("");
 	}
 
-	public void setSignUpTextBlank() {
+	private void setSignUpTextBlank() {
 		setUsername.setText("");
 		setPassword.setText("");
 		confirmPassword.setText("");

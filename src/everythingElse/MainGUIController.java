@@ -39,7 +39,6 @@ public class MainGUIController {
 					e.printStackTrace();
 				}
 			}).start();
-
 		}
 
 
