@@ -9,6 +9,8 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+//import java.nio.file.Files;
+//import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -33,7 +35,7 @@ import javafx.scene.media.MediaPlayer;
 public class ProjectGuiController {
 	//public List<File> arrays = new ArrayList<>();
 	//private ArrayList<String> transfer = new ArrayList<>();
-
+	FileChecker fileChecker = new FileChecker();
 	@FXML VBox fileContainer;
 	@FXML Button addFile;
 	@FXML Button rmFile;
@@ -202,9 +204,7 @@ public class ProjectGuiController {
 			List<File> list = fileChooser.showOpenMultipleDialog(stage);
 
 			if (list != null) {
-				File dir = new File("new_folder");
-				dir.mkdir();
-				System.out.println(dir);
+				//System.out.println(dir);
 				//add.add(file.getName());
 				/*
 				for (int k = 0; k < trans2.size(); k++) {
@@ -220,12 +220,15 @@ public class ProjectGuiController {
 					AnchorPane root = (AnchorPane) loader.load();
 					ProjectGuiController pgc = (ProjectGuiController)loader.getController();
 					Client.new_tab(root, name);
+					File dir = new File(name);
+					dir.mkdir();
 					
 					File f = new File(name + ".txt");
 					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
 
 					for (File file : list) {
-						Files.copy(file.toPath(), (new File(dir.getPath() + "/" + file.getName())).toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+						System.out.println(fileChecker.check_file(file, dir));
+						Files.copy(file.toPath(), (new File(dir.getPath() + "/" + fileChecker.check_file(file, dir))).toPath(), StandardCopyOption.REPLACE_EXISTING);
 						printer.println(file.getName());
 
 					}

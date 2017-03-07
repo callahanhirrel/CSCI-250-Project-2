@@ -54,6 +54,7 @@ public class MainGUIController {
 			try {
 				File f = new File("Test_Store.txt");
 				PrintWriter printer = new PrintWriter(new FileWriter(f, true));
+				//System.out.println(fileChecker.check_existence("Test_Store.txt", projectName.getText()));
 				if (fileChecker.check_existence("Test_Store.txt", projectName.getText()) == true) {
 					printer.close();
 				} else {
