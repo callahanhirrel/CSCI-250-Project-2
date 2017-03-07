@@ -29,8 +29,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 
 public class ProjectGuiController {
@@ -263,11 +261,5 @@ public class ProjectGuiController {
 			exc.printStackTrace();
 		}
 
-	}
-
-	public void playAudioFile(String fileName) {
-		Media media = new Media(new File(fileName).toURI().toString());
-		MediaPlayer mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.play();
 	}
 }
