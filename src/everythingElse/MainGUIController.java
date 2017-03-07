@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 //import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 //import java.net.Socket;
 //import java.util.concurrent.ArrayBlockingQueue;
 import java.util.Scanner;
@@ -17,15 +18,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 //import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
+
 public class MainGUIController {
 		FileChecker fileChecker = new FileChecker();
-
+		
 		@FXML Button createProject;
 		@FXML TextField projectName;
 		@FXML TabPane projects;
@@ -49,7 +52,8 @@ public class MainGUIController {
 
 	@FXML
 	void createNewProject() {
-		if (!projectName.getText().equals("")) {
+		if (!projectName.getText().equals("") || !projects.getTabs().toString().contains(projectName.getText())) {
+			System.out.print(projects.getTabs().toString());
 			try {
 				File f = new File("Test_Store.txt");
 				PrintWriter printer = new PrintWriter(new FileWriter(f, true));
@@ -75,9 +79,14 @@ public class MainGUIController {
 				e.printStackTrace();
 			}
 		} else {
-			Alert alert = new Alert(AlertType.ERROR, "Invalid Project Name");
+			Alert alert = createAlert("Invalid Project Name");
 			alert.showAndWait();
 		}
+	}
+	
+	private Alert createAlert(String message) {
+		Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
+		return alert;
 	}
 
 	public void new_tab(AnchorPane root, String project_name) {
