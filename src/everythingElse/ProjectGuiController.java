@@ -19,7 +19,10 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -28,8 +31,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 
 
 public class ProjectGuiController {
@@ -54,7 +55,7 @@ public class ProjectGuiController {
 					String data = dataCollection.take();
 					useData(data);
 				} catch(Exception e) {
-					// TODO Platform.runLater(() -> alert method?);
+					Platform.runLater(() -> getError(e.getMessage()));
 					e.printStackTrace();
 				}
 			}
@@ -89,7 +90,7 @@ public class ProjectGuiController {
 			message = "You are now connected with " + connectedWith;
 			users.put(connectedWith, ip.getText()); // save the username and IP for later use
 		} catch (InterruptedException e) {
-			// TODO Platform.runLater(() -> alert method?);
+			Platform.runLater(() -> getError(e.getMessage()));
 			e.printStackTrace();
 		}
 		return message;
@@ -107,7 +108,7 @@ public class ProjectGuiController {
 				receiveData(target);
 				target.close();
 			} catch (Exception e) {
-				// TODO Platform.runLater(() -> alert method?);
+				Platform.runLater(() -> getError(e.getMessage()));
 				e.printStackTrace();
 			}
 		}).start();
@@ -144,12 +145,17 @@ public class ProjectGuiController {
 				dataCollection.add(data);
 				System.out.print(dataCollection.toString());
 			} catch(Exception e) {
-				// TODO Platform.runLater(() -> alert method?);
+				Platform.runLater(() -> getError(e.getMessage()));
 				e.printStackTrace();
 			}
 		}
 	}
-
+	
+	private void getError(String error) {
+		Alert alert = new Alert(AlertType.ERROR, error, ButtonType.OK);
+		alert.showAndWait();
+	}
+	
 	public void show_file(String filename) {
 		Label label = new Label(filename);
 		fileContainer.getChildren().add(label);
@@ -258,11 +264,5 @@ public class ProjectGuiController {
 			exc.printStackTrace();
 		}
 
-	}
-
-	public void playAudioFile(String fileName) {
-		Media media = new Media(new File(fileName).toURI().toString());
-		MediaPlayer mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.play();
 	}
 }

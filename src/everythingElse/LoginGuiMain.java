@@ -1,5 +1,4 @@
 package everythingElse;
-//import java.io.IOException;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,12 +13,12 @@ public class LoginGuiMain extends Application {
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(LoginGuiMain.class.getResource("LoginGUI2.fxml"));
 		Pane root = (Pane) loader.load();
-		
+
 		Scene scene = new Scene(root, 425, 450);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
