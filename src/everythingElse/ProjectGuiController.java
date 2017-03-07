@@ -262,4 +262,21 @@ public class ProjectGuiController {
 		}
 
 	}
+	
+	@FXML
+	void openAudioPlaybackWindow() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(audioPlaybackGUIController.class.getResource("audioPlaybackGUI.fxml"));
+			AnchorPane root = (AnchorPane) loader.load();
+			everythingElse.audioPlaybackGUIController apgc = (everythingElse.audioPlaybackGUIController) loader.getController();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);
+			// apgc.initialize();
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
 }
