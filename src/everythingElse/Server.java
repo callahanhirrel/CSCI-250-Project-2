@@ -9,6 +9,10 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 // This class is heavily based on Dr. Ferrer's Server class from his network
 // programming tutorial.
@@ -67,7 +71,13 @@ public class Server {
 		}
 
 		private void saveFile(NetworkData justReceived) {
-
+			try {
+				Path path = Paths.get(System.getProperty("user.dir"), "/receivedFiles/");
+				Files.write(path, justReceived.getFileContents(), StandardOpenOption.CREATE);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 		private void printToConsole(String action, NetworkData data) {

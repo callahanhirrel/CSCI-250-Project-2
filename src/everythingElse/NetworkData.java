@@ -1,7 +1,9 @@
 package everythingElse;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
 
 public class NetworkData implements Serializable {
 
@@ -13,11 +15,10 @@ public class NetworkData implements Serializable {
 	private String msg;
 	private String username;
 	private File file;
+	private byte[] fileContents;
 	static String USERNAME_TAG = "USERNAME";
 	static String FILE_TAG = "FILE";
 	static String MSG_TAG = "MSG";
-
-	//private byte[] file; // byte array of sound file
 
 
 	public NetworkData(String tag, String username, String data) {
@@ -31,6 +32,7 @@ public class NetworkData implements Serializable {
 			this.msg = data;
 		} else if (tag.equals(NetworkData.FILE_TAG)) {
 			this.file = new File(System.getProperty("user.dir") + "/new_folder/" + data);
+			convertToBytes(data);
 		}
 	}
 
@@ -51,14 +53,17 @@ public class NetworkData implements Serializable {
 		return this.file;
 	}
 
-//	private void convertToBytes(String data) {
-//		Path path = (Path) Paths.get(System.getProperty("user.dir"), "/new_folder/" + data);
-//		try {
-//			this.file = Files.readAllBytes(path);
-//		} catch (IOException e) {
-//			// TODO run an alert
-//			e.printStackTrace();
-//		}
-//	}
+	public byte[] getFileContents() {
+		return this.getFileContents();
+	}
+
+	private void convertToBytes(String data) {
+		try {
+			this.fileContents = Files.readAllBytes(this.file.toPath());
+		} catch (IOException e) {
+			// TODO run an alert
+			e.printStackTrace();
+		}
+	}
 
 }
