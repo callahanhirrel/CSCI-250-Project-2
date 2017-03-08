@@ -46,6 +46,7 @@ public class ProjectGuiController {
 	@FXML TextField ip;
 	@FXML Label message;
 	@FXML Button connect;
+	@FXML Label collaboraters;
 	ArrayBlockingQueue<NetworkData> dataCollection = new ArrayBlockingQueue<>(20);
 	HashMap<String, String> users = new HashMap<>(); // maps usernames to the IP addresses they came from
 
@@ -74,6 +75,15 @@ public class ProjectGuiController {
 			Platform.runLater(() -> {message.setText(confirmConnection(data));});
 		}
 	}
+	
+	@FXML
+	void collaborators() {
+		String userReturn = "";
+		for (String user : users.keySet()) {
+			userReturn = userReturn.concat(user);
+		}
+		collaboraters.setText(userReturn);
+	}
 
 	/**
 	 * This method is called upon initial connection with a peer.
@@ -86,6 +96,7 @@ public class ProjectGuiController {
 		String connectedWith = data.getUsername();
 		String msg = "You are now connected with " + connectedWith;
 		users.put(connectedWith, ip.getText()); // save the username and IP for later use
+		collaborators();
 		return msg;
 	}
 
@@ -102,6 +113,7 @@ public class ProjectGuiController {
 				sendRequest(target, request);
 				receiveData(target);
 				target.close();
+				
 			} catch (Exception e) {
 				Platform.runLater(() -> getError(e.getMessage()));
 				e.printStackTrace();
