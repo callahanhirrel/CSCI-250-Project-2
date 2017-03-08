@@ -79,6 +79,8 @@ public class ProjectGuiController {
 				}
 			}
 		}).start();
+
+		displayReceived();
 	}
 
 	/**
@@ -197,17 +199,37 @@ public class ProjectGuiController {
 		}
 	}
 
+	@FXML
 	private void displayReceived() {
 		new Thread(() -> {
 			for (;;) {
 				String path = System.getProperty("user.dir") + "/receivedFiles/";
 				File dir = new File(path);
 				File[] directoryListing = dir.listFiles();
-				String name = directoryListing[directoryListing.length - 1].getName();
-				Label toDisplay = new Label(name);
-				receivedFiles.getChildren().add(toDisplay);
+				for (int i = 0; i < directoryListing.length; i++) {
+					String name = directoryListing[i].getName();
+					Label toDisplay = new Label(name);
+					//System.out.println(directoryListing[i]);
+					if ((!inReceivedFiles(name)) && name.endsWith(".aif")) {
+						//System.out.println("yo");
+						Platform.runLater(() -> receivedFiles.getChildren().add(toDisplay));
+					}
+				}
 			}
 		}).start();
+	}
+
+	private boolean inReceivedFiles(String name) {
+		for (Node n : receivedFiles.getChildren()) {
+			Label label = (Label) n;
+			String[] nameArray = name.split("/");
+			System.out.println(nameArray[nameArray.length - 1]);
+			System.out.println(label.getText());
+			if (label.getText().equals(nameArray[nameArray.length - 1])) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	private void getError(String error) {
