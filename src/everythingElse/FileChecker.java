@@ -4,7 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
+//import java.nio.file.Files;
+//import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 
 public class FileChecker {
@@ -31,9 +32,7 @@ public class FileChecker {
 		File[] list = x.listFiles();
 		while (list.length != i) {
 			if (list[i].getName().equals(file.getName())) {
-				File nn = new File("D" + file.getName());
-				file.renameTo(nn);
-				File new_filename = new File(file.getName());
+				File new_filename = new File("D" + file.getName());
 				return fileChecker.check_file(new_filename, direct);
 			}
 			i++;
