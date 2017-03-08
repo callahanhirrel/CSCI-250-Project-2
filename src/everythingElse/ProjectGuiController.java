@@ -75,7 +75,7 @@ public class ProjectGuiController {
 			Platform.runLater(() -> {message.setText(confirmConnection(data));});
 		}
 	}
-	
+
 	@FXML
 	void collaborators() {
 		String userReturn = "";
@@ -113,12 +113,17 @@ public class ProjectGuiController {
 				sendRequest(target, request);
 				receiveData(target);
 				target.close();
-				
+
 			} catch (Exception e) {
 				Platform.runLater(() -> getError(e.getMessage()));
 				e.printStackTrace();
 			}
 		}).start();
+	}
+
+	@FXML
+	public void sendFile() {
+
 	}
 
 	/**

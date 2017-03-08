@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
@@ -17,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="everythingElse.ProjectGuiController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="everythingElse.ProjectGuiController">
 
    <children>
       <TabPane prefHeight="371.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
@@ -33,7 +29,7 @@
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <Label translateX="5.0">
+                              <Label fx:id="collaboraters" prefHeight="19.0" prefWidth="97.0" translateX="5.0">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
