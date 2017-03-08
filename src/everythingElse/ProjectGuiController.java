@@ -36,6 +36,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -210,6 +213,12 @@ public class ProjectGuiController {
 
 	public void show_file(String filename) {
 		Label label = new Label(filename);
+		if (label.getText().endsWith(".mp3")) {
+			label.setTextFill(Color.RED);
+			label.setOnMouseClicked(event -> {
+				playAudioFile(System.getProperty("user.dir") + "/" + "new_folder" + "/" + label.getText());
+			});
+		}
 		fileContainer.getChildren().add(label);
 	}
 
@@ -317,7 +326,7 @@ public class ProjectGuiController {
 		}
 
 	}
-	
+	/*
 	@FXML
 	ArrayList<String> getAddedFiles() {
 		ArrayList<String> addedFiles = new ArrayList<String>();
@@ -348,7 +357,14 @@ public class ProjectGuiController {
 			exc.printStackTrace();
 		}
 	}
+	*/
 	public void setProjectName(String name) {
 		this.projectName = name;
+	}
+	
+	public void playAudioFile(String fileName) {
+		Media media = new Media(new File(fileName).toURI().toString());
+		MediaPlayer mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.play();
 	}
 }
