@@ -61,12 +61,15 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="282.0" prefWidth="100.0">
                                  <children>
-                                    <Button mnemonicParsing="false" onAction="#playAudioFile" text="Play Audio" />
+                                    <Button mnemonicParsing="false" text="Play Audio" />
                                  </children></VBox>
                               <VBox prefHeight="282.0" prefWidth="228.0">
                                  <children>
                                     <Label text="Files you have received:" />
-                                    <ScrollPane prefHeight="216.0" prefWidth="207.0" />
+                                    <ScrollPane prefHeight="216.0" prefWidth="207.0">
+                                       <content>
+                                          <VBox fx:id="receivedFiles" prefHeight="200.0" prefWidth="210.0" />
+                                       </content></ScrollPane>
                                     <HBox prefHeight="49.0" prefWidth="207.0">
                                        <children>
                                           <Button mnemonicParsing="false" text="Save a File" />
