@@ -22,14 +22,14 @@
                <content>
                   <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="335.0" prefWidth="601.0">
                      <children>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="479.0" translateX="5.0" translateY="5.0">
+                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="598.0" translateX="5.0" translateY="5.0">
                            <children>
                               <Label text="Collaborators:" underline="true">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="collaboraters" prefHeight="19.0" prefWidth="97.0" translateX="5.0">
+                              <Label fx:id="collaboraters" prefHeight="19.0" prefWidth="478.0" translateX="5.0">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -92,7 +92,7 @@
                               <Button fx:id="connect" alignment="CENTER" mnemonicParsing="false" onAction="#connect" prefHeight="26.0" prefWidth="77.0" text="Connect" textAlignment="CENTER" translateX="15.0" translateY="10.0" wrapText="true" />
                            </children>
                         </HBox>
-                        <Label fx:id="message" layoutX="10.0" layoutY="56.0" prefHeight="19.0" prefWidth="26.0" text=" ">
+                        <Label fx:id="message" layoutX="10.0" layoutY="56.0" prefHeight="19.0" prefWidth="580.0" text=" ">
                            <font>
                               <Font size="15.0" />
                            </font>
