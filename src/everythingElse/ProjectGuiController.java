@@ -272,7 +272,9 @@ public class ProjectGuiController {
 			everythingElse.audioPlaybackGUIController apgc = (everythingElse.audioPlaybackGUIController) loader.getController();
 			Stage stage = new Stage();
 			Scene scene = new Scene(root);
-			// apgc.initialize();
+			// apgc.setAddedFiles(list);
+			// apgc.setReceivedFiles(list);
+			// apgc.displayFiles(,);
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception exc) {

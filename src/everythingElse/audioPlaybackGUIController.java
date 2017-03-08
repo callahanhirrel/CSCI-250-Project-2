@@ -16,9 +16,22 @@ public class audioPlaybackGUIController {
 	@FXML
 	VBox receivedBox;
 	
+	ArrayList<String> addedFiles;
+	ArrayList<String> receivedFiles;
+	
 	@FXML
-	void initialize(ArrayList<String> addedFiles,
-			ArrayList<String> receivedFiles) {
+	void initialize() {}
+	
+	public void setAddedFiles(ArrayList<String> list) {
+		addedFiles = list;
+	}
+	
+	public void setReceivedFiles(ArrayList<String> list) {
+		receivedFiles = list;
+	}
+	
+	@FXML
+	void displayFiles(ArrayList<String> addedFiles, ArrayList<String> receivedFiles) {
 		addFilesToBox(addedFiles, addedBox);
 		addFilesToBox(receivedFiles, receivedBox);
 	}
