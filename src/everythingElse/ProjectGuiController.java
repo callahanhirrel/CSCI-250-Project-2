@@ -377,11 +377,7 @@ public class ProjectGuiController {
 
 
 	}
-//<<<<<<< HEAD
 	/*
-=======
-
->>>>>>> origin/master
 	@FXML
 	ArrayList<String> getAddedFiles() {
 		ArrayList<String> addedFiles = new ArrayList<String>();
