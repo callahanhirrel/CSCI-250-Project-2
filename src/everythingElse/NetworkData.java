@@ -1,11 +1,7 @@
 package everythingElse;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.Path;
 
 public class NetworkData implements Serializable {
 
@@ -14,23 +10,30 @@ public class NetworkData implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private String tag; // instruction for the server/client
-	private String msg; // data being sent
-	//private byte[] file; // byte array of sound file
+	private String msg;
+	private String username;
 	private File file;
+	static String USERNAME_TAG = "USERNAME";
+	static String FILE_TAG = "FILE";
+	static String MSG_TAG = "MSG";
 
-	public NetworkData(String tag, String data) {
+	//private byte[] file; // byte array of sound file
+
+
+	public NetworkData(String tag, String username, String data) {
 		this.tag = tag;
+		this.username = username;
 		placeData(data);
 	}
 
 	private void placeData(String data) {
-		if (tag.equals("USERNAME")) {
+		if (tag.equals(NetworkData.USERNAME_TAG)) {
 			this.msg = data;
-		} else if (tag.equals("FILE")) { // data should be a filename in this case
-			// convertToBytes(data);
+		} else if (tag.equals(NetworkData.FILE_TAG)) {
 			this.file = new File(System.getProperty("user.dir") + "/new_folder/" + data);
 		}
 	}
+
 
 	public String getTag() {
 		return this.tag;
@@ -38,6 +41,10 @@ public class NetworkData implements Serializable {
 
 	public String getMsg() {
 		return this.msg;
+	}
+
+	public String getUsername() {
+		return this.username;
 	}
 
 	public File getFile() {

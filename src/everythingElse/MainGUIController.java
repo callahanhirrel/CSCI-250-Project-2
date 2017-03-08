@@ -28,11 +28,11 @@ import javafx.scene.layout.AnchorPane;
 
 public class MainGUIController {
 		FileChecker fileChecker = new FileChecker();
-		
+
 		@FXML Button createProject;
 		@FXML TextField projectName;
 		@FXML TabPane projects;
-		String username;
+		static String USERNAME;
 		Server server;
 		static int PORT = 8881; // gonna use 8881 as the port for now
 
@@ -40,8 +40,8 @@ public class MainGUIController {
 		public void initialize(String username) throws IOException {
 			new Thread(() -> {
 				try {
-					this.username = username;
-					server = new Server(MainGUIController.PORT, this.username);
+					MainGUIController.USERNAME = username;
+					server = new Server(MainGUIController.PORT, MainGUIController.USERNAME);
 					server.listen();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -84,7 +84,7 @@ public class MainGUIController {
 			alert.showAndWait();
 		}
 	}
-	
+
 	private Alert createAlert(String message) {
 		Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
 		return alert;
@@ -96,7 +96,7 @@ public class MainGUIController {
 			newProject.setContent(root);
 			projects.getTabs().add(projects.getTabs().size() - 1, newProject);
 	}
-		
+
 	public Scanner get_tabs() throws FileNotFoundException {
 		File f = new File("Test_Store.txt");
 		Scanner input = new Scanner(f);
@@ -110,6 +110,6 @@ public class MainGUIController {
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.USERNAME = username;
 	}
 }
