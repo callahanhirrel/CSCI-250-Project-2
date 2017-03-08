@@ -3,12 +3,9 @@ package everythingElse;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-<<<<<<< HEAD
-=======
 import java.nio.file.Files;
 //import java.nio.file.Files;
 //import java.nio.file.StandardCopyOption;
->>>>>>> origin/master
 import java.util.Scanner;
 
 public class FileChecker {
@@ -42,7 +39,7 @@ public class FileChecker {
 		}
 		return file.getName();
 	}
-	
+
 	public void check_new_file(File file, File direct) throws IOException {
 		for (File f : new File(direct.getPath()).listFiles()) {
 			if (f.getName().equals(file.getName())) {
