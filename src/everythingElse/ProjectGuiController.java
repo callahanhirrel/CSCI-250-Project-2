@@ -55,6 +55,7 @@ public class ProjectGuiController {
 	@FXML Button addFile;
 	@FXML Button rmFile;
 	@FXML Button send;
+	@FXML Button playButton;
 	@FXML ScrollPane hasAddedFile;
 	@FXML TextField ip;
 	@FXML Label message;
@@ -450,7 +451,10 @@ public class ProjectGuiController {
 	public void setProjectName(String name) {
 		this.projectName = name;
 	}
+<<<<<<< HEAD
 //<<<<<<< HEAD
+=======
+>>>>>>> master
 	
 	@FXML
 	public void playAudioFile() {
@@ -464,11 +468,23 @@ public class ProjectGuiController {
 						Media media = new Media(new File(System.getProperty("user.dir") + "/new_folder/" + filename.getText()).toURI().toString());
 						MediaPlayer mediaPlayer = new MediaPlayer(media);
 						mediaPlayer.play();
+						playButton.setText("Stop Audio");
+						playButton.setOnAction(event2 -> {
+							mediaPlayer.stop();
+							playButton.setText("Play Audio");
+							playButton.setOnAction(event3 -> {
+								playAudioFile();
+							});
+						});
 					}
 				});
 			}
 		}).start();
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 
 	public void playAudioFile(String fileName) {
 		Media media = new Media(new File(fileName).toURI().toString());
