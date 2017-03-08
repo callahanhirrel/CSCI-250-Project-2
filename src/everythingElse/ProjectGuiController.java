@@ -146,7 +146,7 @@ public class ProjectGuiController {
 							try {
 								Socket target = new Socket(users.get(username), MainGUIController.PORT);
 								NetworkData request = new NetworkData(NetworkData.FILE_TAG,
-										MainGUIController.USERNAME, "new_folder "+
+										MainGUIController.USERNAME, "/new_folder/"+
 										filename.getText());
 								sendRequest(target, request);
 								target.close();
