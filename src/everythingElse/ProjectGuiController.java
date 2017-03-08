@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import javafx.application.Platform;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -31,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -115,7 +118,6 @@ public class ProjectGuiController {
 				NetworkData request = new NetworkData(NetworkData.MSG_TAG,
 						MainGUIController.USERNAME, "requesting connection");
 				sendRequest(target, request);
-				receiveData(target);
 				target.close();
 
 			} catch (Exception e) {
@@ -127,8 +129,32 @@ public class ProjectGuiController {
 
 	@FXML
 	public void sendFile() {
+		new Thread (() -> {
+			for (Node filename : fileContainer.getChildren()) {
+				filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+					@Override
+					public void handle(MouseEvent event) {
+						for (String username : users.keySet()) {
+							try {
+								Socket target = new Socket(users.get(username), MainGUIController.PORT);
+								NetworkData request = new NetworkData(NetworkData.FILE_TAG,
+										MainGUIController.USERNAME, projectName + "/" +
+										filename.getAccessibleText());
+								sendRequest(target, request);
+								receiveData(target);
+								target.close();
+							} catch (Exception e) {
+								Platform.runLater(() -> getError(e.getMessage()));
+								e.printStackTrace();
+							}
+						}
+					}
+				});
+			}
+		}).start();
 	}
+
 
 	/**
 	 * Sends a request to a peer's server
@@ -141,7 +167,7 @@ public class ProjectGuiController {
 		ObjectOutputStream sockout = new ObjectOutputStream(target.getOutputStream());
 		sockout.writeObject(request);
 		sockout.flush();
-		System.out.println("Client: Sent [" + request.getMsg() + "]");
+		System.out.println("Client: Sent [" + request.getTag() + "]");
 	}
 
 	/**

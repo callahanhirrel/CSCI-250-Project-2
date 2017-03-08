@@ -31,7 +31,7 @@ public class NetworkData implements Serializable {
 		if (tag.equals(NetworkData.USERNAME_TAG)) {
 			this.msg = data;
 		} else if (tag.equals(NetworkData.FILE_TAG)) {
-			this.file = new File(System.getProperty("user.dir") + "/new_folder/" + data);
+			this.file = new File(System.getProperty("user.dir") + data);
 			convertToBytes(data);
 		}
 	}
