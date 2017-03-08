@@ -288,7 +288,7 @@ public class ProjectGuiController {
 		}
 
 	}
-<<<<<<< HEAD
+
 	
 	@FXML
 	void openAudioPlaybackWindow() {
@@ -307,10 +307,11 @@ public class ProjectGuiController {
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
-=======
+	}
+
 
 	public void setProjectName(String name) {
 		this.projectName = name;
->>>>>>> origin/master
+
 	}
 }
