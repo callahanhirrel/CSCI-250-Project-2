@@ -80,7 +80,7 @@ public class ProjectGuiController {
 			}
 		}).start();
 
-		displayReceived();
+		// displayReceived(); this is currently broken
 	}
 
 	/**
@@ -198,39 +198,39 @@ public class ProjectGuiController {
 			e.printStackTrace();
 		}
 	}
-
-	@FXML
-	private void displayReceived() {
-		new Thread(() -> {
-			for (;;) {
-				String path = System.getProperty("user.dir") + "/receivedFiles/";
-				File dir = new File(path);
-				File[] directoryListing = dir.listFiles();
-				for (int i = 0; i < directoryListing.length; i++) {
-					String name = directoryListing[i].getName();
-					Label toDisplay = new Label(name);
-					//System.out.println(directoryListing[i]);
-					if ((!inReceivedFiles(name)) && name.endsWith(".aif")) {
-						//System.out.println("yo");
-						Platform.runLater(() -> receivedFiles.getChildren().add(toDisplay));
-					}
-				}
-			}
-		}).start();
-	}
-
-	private boolean inReceivedFiles(String name) {
-		for (Node n : receivedFiles.getChildren()) {
-			Label label = (Label) n;
-			String[] nameArray = name.split("/");
-			System.out.println(nameArray[nameArray.length - 1]);
-			System.out.println(label.getText());
-			if (label.getText().equals(nameArray[nameArray.length - 1])) {
-				return true;
-			}
-		}
-		return false;
-	}
+// Currently broken
+//	@FXML
+//	private void displayReceived() {
+//		new Thread(() -> {
+//			for (;;) {
+//				String path = System.getProperty("user.dir") + "/receivedFiles/";
+//				File dir = new File(path);
+//				File[] directoryListing = dir.listFiles();
+//				for (int i = 0; i < directoryListing.length; i++) {
+//					String name = directoryListing[i].getName();
+//					Label toDisplay = new Label(name);
+//					//System.out.println(directoryListing[i]);
+//					if ((!inReceivedFiles(name)) && name.endsWith(".aif")) {
+//						//System.out.println("yo");
+//						Platform.runLater(() -> receivedFiles.getChildren().add(toDisplay));
+//					}
+//				}
+//			}
+//		}).start();
+//	}
+//
+//	private boolean inReceivedFiles(String name) {
+//		for (Node n : receivedFiles.getChildren()) {
+//			Label label = (Label) n;
+//			String[] nameArray = name.split("/");
+//			System.out.println(nameArray[nameArray.length - 1]);
+//			System.out.println(label.getText());
+//			if (label.getText().equals(nameArray[nameArray.length - 1])) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
 
 	private void getError(String error) {
 		Alert alert = new Alert(AlertType.ERROR, error, ButtonType.OK);
@@ -279,7 +279,7 @@ public class ProjectGuiController {
 
 
 	}
-	
+
 	@FXML
 	ArrayList<String> getAddedFiles() {
 		ArrayList<String> addedFiles = new ArrayList<String>();
@@ -311,14 +311,14 @@ public class ProjectGuiController {
 		}
 	}
 
-	
+
 	@FXML
 	void rmFile() {
 		for (Node filename : fileContainer.getChildren()) {
 			//System.out.println(fileContainer.getChildren().size());
 			//System.out.println(filename);
-			filename.setOnMouseClicked(new EventHandler<MouseEvent>() {			
-				
+			filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
 				@Override
 				public void handle(MouseEvent e) {
 					//System.out.println("clicked!");
@@ -333,13 +333,13 @@ public class ProjectGuiController {
 					}
 					fileContainer.getChildren().remove(filename);
 				}
-				
+
 			});
 		}
 	}
-	
 
-	
+
+
 //>>>>>>> master
 	public void setProjectName(String name) {
 		this.projectName = name;

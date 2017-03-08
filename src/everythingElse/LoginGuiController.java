@@ -47,7 +47,7 @@ public class LoginGuiController {
 	Button signUp;
 
 	User users = new User();
-	
+
 	public void initialize() {
 		users = User.loadUsers();
 		Output.setEditable(false);
@@ -83,7 +83,7 @@ public class LoginGuiController {
 			}
 		}
 	}
-	
+
 	@FXML
 	void SignIn() {
 		if (!userSignedIn()) {
@@ -108,7 +108,7 @@ public class LoginGuiController {
 						Client.setUsername(Username);
 						ClientStage.setScene(scene);
 						ClientStage.show();
-						
+
 						signIn.getScene().getWindow().hide();
 
 					} catch (Exception exc) {
