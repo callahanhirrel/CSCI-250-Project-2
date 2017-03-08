@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 //import java.nio.file.Files;
 //import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
@@ -20,12 +21,14 @@ import java.util.concurrent.ArrayBlockingQueue;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -288,10 +291,23 @@ public class ProjectGuiController {
 		}
 
 	}
-<<<<<<< HEAD
+	
+	@FXML
+	ArrayList<String> getAddedFiles() {
+		ArrayList<String> addedFiles = new ArrayList<String>();
+		for (Node item : fileContainer.getChildren()) {
+			Label label = (Label) item;
+			if (label.getText().endsWith(".mp3")) {
+				addedFiles.add(label.getText());
+			}
+		}
+		return addedFiles;
+	}
 	
 	@FXML
 	void openAudioPlaybackWindow() {
+		ArrayList<String> addedFiles = getAddedFiles();
+		ArrayList<String> receivedFiles = new ArrayList<String>();
 		try {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(audioPlaybackGUIController.class.getResource("audioPlaybackGUI.fxml"));
@@ -299,18 +315,15 @@ public class ProjectGuiController {
 			everythingElse.audioPlaybackGUIController apgc = (everythingElse.audioPlaybackGUIController) loader.getController();
 			Stage stage = new Stage();
 			Scene scene = new Scene(root);
-			// apgc.setAddedFiles(list);
-			// apgc.setReceivedFiles(list);
-			// apgc.displayFiles(,);
+			apgc.initialize(addedFiles, receivedFiles);
 			stage.setScene(scene);
 			stage.show();
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
-=======
+	}
 
 	public void setProjectName(String name) {
 		this.projectName = name;
->>>>>>> origin/master
 	}
 }
