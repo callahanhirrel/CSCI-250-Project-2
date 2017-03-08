@@ -1,34 +1,17 @@
 package everythingElse;
 
-<<<<<<< HEAD
 import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-=======
-//import java.io.BufferedReader;
-import java.io.File;
-//import java.io.FileWriter;
-import java.io.IOException;
-//import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-//import java.io.PrintWriter;
->>>>>>> origin/master
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-<<<<<<< HEAD
 import java.util.concurrent.ArrayBlockingQueue;
 import javafx.application.Platform;
-=======
-//import java.util.Scanner;
-import java.util.concurrent.ArrayBlockingQueue;
-import javafx.application.Platform;
-//import javafx.event.Event;
->>>>>>> origin/master
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -37,13 +20,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-<<<<<<< HEAD
 import javafx.scene.control.ScrollPane;
-=======
-//import javafx.scene.control.Labeled;
-import javafx.scene.control.ScrollPane;
-//import javafx.scene.control.Tab;
->>>>>>> origin/master
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -56,11 +33,8 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class ProjectGuiController {
 
 	FileChecker fileChecker = new FileChecker();
-<<<<<<< HEAD
-=======
 	File dir = new File("new_folder");
 	//@FXML Tab tabMaster;
->>>>>>> origin/master
 	@FXML VBox fileContainer;
 	@FXML VBox receivedFiles;
 	@FXML Button addFile;
@@ -209,7 +183,7 @@ public class ProjectGuiController {
 		}
 
 	}
-<<<<<<< HEAD
+
 // Currently broken
 //	@FXML
 //	private void displayReceived() {
@@ -243,42 +217,7 @@ public class ProjectGuiController {
 //		}
 //		return false;
 //	}
-=======
 
-	@FXML
-	private void displayReceived() {
-		new Thread(() -> {
-			for (;;) {
-				String path = System.getProperty("user.dir") + "/receivedFiles/";
-				File dir = new File(path);
-				File[] directoryListing = dir.listFiles();
-				for (int i = 0; i < directoryListing.length; i++) {
-					String name = directoryListing[i].getName();
-					Label toDisplay = new Label(name);
-					//System.out.println(directoryListing[i]);
-					if ((!inReceivedFiles(name)) && name.endsWith(".aif")) {
-						//System.out.println("yo");
-						Platform.runLater(() -> receivedFiles.getChildren().add(toDisplay));
-					}
-				}
-			}
-		}).start();
-
-	}
-
-	private boolean inReceivedFiles(String name) {
-		for (Node n : receivedFiles.getChildren()) {
-			Label label = (Label) n;
-			String[] nameArray = name.split("/");
-			System.out.println(nameArray[nameArray.length - 1]);
-			System.out.println(label.getText());
-			if (label.getText().equals(nameArray[nameArray.length - 1])) {
-				return true;
-			}
-		}
-		return false;
-	}
->>>>>>> origin/master
 
 	private void getError(String error) {
 		Alert alert = new Alert(AlertType.ERROR, error, ButtonType.OK);
@@ -295,13 +234,15 @@ public class ProjectGuiController {
 
 	@FXML
 	void add_file() {
-<<<<<<< HEAD
+
 		try {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle(addFile.getText());
 			fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Audio Files", "*.aif"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-=======
 		try{
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle(addFile.getText());
@@ -310,10 +251,8 @@ public class ProjectGuiController {
 					//new ExtensionFilter("MP3", "*.mp3"),
 					//new ExtensionFilter("WAV", "*.wav")
 					);
->>>>>>> origin/master
 			List<File> list = fileChooser.showOpenMultipleDialog(addFile.getScene().getWindow());
 			if (list != null) {
-<<<<<<< HEAD
 
 				File dir = new File("new_folder");
 				dir.mkdir();
@@ -324,7 +263,6 @@ public class ProjectGuiController {
 					Label label = new Label(filename);
 					fileContainer.getChildren().add(label);
 				}
-=======
 					dir.mkdir();
 
 						for (File file : list) {
@@ -336,18 +274,11 @@ public class ProjectGuiController {
 //							printer.println(filename);
 
 						}
->>>>>>> origin/master
 			}
 
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
-<<<<<<< HEAD
-	}
-
-=======
-
-
 	}
 
 	@FXML
@@ -361,26 +292,6 @@ public class ProjectGuiController {
 		}
 		return addedFiles;
 	}
-
-	@FXML
-	void openAudioPlaybackWindow() {
-		ArrayList<String> addedFiles = getAddedFiles();
-		ArrayList<String> receivedFiles = new ArrayList<String>();
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(audioPlaybackGUIController.class.getResource("audioPlaybackGUI.fxml"));
-			AnchorPane root = (AnchorPane) loader.load();
-			everythingElse.audioPlaybackGUIController apgc = (everythingElse.audioPlaybackGUIController) loader.getController();
-			Stage stage = new Stage();
-			Scene scene = new Scene(root);
-			apgc.initialize(addedFiles, receivedFiles);
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception exc) {
-			exc.printStackTrace();
-		}
-	}
-
 
 	@FXML
 	void rmFile() {
@@ -407,11 +318,6 @@ public class ProjectGuiController {
 			});
 		}
 	}
-
-
-
-//>>>>>>> master
->>>>>>> origin/master
 	public void setProjectName(String name) {
 		this.projectName = name;
 	}
@@ -421,7 +327,7 @@ public class ProjectGuiController {
 		Alert alert = new Alert(AlertType.CONFIRMATION, "File Successfully Sent", ButtonType.OK);
 		alert.showAndWait();
 	}
-	
+
 	@FXML
 	public void playAudioFile() {
 		new Thread(() -> {
