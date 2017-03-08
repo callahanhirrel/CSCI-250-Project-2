@@ -37,6 +37,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
@@ -134,7 +137,8 @@ public class ProjectGuiController {
 	@FXML
 	public void sendFile() {
 		new Thread (() -> {
-			for (Node filename : fileContainer.getChildren()) {
+			for (Node item : fileContainer.getChildren()) {
+				Label filename = (Label) item;
 				filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 					@Override
@@ -143,8 +147,7 @@ public class ProjectGuiController {
 							try {
 								Socket target = new Socket(users.get(username), MainGUIController.PORT);
 								NetworkData request = new NetworkData(NetworkData.FILE_TAG,
-										MainGUIController.USERNAME, projectName + "/" +
-										filename.getAccessibleText());
+										MainGUIController.USERNAME, filename.getText());
 								sendRequest(target, request);
 								target.close();
 							} catch (Exception e) {
@@ -213,6 +216,9 @@ public class ProjectGuiController {
 
 	public void show_file(String filename) {
 		Label label = new Label(filename);
+		if (label.getText().endsWith(".aif")) {
+			label.setTextFill(Color.RED);
+		}
 		fileContainer.getChildren().add(label);
 	}
 
@@ -249,7 +255,7 @@ public class ProjectGuiController {
 //				AnchorPane root1 = (AnchorPane) loader1.load();
 //				ProjectGuiController pgc1 = (ProjectGuiController)loader1.getController();
 //				Client.new_tab(root1, name1);
-//				
+//
 //				File f1 = new File(name1 + ".txt");
 //				try {
 //					Scanner input1 = new Scanner(f1);
@@ -266,7 +272,7 @@ public class ProjectGuiController {
 //					exc.printStackTrace();
 //				}
 //			}
-//			
+//
 //			Stage stage = new Stage();
 //			Scene scene = new Scene(root2);
 //			stage.setScene(scene);
@@ -309,9 +315,15 @@ public class ProjectGuiController {
 					
 					dir.mkdir();
 
+<<<<<<< HEAD
 //					File f = new File("save.txt");
 //					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
 					
+=======
+					File f = new File("save.txt");
+					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
+
+>>>>>>> master
 					//if (project_name.isSelected()) {
 
 						for (File file : list) {
@@ -323,8 +335,13 @@ public class ProjectGuiController {
 //							printer.println(filename);
 
 						}
+<<<<<<< HEAD
 						
 //						printer.close();
+=======
+
+						printer.close();
+>>>>>>> master
 //
 //						try {
 //							Scanner input = new Scanner(f);
@@ -340,7 +357,7 @@ public class ProjectGuiController {
 //						} catch (Exception exc) {
 //							exc.printStackTrace();
 //						}
-					
+
 //					} else {
 //						printer.close();
 //						try {
@@ -358,18 +375,18 @@ public class ProjectGuiController {
 //							exc.printStackTrace();
 //						}
 //					}
-					
+
 //				}
 //				scan.close();
 			}
-			
+
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
-		
+
 
 	}
-
+	/*
 	@FXML
 	ArrayList<String> getAddedFiles() {
 		ArrayList<String> addedFiles = new ArrayList<String>();
@@ -400,6 +417,7 @@ public class ProjectGuiController {
 			exc.printStackTrace();
 		}
 	}
+<<<<<<< HEAD
 	
 	@FXML
 	void rmFile() {
@@ -426,7 +444,36 @@ public class ProjectGuiController {
 		}
 	}
 	
+=======
+	*/
+>>>>>>> master
 	public void setProjectName(String name) {
 		this.projectName = name;
+	}
+<<<<<<< HEAD
+	
+	@FXML
+	public void playAudioFile() {
+		new Thread (() -> {
+			for (Node item : fileContainer.getChildren()) {
+				Label filename = (Label) item;
+				filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+					@Override
+					public void handle(MouseEvent event) {
+						Media media = new Media(new File(System.getProperty("user.dir") + "/new_folder/" + filename.getText()).toURI().toString());
+						MediaPlayer mediaPlayer = new MediaPlayer(media);
+						mediaPlayer.play();
+					}
+				});
+			}
+		}).start();
+=======
+
+	public void playAudioFile(String fileName) {
+		Media media = new Media(new File(fileName).toURI().toString());
+		MediaPlayer mediaPlayer = new MediaPlayer(media);
+		mediaPlayer.play();
+>>>>>>> origin/master
 	}
 }

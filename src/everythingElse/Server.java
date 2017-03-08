@@ -2,6 +2,7 @@ package everythingElse;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -72,8 +73,12 @@ public class Server {
 
 		private void saveFile(NetworkData justReceived) {
 			try {
-				Path path = Paths.get(System.getProperty("user.dir"), "/receivedFiles/");
-				Files.write(path, justReceived.getFileContents(), StandardOpenOption.CREATE);
+				String path = System.getProperty("user.dir") + "/receivedFiles/" + justReceived.getFilename();
+				FileOutputStream writer = new FileOutputStream(path);
+				writer.write(justReceived.getFileContents());
+				writer.close();
+//				Path path = Paths.get(System.getProperty("user.dir"), "/receivedFiles/");
+//				Files.write(path, justReceived.getFileContents(), StandardOpenOption.CREATE);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
