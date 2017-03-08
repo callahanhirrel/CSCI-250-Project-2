@@ -322,7 +322,6 @@ public class ProjectGuiController {
 			exc.printStackTrace();
 		}
 	}
-
 	public void setProjectName(String name) {
 		this.projectName = name;
 	}
