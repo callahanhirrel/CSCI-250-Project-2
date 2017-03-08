@@ -195,7 +195,7 @@ public class ProjectGuiController {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle(addFile.getText());
 			fileChooser.getExtensionFilters().addAll(
-					new ExtensionFilter("All Files", "*.*")
+					new ExtensionFilter("Audio Files", "*.aif")
 					//new ExtensionFilter("MP3", "*.mp3"),
 					//new ExtensionFilter("WAV", "*.wav")
 					);
@@ -233,9 +233,9 @@ public class ProjectGuiController {
 					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
 
 					for (File file : list) {
-						System.out.println(fileChecker.check_file(file, dir));
+						//System.out.println(fileChecker.check_file(file, dir));
 						Files.copy(file.toPath(), (new File(dir.getPath() + "/" + fileChecker.check_file(file, dir))).toPath(), StandardCopyOption.REPLACE_EXISTING);
-						printer.println(file.getName());
+						printer.println(fileChecker.check_file(file, dir));
 
 					}
 
