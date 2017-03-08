@@ -70,6 +70,7 @@ public class MainGUIController {
 					ProjectGuiController projCtrl = (ProjectGuiController) loader.getController();
 
 					Tab newProject = new Tab();
+					newProject.setId(projectName.getText());
 					newProject.setText(projectName.getText());
 					newProject.setContent(root);
 					projects.getTabs().add(projects.getTabs().size() - 1, newProject);
@@ -84,21 +85,19 @@ public class MainGUIController {
 			createAlert("Invalid Project Name");
 		}
 	}
-<<<<<<< HEAD
-
-=======
 	
->>>>>>> origin/master
 	private void createAlert(String message) {
 		Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
 		alert.showAndWait();
 	}
 
-	public void new_tab(AnchorPane root, String project_name) {
+	public Tab new_tab(AnchorPane root, String project_name) {
 		Tab newProject = new Tab();
+		newProject.setId(project_name);
 			newProject.setText(project_name);
 			newProject.setContent(root);
 			projects.getTabs().add(projects.getTabs().size() - 1, newProject);
+			return newProject;
 	}
 
 	public Scanner get_tabs() throws FileNotFoundException {

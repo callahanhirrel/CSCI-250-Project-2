@@ -27,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -242,41 +243,61 @@ public class ProjectGuiController {
 					loader.setLocation(ProjectGuiController.class.getResource("Project_GUI.fxml"));
 					AnchorPane root = (AnchorPane) loader.load();
 					ProjectGuiController pgc = (ProjectGuiController)loader.getController();
-					Client.new_tab(root, name);
+					Tab project_name = Client.new_tab(root, name);
 					File dir = new File(name);
 					dir.mkdir();
 
 					File f = new File(name + ".txt");
 					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
+					
+					if (project_name.isSelected()) {
 
-					for (File file : list) {
+						for (File file : list) {
 						//System.out.println(fileChecker.check_file(file, dir));
-						Files.copy(file.toPath(), (new File(dir.getPath() + "/" + fileChecker.check_file(file, dir))).toPath(), StandardCopyOption.REPLACE_EXISTING);
-						printer.println(fileChecker.check_file(file, dir));
+							String filename = fileChecker.check_file(file, dir);
+							Files.copy(file.toPath(), (new File(dir.getPath() + "/" + filename)).toPath(), StandardCopyOption.REPLACE_EXISTING);
+							printer.println(filename);
 
-					}
-
-					printer.close();
-
-					try {
-						Scanner input = new Scanner(f);
-						//System.out.print(f.getName());
-						while (input.hasNextLine()) {
-							String x = input.nextLine();
-							//System.out.print(line);
-							pgc.show_file(x);
 						}
 
-						input.close();
+						printer.close();
 
-					} catch (Exception exc) {
-						exc.printStackTrace();
+						try {
+							Scanner input = new Scanner(f);
+						//System.out.print(f.getName());
+							while (input.hasNextLine()) {
+								String x = input.nextLine();
+							//System.out.print(line);
+								pgc.show_file(x);
+							}
+
+							input.close();
+
+						} catch (Exception exc) {
+							exc.printStackTrace();
+						}
+					
+					} else {
+						printer.close();
+						try {
+							Scanner input = new Scanner(f);
+						//System.out.print(f.getName());
+							while (input.hasNextLine()) {
+								String x = input.nextLine();
+							//System.out.print(line);
+								pgc.show_file(x);
+							}
+
+							input.close();
+
+						} catch (Exception exc) {
+							exc.printStackTrace();
+						}
 					}
-
+					
 				}
-
-
 			}
+			
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
