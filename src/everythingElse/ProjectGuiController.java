@@ -216,11 +216,8 @@ public class ProjectGuiController {
 
 	public void show_file(String filename) {
 		Label label = new Label(filename);
-		if (label.getText().endsWith(".mp3")) {
+		if (label.getText().endsWith(".aif")) {
 			label.setTextFill(Color.RED);
-			label.setOnMouseClicked(event -> {
-				playAudioFile(System.getProperty("user.dir") + "/" + "new_folder" + "/" + label.getText());
-			});
 		}
 		fileContainer.getChildren().add(label);
 	}
@@ -418,9 +415,21 @@ public class ProjectGuiController {
 		this.projectName = name;
 	}
 	
-	public void playAudioFile(String fileName) {
-		Media media = new Media(new File(fileName).toURI().toString());
-		MediaPlayer mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.play();
+	@FXML
+	public void playAudioFile() {
+		new Thread (() -> {
+			for (Node item : fileContainer.getChildren()) {
+				Label filename = (Label) item;
+				filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+					@Override
+					public void handle(MouseEvent event) {
+						Media media = new Media(new File(System.getProperty("user.dir") + "/new_folder/" + filename.getText()).toURI().toString());
+						MediaPlayer mediaPlayer = new MediaPlayer(media);
+						mediaPlayer.play();
+					}
+				});
+			}
+		}).start();
 	}
 }
