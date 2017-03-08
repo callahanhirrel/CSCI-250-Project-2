@@ -1,13 +1,13 @@
 package everythingElse;
 
-import java.io.BufferedReader;
+//import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
+//import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
+//import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+//import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -16,10 +16,10 @@ import java.util.ArrayList;
 //import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
+//import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import javafx.application.Platform;
-import javafx.event.Event;
+//import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,9 +30,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
+//import javafx.scene.control.Labeled;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
+//import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -49,6 +49,7 @@ public class ProjectGuiController {
 	//public List<File> arrays = new ArrayList<>();
 	//private ArrayList<String> transfer = new ArrayList<>();
 	FileChecker fileChecker = new FileChecker();
+	File dir = new File("new_folder");
 	//@FXML Tab tabMaster;
 	@FXML VBox fileContainer;
 	@FXML VBox receivedFiles;
@@ -227,98 +228,17 @@ public class ProjectGuiController {
 	@FXML
 	void add_file() {
 		try{
-			/*
-			ArrayList<String> trans = new ArrayList<>();
-			//addFile.setText("Test");
-			for (int j = 0; j < arrays.size(); j++) {
-				trans.add(arrays.get(j));
-			}
-			*/
-//			FXMLLoader loader2 = new FXMLLoader();
-//
-//			loader2.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
-//			AnchorPane root2 = (AnchorPane) loader2.load();
-//
-//
-//			MainGUIController Client = (MainGUIController)loader2.getController();
-//			/*
-//			for (File files : arrays) {
-//				pgc.arrays.add(files);
-//			}
-//			*/
-//			Scanner scan1 = Client.get_tabs();
-//			while (scan1.hasNextLine()) {
-//				//System.out.print(line);
-//				String name1 = scan1.nextLine();
-//				FXMLLoader loader1 = new FXMLLoader();
-//				loader1.setLocation(ProjectGuiController.class.getResource("Project_GUI.fxml"));
-//				AnchorPane root1 = (AnchorPane) loader1.load();
-//				ProjectGuiController pgc1 = (ProjectGuiController)loader1.getController();
-//				Client.new_tab(root1, name1);
-//
-//				File f1 = new File(name1 + ".txt");
-//				try {
-//					Scanner input1 = new Scanner(f1);
-//				//System.out.print(f.getName());
-//					while (input1.hasNextLine()) {
-//						String y = input1.nextLine();
-//					//System.out.print(line);
-//						pgc1.show_file(y);
-//					}
-//
-//					input1.close();
-//
-//				} catch (Exception exc) {
-//					exc.printStackTrace();
-//				}
-//			}
-//
-//			Stage stage = new Stage();
-//			Scene scene = new Scene(root2);
-//			stage.setScene(scene);
-//			stage.show();
-
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle(addFile.getText());
 			fileChooser.getExtensionFilters().addAll(
-					new ExtensionFilter("Audio Files", "*.aif")
+					new ExtensionFilter("Audio Files", "*.aif", "*.mp3")
 					//new ExtensionFilter("MP3", "*.mp3"),
 					//new ExtensionFilter("WAV", "*.wav")
 					);
-
-			//ArrayList<String> trans2 = new ArrayList<>();
-			//addFile.setText("Test");
-			/*
-			for (int x = 0; x < trans.size(); x++) {
-				trans2.add(trans.get(x));
-			}
-			*/
 			List<File> list = fileChooser.showOpenMultipleDialog(addFile.getScene().getWindow());
 
 			if (list != null) {
-				//System.out.println(dir);
-				//add.add(file.getName());
-				/*
-				for (int k = 0; k < trans2.size(); k++) {
-					arrays.add(trans2.get(k));
-				}
-				*/
-//				Scanner scan = new Scanner(new File("Current_Work.txt"));
-//				while (scan.hasNextLine()) {
-//					//System.out.print(line);
-//					String name = scan.nextLine();
-//					FXMLLoader loader = new FXMLLoader();
-//					loader.setLocation(ProjectGuiController.class.getResource("Project_GUI.fxml"));
-//					AnchorPane root = (AnchorPane) loader.load();
-//					ProjectGuiController pgc = (ProjectGuiController)loader.getController();
-//					Client.new_tab(root, name);
-					File dir = new File("new_folder");
 					dir.mkdir();
-
-					File f = new File("save.txt");
-					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
-
-					//if (project_name.isSelected()) {
 
 						for (File file : list) {
 						//System.out.println(fileChecker.check_file(file, dir));
@@ -326,47 +246,9 @@ public class ProjectGuiController {
 							Files.copy(file.toPath(), (new File(dir.getPath() + "/" + filename)).toPath(), StandardCopyOption.REPLACE_EXISTING);
 							Label label = new Label(filename);
 							fileContainer.getChildren().add(label);
-							printer.println(filename);
+//							printer.println(filename);
 
 						}
-
-						printer.close();
-//
-//						try {
-//							Scanner input = new Scanner(f);
-//						//System.out.print(f.getName());
-//							while (input.hasNextLine()) {
-//								String x = input.nextLine();
-//							//System.out.print(line);
-//								pgc.show_file(x);
-//							}
-//
-//							input.close();
-//
-//						} catch (Exception exc) {
-//							exc.printStackTrace();
-//						}
-
-//					} else {
-//						printer.close();
-//						try {
-//							Scanner input = new Scanner(f);
-//						//System.out.print(f.getName());
-//							while (input.hasNextLine()) {
-//								String x = input.nextLine();
-//							//System.out.print(line);
-//								pgc.show_file(x);
-//							}
-//
-//							input.close();
-//
-//						} catch (Exception exc) {
-//							exc.printStackTrace();
-//						}
-//					}
-
-//				}
-//				scan.close();
 			}
 
 		} catch (Exception exc) {
@@ -375,7 +257,7 @@ public class ProjectGuiController {
 
 
 	}
-	/*
+	
 	@FXML
 	ArrayList<String> getAddedFiles() {
 		ArrayList<String> addedFiles = new ArrayList<String>();
@@ -406,7 +288,37 @@ public class ProjectGuiController {
 			exc.printStackTrace();
 		}
 	}
-	*/
+
+	
+	@FXML
+	void rmFile() {
+		for (Node filename : fileContainer.getChildren()) {
+			//System.out.println(fileContainer.getChildren().size());
+			//System.out.println(filename);
+			filename.setOnMouseClicked(new EventHandler<MouseEvent>() {			
+				
+				@Override
+				public void handle(MouseEvent e) {
+					//System.out.println("clicked!");
+					String[] list = filename.toString().split("'");
+					System.out.println(list[1]);
+					System.out.println(dir.getPath());
+					try {
+						fileChecker.check_new_file(new File(list[1]), dir);
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					fileContainer.getChildren().remove(filename);
+				}
+				
+			});
+		}
+	}
+	
+
+	
+//>>>>>>> master
 	public void setProjectName(String name) {
 		this.projectName = name;
 	}

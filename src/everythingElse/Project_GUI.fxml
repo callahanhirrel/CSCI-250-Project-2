@@ -53,7 +53,7 @@
                                     <HBox prefHeight="49.0" prefWidth="207.0">
                                        <children>
                                           <Button fx:id="addFile" mnemonicParsing="false" onMouseClicked="#add_file" prefHeight="27.0" prefWidth="64.0" text="Add" />
-                                          <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Remove" />
+                                          <Button fx:id="rmFile" mnemonicParsing="false" onMouseClicked="#rmFile" prefHeight="27.0" prefWidth="77.0" text="Remove" />
                                           <Button fx:id="send" mnemonicParsing="false" onMouseClicked="#sendFile" prefHeight="27.0" prefWidth="70.0" text="Send" />
                                        </children>
                                     </HBox>
