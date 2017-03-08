@@ -31,7 +31,9 @@ public class FileChecker {
 		File[] list = x.listFiles();
 		while (list.length != i) {
 			if (list[i].getName().equals(file.getName())) {
-				File new_filename = new File("D" + file.getName());
+				File nn = new File("D" + file.getName());
+				file.renameTo(nn);
+				File new_filename = new File(file.getName());
 				return fileChecker.check_file(new_filename, direct);
 			}
 			i++;

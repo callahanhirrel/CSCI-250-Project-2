@@ -315,15 +315,15 @@ public class ProjectGuiController {
 					
 					dir.mkdir();
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 //					File f = new File("save.txt");
 //					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
 					
-=======
-					File f = new File("save.txt");
-					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
+//=======
+//					File f = new File("save.txt");
+//					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
 
->>>>>>> master
+//>>>>>>> master
 					//if (project_name.isSelected()) {
 
 						for (File file : list) {
@@ -335,13 +335,13 @@ public class ProjectGuiController {
 //							printer.println(filename);
 
 						}
-<<<<<<< HEAD
-						
+//<<<<<<< HEAD
+//						
+////						printer.close();
+//=======
+//
 //						printer.close();
-=======
-
-						printer.close();
->>>>>>> master
+//>>>>>>> master
 //
 //						try {
 //							Scanner input = new Scanner(f);
@@ -386,7 +386,7 @@ public class ProjectGuiController {
 
 
 	}
-	/*
+	
 	@FXML
 	ArrayList<String> getAddedFiles() {
 		ArrayList<String> addedFiles = new ArrayList<String>();
@@ -417,7 +417,7 @@ public class ProjectGuiController {
 			exc.printStackTrace();
 		}
 	}
-<<<<<<< HEAD
+
 	
 	@FXML
 	void rmFile() {
@@ -444,36 +444,35 @@ public class ProjectGuiController {
 		}
 	}
 	
-=======
-	*/
->>>>>>> master
+
+	
+//>>>>>>> master
 	public void setProjectName(String name) {
 		this.projectName = name;
 	}
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	
 	@FXML
-	public void playAudioFile() {
-		new Thread (() -> {
-			for (Node item : fileContainer.getChildren()) {
-				Label filename = (Label) item;
-				filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-					@Override
-					public void handle(MouseEvent event) {
-						Media media = new Media(new File(System.getProperty("user.dir") + "/new_folder/" + filename.getText()).toURI().toString());
-						MediaPlayer mediaPlayer = new MediaPlayer(media);
-						mediaPlayer.play();
-					}
-				});
-			}
-		}).start();
-=======
+//	public void playAudioFile() {
+//		new Thread (() -> {
+//			for (Node item : fileContainer.getChildren()) {
+//				Label filename = (Label) item;
+//				filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//
+//					@Override
+//					public void handle(MouseEvent event) {
+//						Media media = new Media(new File(System.getProperty("user.dir") + "/new_folder/" + filename.getText()).toURI().toString());
+//						MediaPlayer mediaPlayer = new MediaPlayer(media);
+//						mediaPlayer.play();
+//					}
+//				});
+//			}
+//		}).start();
+//=======
 
 	public void playAudioFile(String fileName) {
 		Media media = new Media(new File(fileName).toURI().toString());
 		MediaPlayer mediaPlayer = new MediaPlayer(media);
 		mediaPlayer.play();
->>>>>>> origin/master
 	}
 }
