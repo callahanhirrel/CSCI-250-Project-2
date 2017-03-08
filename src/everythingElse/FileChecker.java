@@ -38,4 +38,12 @@ public class FileChecker {
 		}
 		return file.getName();
 	}
+	
+	public void check_new_file(File file, File direct) throws IOException {
+		for (File f : new File(direct.getPath()).listFiles()) {
+			if (f.getName().equals(file.getName())) {
+				Files.delete(f.toPath());
+			}
+		}
+	}
 }

@@ -46,6 +46,7 @@ public class ProjectGuiController {
 	//public List<File> arrays = new ArrayList<>();
 	//private ArrayList<String> transfer = new ArrayList<>();
 	FileChecker fileChecker = new FileChecker();
+	File dir = new File("new_folder");
 	//@FXML Tab tabMaster;
 	@FXML VBox fileContainer;
 	@FXML Button addFile;
@@ -305,7 +306,7 @@ public class ProjectGuiController {
 //					AnchorPane root = (AnchorPane) loader.load();
 //					ProjectGuiController pgc = (ProjectGuiController)loader.getController();
 //					Client.new_tab(root, name);
-					File dir = new File("new_folder");
+					
 					dir.mkdir();
 
 //					File f = new File("save.txt");
@@ -399,6 +400,32 @@ public class ProjectGuiController {
 			exc.printStackTrace();
 		}
 	}
+	
+	@FXML
+	void rmFile() {
+		for (Node filename : fileContainer.getChildren()) {
+			//System.out.println(fileContainer.getChildren().size());
+			//System.out.println(filename);
+			System.out.println(filename.getAccessibleText());
+			filename.setOnMouseClicked(new EventHandler<MouseEvent>() {			
+				
+				@Override
+				public void handle(MouseEvent e) {
+					//System.out.println("clicked!");
+					System.out.println(filename.getAccessibleText());
+//					try {
+//						fileChecker.check_new_file(, dir);
+//					} catch (IOException e1) {
+//						// TODO Auto-generated catch block
+//						e1.printStackTrace();
+//					}
+					fileContainer.getChildren().remove(filename);
+				}
+				
+			});
+		}
+	}
+	
 	public void setProjectName(String name) {
 		this.projectName = name;
 	}
