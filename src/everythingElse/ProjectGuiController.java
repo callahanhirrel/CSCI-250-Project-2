@@ -52,6 +52,7 @@ public class ProjectGuiController {
 	File dir = new File("new_folder");
 	//@FXML Tab tabMaster;
 	@FXML VBox fileContainer;
+	@FXML VBox receivedFiles;
 	@FXML Button addFile;
 	@FXML Button rmFile;
 	@FXML Button send;
@@ -194,20 +195,19 @@ public class ProjectGuiController {
 			Platform.runLater(() -> getError(e.getMessage()));
 			e.printStackTrace();
 		}
+	}
 
-//		BufferedReader sockin = new BufferedReader(new InputStreamReader(target.getInputStream()));
-//		while (!sockin.ready()) {}
-//		while (sockin.ready()) {
-//			try {
-//				String data = sockin.readLine();
-//				System.out.println("Client: Received [" + data + "]");
-//				dataCollection.add(data);
-//				System.out.print(dataCollection.toString());
-//			} catch(Exception e) {
-//				Platform.runLater(() -> getError(e.getMessage()));
-//				e.printStackTrace();
-//			}
-//		}
+	private void displayReceived() {
+		new Thread(() -> {
+			for (;;) {
+				String path = System.getProperty("user.dir") + "/receivedFiles/";
+				File dir = new File(path);
+				File[] directoryListing = dir.listFiles();
+				String name = directoryListing[directoryListing.length - 1].getName();
+				Label toDisplay = new Label(name);
+				receivedFiles.getChildren().add(toDisplay);
+			}
+		}).start();
 	}
 
 	private void getError(String error) {
@@ -322,7 +322,7 @@ public class ProjectGuiController {
 	public void setProjectName(String name) {
 		this.projectName = name;
 	}
-	
+
 	@FXML
 	public void playAudioFile() {
 		new Thread (() -> {
@@ -347,12 +347,5 @@ public class ProjectGuiController {
 				});
 			}
 		}).start();
-	}
-
-
-	public void playAudioFile(String fileName) {
-		Media media = new Media(new File(fileName).toURI().toString());
-		MediaPlayer mediaPlayer = new MediaPlayer(media);
-		mediaPlayer.play();
 	}
 }
