@@ -54,7 +54,7 @@ public class NetworkData implements Serializable {
 	}
 
 	public byte[] getFileContents() {
-		return this.getFileContents();
+		return this.fileContents;
 	}
 
 	private void convertToBytes(String data) {
