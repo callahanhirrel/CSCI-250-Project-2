@@ -32,6 +32,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Labeled;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -45,6 +46,7 @@ public class ProjectGuiController {
 	//public List<File> arrays = new ArrayList<>();
 	//private ArrayList<String> transfer = new ArrayList<>();
 	FileChecker fileChecker = new FileChecker();
+	//@FXML Tab tabMaster;
 	@FXML VBox fileContainer;
 	@FXML Button addFile;
 	@FXML Button rmFile;
@@ -217,7 +219,6 @@ public class ProjectGuiController {
 
 	@FXML
 	void add_file() {
-		addFile.getScene().getWindow().hide();
 		try{
 			/*
 			ArrayList<String> trans = new ArrayList<>();
@@ -226,28 +227,54 @@ public class ProjectGuiController {
 				trans.add(arrays.get(j));
 			}
 			*/
-
-			FXMLLoader loader2 = new FXMLLoader();
-
-			loader2.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
-			AnchorPane root2 = (AnchorPane) loader2.load();
-
-
-			MainGUIController Client = (MainGUIController)loader2.getController();
-			/*
-			for (File files : arrays) {
-				pgc.arrays.add(files);
-			}
-			*/
-			Stage stage = new Stage();
-			Scene scene = new Scene(root2);
-			stage.setScene(scene);
-			stage.show();
+//			FXMLLoader loader2 = new FXMLLoader();
+//
+//			loader2.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
+//			AnchorPane root2 = (AnchorPane) loader2.load();
+//
+//
+//			MainGUIController Client = (MainGUIController)loader2.getController();
+//			/*
+//			for (File files : arrays) {
+//				pgc.arrays.add(files);
+//			}
+//			*/
+//			Scanner scan1 = Client.get_tabs();
+//			while (scan1.hasNextLine()) {
+//				//System.out.print(line);
+//				String name1 = scan1.nextLine();
+//				FXMLLoader loader1 = new FXMLLoader();
+//				loader1.setLocation(ProjectGuiController.class.getResource("Project_GUI.fxml"));
+//				AnchorPane root1 = (AnchorPane) loader1.load();
+//				ProjectGuiController pgc1 = (ProjectGuiController)loader1.getController();
+//				Client.new_tab(root1, name1);
+//				
+//				File f1 = new File(name1 + ".txt");
+//				try {
+//					Scanner input1 = new Scanner(f1);
+//				//System.out.print(f.getName());
+//					while (input1.hasNextLine()) {
+//						String y = input1.nextLine();
+//					//System.out.print(line);
+//						pgc1.show_file(y);
+//					}
+//
+//					input1.close();
+//
+//				} catch (Exception exc) {
+//					exc.printStackTrace();
+//				}
+//			}
+//			
+//			Stage stage = new Stage();
+//			Scene scene = new Scene(root2);
+//			stage.setScene(scene);
+//			stage.show();
 
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle(addFile.getText());
 			fileChooser.getExtensionFilters().addAll(
-					new ExtensionFilter("All Files", "*.*")
+					new ExtensionFilter("Audio Files", "*.aif")
 					//new ExtensionFilter("MP3", "*.mp3"),
 					//new ExtensionFilter("WAV", "*.wav")
 					);
@@ -259,7 +286,7 @@ public class ProjectGuiController {
 				trans2.add(trans.get(x));
 			}
 			*/
-			List<File> list = fileChooser.showOpenMultipleDialog(stage);
+			List<File> list = fileChooser.showOpenMultipleDialog(addFile.getScene().getWindow());
 
 			if (list != null) {
 				//System.out.println(dir);
@@ -269,52 +296,76 @@ public class ProjectGuiController {
 					arrays.add(trans2.get(k));
 				}
 				*/
-				Scanner scan = Client.get_tabs();
-				while (scan.hasNextLine()) {
-					//System.out.print(line);
-					String name = scan.nextLine();
-					FXMLLoader loader = new FXMLLoader();
-					loader.setLocation(ProjectGuiController.class.getResource("Project_GUI.fxml"));
-					AnchorPane root = (AnchorPane) loader.load();
-					ProjectGuiController pgc = (ProjectGuiController)loader.getController();
-					Client.new_tab(root, name);
-					File dir = new File(name);
+//				Scanner scan = new Scanner(new File("Current_Work.txt"));
+//				while (scan.hasNextLine()) {
+//					//System.out.print(line);
+//					String name = scan.nextLine();
+//					FXMLLoader loader = new FXMLLoader();
+//					loader.setLocation(ProjectGuiController.class.getResource("Project_GUI.fxml"));
+//					AnchorPane root = (AnchorPane) loader.load();
+//					ProjectGuiController pgc = (ProjectGuiController)loader.getController();
+//					Client.new_tab(root, name);
+					File dir = new File("new_folder");
 					dir.mkdir();
 
-					File f = new File(name + ".txt");
+					File f = new File("save.txt");
 					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
+					
+					//if (project_name.isSelected()) {
 
-					for (File file : list) {
-						System.out.println(fileChecker.check_file(file, dir));
-						Files.copy(file.toPath(), (new File(dir.getPath() + "/" + fileChecker.check_file(file, dir))).toPath(), StandardCopyOption.REPLACE_EXISTING);
-						printer.println(file.getName());
+						for (File file : list) {
+						//System.out.println(fileChecker.check_file(file, dir));
+							String filename = fileChecker.check_file(file, dir);
+							Files.copy(file.toPath(), (new File(dir.getPath() + "/" + filename)).toPath(), StandardCopyOption.REPLACE_EXISTING);
+							Label label = new Label(filename);
+							fileContainer.getChildren().add(label);
+							printer.println(filename);
 
-					}
-
-					printer.close();
-
-					try {
-						Scanner input = new Scanner(f);
-						//System.out.print(f.getName());
-						while (input.hasNextLine()) {
-							String x = input.nextLine();
-							//System.out.print(line);
-							pgc.show_file(x);
 						}
-
-						input.close();
-
-					} catch (Exception exc) {
-						exc.printStackTrace();
-					}
-
-				}
-
-
+						
+						printer.close();
+//
+//						try {
+//							Scanner input = new Scanner(f);
+//						//System.out.print(f.getName());
+//							while (input.hasNextLine()) {
+//								String x = input.nextLine();
+//							//System.out.print(line);
+//								pgc.show_file(x);
+//							}
+//
+//							input.close();
+//
+//						} catch (Exception exc) {
+//							exc.printStackTrace();
+//						}
+					
+//					} else {
+//						printer.close();
+//						try {
+//							Scanner input = new Scanner(f);
+//						//System.out.print(f.getName());
+//							while (input.hasNextLine()) {
+//								String x = input.nextLine();
+//							//System.out.print(line);
+//								pgc.show_file(x);
+//							}
+//
+//							input.close();
+//
+//						} catch (Exception exc) {
+//							exc.printStackTrace();
+//						}
+//					}
+					
+//				}
+//				scan.close();
 			}
+			
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
+		
 
 	}
 	

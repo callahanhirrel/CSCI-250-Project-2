@@ -55,12 +55,18 @@ public class MainGUIController {
 		if (!projectName.getText().equals("")) {
 			try {
 				File f = new File("Test_Store.txt");
+				//File f2 = new File("Current_Work.txt");
 				PrintWriter printer = new PrintWriter(new FileWriter(f, true));
 				//System.out.println(fileChecker.check_existence("Test_Store.txt", projectName.getText()));
 				if (fileChecker.check_existence("Test_Store.txt", projectName.getText()) == true) {
 					printer.close();
 					createAlert("Invalid Project Name");
 				} else {
+//					if (!fileChecker.check_existence("Current_Work.txt", projectName.getText()) && projectName.getText() != "") {
+//						FileWriter writer = new FileWriter(f2, false);
+//						writer.write(projectName.getText());
+//						writer.close();
+//					}
 					printer.println(projectName.getText());
 					printer.close();
 					FXMLLoader loader = new FXMLLoader();
@@ -70,6 +76,7 @@ public class MainGUIController {
 					ProjectGuiController projCtrl = (ProjectGuiController) loader.getController();
 
 					Tab newProject = new Tab();
+					//newProject.setId(projectName.getText());
 					newProject.setText(projectName.getText());
 					newProject.setContent(root);
 					projects.getTabs().add(projects.getTabs().size() - 1, newProject);
@@ -84,25 +91,26 @@ public class MainGUIController {
 			createAlert("Invalid Project Name");
 		}
 	}
-
 	private void createAlert(String message) {
 		Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
 		alert.showAndWait();
 	}
 
-	public void new_tab(AnchorPane root, String project_name) {
-		Tab newProject = new Tab();
-			newProject.setText(project_name);
-			newProject.setContent(root);
-			projects.getTabs().add(projects.getTabs().size() - 1, newProject);
-	}
+//	public void new_tab(AnchorPane root, String project_name) {
+//		Tab newProject = new Tab();
+//		newProject.setId(project_name);
+//			newProject.setText(project_name);
+//			newProject.setContent(root);
+//			projects.getTabs().add(projects.getTabs().size() - 1, newProject);
+//			//return newProject;
+//	}
 
-	public Scanner get_tabs() throws FileNotFoundException {
-		File f = new File("Test_Store.txt");
-		Scanner input = new Scanner(f);
-				//System.out.print(f.getName());
-		return input;
-	}
+//	public Scanner get_tabs() throws FileNotFoundException {
+//		File f = new File("Test_Store.txt");
+//		Scanner input = new Scanner(f);
+//				//System.out.print(f.getName());
+//		return input;
+//	}
 // TODO: come back to this after jack finishes project controller class
 	void newProjectSetup(ProjectGuiController projCtrl) {
 		projCtrl.setProjectName(projectName.getText());
