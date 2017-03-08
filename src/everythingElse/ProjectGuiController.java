@@ -144,7 +144,8 @@ public class ProjectGuiController {
 								Socket target = new Socket(users.get(username), MainGUIController.PORT);
 								NetworkData request = new NetworkData(NetworkData.FILE_TAG,
 										MainGUIController.USERNAME, projectName + "/" +
-										filename.getAccessibleText());
+										
+										filename.getText());
 								sendRequest(target, request);
 								target.close();
 							} catch (Exception e) {
