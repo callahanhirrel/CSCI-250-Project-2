@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="everythingElse.audioPlaybackGUIController">
    <top>
       <Label text="Play Audio File" underline="true" BorderPane.alignment="CENTER">
          <font>
@@ -29,7 +28,7 @@
                   <Insets left="5.0" right="5.0" />
                </VBox.margin>
             </Label>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox fx:id="addedBox" prefHeight="200.0" prefWidth="100.0" />
          </children>
       </VBox>
    </left>
@@ -44,7 +43,7 @@
                   <Insets left="5.0" right="5.0" />
                </VBox.margin>
             </Label>
-            <VBox prefHeight="200.0" prefWidth="100.0" />
+            <VBox fx:id="receivedBox" prefHeight="200.0" prefWidth="100.0" />
          </children>
       </VBox>
    </right>

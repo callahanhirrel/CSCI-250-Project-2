@@ -54,12 +54,15 @@
                                        <children>
                                           <Button fx:id="addFile" mnemonicParsing="false" onMouseClicked="#add_file" prefHeight="27.0" prefWidth="64.0" text="Add" />
                                           <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Remove" />
-                                          <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Send" />
+                                          <Button fx:id="send" mnemonicParsing="false" onMouseClicked="#sendFile" prefHeight="27.0" prefWidth="70.0" text="Send" />
                                        </children>
                                     </HBox>
                                  </children>
                               </VBox>
-                              <VBox prefHeight="282.0" prefWidth="100.0" />
+                              <VBox alignment="CENTER" prefHeight="282.0" prefWidth="100.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" text="Play Audio" />
+                                 </children></VBox>
                               <VBox prefHeight="282.0" prefWidth="228.0">
                                  <children>
                                     <Label text="Files you have received:" />

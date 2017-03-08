@@ -112,9 +112,8 @@ public class MainGUIController {
 //		return input;
 //	}
 // TODO: come back to this after jack finishes project controller class
-	@FXML
 	void newProjectSetup(ProjectGuiController projCtrl) {
-
+		projCtrl.setProjectName(projectName.getText());
 	}
 
 	public void setUsername(String username) {

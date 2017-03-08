@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 //import java.nio.file.Files;
 //import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
@@ -18,17 +19,22 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import javafx.application.Platform;
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -44,6 +50,7 @@ public class ProjectGuiController {
 	@FXML VBox fileContainer;
 	@FXML Button addFile;
 	@FXML Button rmFile;
+	@FXML Button send;
 	@FXML ScrollPane hasAddedFile;
 	@FXML TextField ip;
 	@FXML Label message;
@@ -51,6 +58,7 @@ public class ProjectGuiController {
 	@FXML Label collaboraters;
 	ArrayBlockingQueue<NetworkData> dataCollection = new ArrayBlockingQueue<>(20);
 	HashMap<String, String> users = new HashMap<>(); // maps usernames to the IP addresses they came from
+	private String projectName;
 
 
 	public void initialize() throws IOException {
@@ -115,7 +123,6 @@ public class ProjectGuiController {
 				sendRequest(target, request);
 				receiveData(target);
 				target.close();
-
 			} catch (Exception e) {
 				Platform.runLater(() -> getError(e.getMessage()));
 				e.printStackTrace();
@@ -125,8 +132,31 @@ public class ProjectGuiController {
 
 	@FXML
 	public void sendFile() {
+		new Thread (() -> {
+			for (Node filename : fileContainer.getChildren()) {
+				filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
+					@Override
+					public void handle(MouseEvent event) {
+						for (String username : users.keySet()) {
+							try {
+								Socket target = new Socket(users.get(username), MainGUIController.PORT);
+								NetworkData request = new NetworkData(NetworkData.FILE_TAG,
+										MainGUIController.USERNAME, projectName + "/" +
+										filename.getAccessibleText());
+								sendRequest(target, request);
+								target.close();
+							} catch (Exception e) {
+								Platform.runLater(() -> getError(e.getMessage()));
+								e.printStackTrace();
+							}
+						}
+					}
+				});
+			}
+		}).start();
 	}
+
 
 	/**
 	 * Sends a request to a peer's server
@@ -139,7 +169,7 @@ public class ProjectGuiController {
 		ObjectOutputStream sockout = new ObjectOutputStream(target.getOutputStream());
 		sockout.writeObject(request);
 		sockout.flush();
-		System.out.println("Client: Sent [" + request.getMsg() + "]");
+		System.out.println("Client: Sent [" + request.getTag() + "]");
 	}
 
 	/**
@@ -337,5 +367,39 @@ public class ProjectGuiController {
 		}
 		
 
+	}
+
+	@FXML
+	ArrayList<String> getAddedFiles() {
+		ArrayList<String> addedFiles = new ArrayList<String>();
+		for (Node item : fileContainer.getChildren()) {
+			Label label = (Label) item;
+			if (label.getText().endsWith(".mp3")) {
+				addedFiles.add(label.getText());
+			}
+		}
+		return addedFiles;
+	}
+
+	@FXML
+	void openAudioPlaybackWindow() {
+		ArrayList<String> addedFiles = getAddedFiles();
+		ArrayList<String> receivedFiles = new ArrayList<String>();
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(audioPlaybackGUIController.class.getResource("audioPlaybackGUI.fxml"));
+			AnchorPane root = (AnchorPane) loader.load();
+			everythingElse.audioPlaybackGUIController apgc = (everythingElse.audioPlaybackGUIController) loader.getController();
+			Stage stage = new Stage();
+			Scene scene = new Scene(root);
+			apgc.initialize(addedFiles, receivedFiles);
+			stage.setScene(scene);
+			stage.show();
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
+	public void setProjectName(String name) {
+		this.projectName = name;
 	}
 }
