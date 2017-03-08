@@ -84,7 +84,11 @@ public class MainGUIController {
 			createAlert("Invalid Project Name");
 		}
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> origin/master
 	private void createAlert(String message) {
 		Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
 		alert.showAndWait();
