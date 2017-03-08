@@ -1,13 +1,13 @@
 package everythingElse;
 
-import java.io.BufferedReader;
+//import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
+//import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
+//import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+//import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
@@ -16,10 +16,10 @@ import java.util.ArrayList;
 //import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Scanner;
+//import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import javafx.application.Platform;
-import javafx.event.Event;
+//import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,9 +30,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
+//import javafx.scene.control.Labeled;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Tab;
+//import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -308,8 +308,8 @@ public class ProjectGuiController {
 					File dir = new File("new_folder");
 					dir.mkdir();
 
-					File f = new File("save.txt");
-					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
+//					File f = new File("save.txt");
+//					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
 					
 					//if (project_name.isSelected()) {
 
@@ -319,11 +319,11 @@ public class ProjectGuiController {
 							Files.copy(file.toPath(), (new File(dir.getPath() + "/" + filename)).toPath(), StandardCopyOption.REPLACE_EXISTING);
 							Label label = new Label(filename);
 							fileContainer.getChildren().add(label);
-							printer.println(filename);
+//							printer.println(filename);
 
 						}
 						
-						printer.close();
+//						printer.close();
 //
 //						try {
 //							Scanner input = new Scanner(f);
