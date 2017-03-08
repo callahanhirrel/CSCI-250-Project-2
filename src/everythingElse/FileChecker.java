@@ -3,9 +3,17 @@ package everythingElse;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+<<<<<<< HEAD
 import java.nio.file.Files;
 //import java.nio.file.Files;
 //import java.nio.file.StandardCopyOption;
+=======
+
+import java.nio.file.Files;
+//import java.nio.file.Files;
+//import java.nio.file.StandardCopyOption;
+
+>>>>>>> origin/master
 import java.util.Scanner;
 
 public class FileChecker {

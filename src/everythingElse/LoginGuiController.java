@@ -89,7 +89,7 @@ public class LoginGuiController {
 		if (!userSignedIn()) {
 			if (users.containsUser(username.getText())) {
 				String signInPassword = password.getText();
-				String usernamePassword = username.getText();
+				String usernamePassword = users.getHashMap().get(username.getText());
 
 				if (signInPassword.equals(usernamePassword)) {
 					currentUser.setText(username.getText());
