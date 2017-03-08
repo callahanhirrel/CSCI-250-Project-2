@@ -50,6 +50,7 @@ public class ProjectGuiController {
 	@FXML VBox fileContainer;
 	@FXML Button addFile;
 	@FXML Button rmFile;
+	@FXML Button send;
 	@FXML ScrollPane hasAddedFile;
 	@FXML TextField ip;
 	@FXML Label message;
@@ -120,8 +121,8 @@ public class ProjectGuiController {
 				NetworkData request = new NetworkData(NetworkData.MSG_TAG,
 						MainGUIController.USERNAME, "requesting connection");
 				sendRequest(target, request);
+				receiveData(target);
 				target.close();
-
 			} catch (Exception e) {
 				Platform.runLater(() -> getError(e.getMessage()));
 				e.printStackTrace();
@@ -144,7 +145,6 @@ public class ProjectGuiController {
 										MainGUIController.USERNAME, projectName + "/" +
 										filename.getAccessibleText());
 								sendRequest(target, request);
-								receiveData(target);
 								target.close();
 							} catch (Exception e) {
 								Platform.runLater(() -> getError(e.getMessage()));
@@ -368,7 +368,7 @@ public class ProjectGuiController {
 		
 
 	}
-	
+
 	@FXML
 	ArrayList<String> getAddedFiles() {
 		ArrayList<String> addedFiles = new ArrayList<String>();
@@ -380,7 +380,7 @@ public class ProjectGuiController {
 		}
 		return addedFiles;
 	}
-	
+
 	@FXML
 	void openAudioPlaybackWindow() {
 		ArrayList<String> addedFiles = getAddedFiles();
