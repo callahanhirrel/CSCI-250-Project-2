@@ -108,6 +108,8 @@ public class LoginGuiController {
 						Client.setUsername(Username);
 						ClientStage.setScene(scene);
 						ClientStage.show();
+						
+						signIn.getScene().getWindow().hide();
 
 					} catch (Exception exc) {
 						exc.printStackTrace();
