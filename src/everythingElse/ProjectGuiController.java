@@ -146,8 +146,7 @@ public class ProjectGuiController {
 							try {
 								Socket target = new Socket(users.get(username), MainGUIController.PORT);
 								NetworkData request = new NetworkData(NetworkData.FILE_TAG,
-										MainGUIController.USERNAME, "/new_folder/"+
-										filename.getText());
+										MainGUIController.USERNAME, filename.getText());
 								sendRequest(target, request);
 								target.close();
 							} catch (Exception e) {
@@ -378,7 +377,7 @@ public class ProjectGuiController {
 
 
 	}
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	/*
 =======
 
@@ -417,7 +416,7 @@ public class ProjectGuiController {
 	public void setProjectName(String name) {
 		this.projectName = name;
 	}
-	
+
 	public void playAudioFile(String fileName) {
 		Media media = new Media(new File(fileName).toURI().toString());
 		MediaPlayer mediaPlayer = new MediaPlayer(media);
