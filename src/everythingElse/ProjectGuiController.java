@@ -274,7 +274,7 @@ public class ProjectGuiController {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle(addFile.getText());
 			fileChooser.getExtensionFilters().addAll(
-					new ExtensionFilter("Audio Files", "*.aif")
+					new ExtensionFilter("Audio Files", "*.aif", "*.mp3")
 					//new ExtensionFilter("MP3", "*.mp3"),
 					//new ExtensionFilter("WAV", "*.wav")
 					);
