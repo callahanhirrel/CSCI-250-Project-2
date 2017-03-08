@@ -49,6 +49,7 @@ public class ProjectGuiController {
 	@FXML Label collaboraters;
 	ArrayBlockingQueue<NetworkData> dataCollection = new ArrayBlockingQueue<>(20);
 	HashMap<String, String> users = new HashMap<>(); // maps usernames to the IP addresses they came from
+	private String projectName;
 
 
 	public void initialize() throws IOException {
@@ -286,5 +287,9 @@ public class ProjectGuiController {
 			exc.printStackTrace();
 		}
 
+	}
+
+	public void setProjectName(String name) {
+		this.projectName = name;
 	}
 }
