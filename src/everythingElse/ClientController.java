@@ -43,7 +43,7 @@ public class ClientController {
 						Platform.runLater(() -> {message.setText("You are now connected with " + username);
 						createProject.setDisable(false);});
 					} catch(Exception e) {
-						//TODO Platform.runLater(() -> alert method?);
+						Platform.runLater(() -> getAlert("could not connect with user"));
 						e.printStackTrace();
 					}
 				}
@@ -58,7 +58,7 @@ public class ClientController {
 					confirmConnection(target);
 					target.close();
 				} catch (Exception e) {
-					//TODO Platform.runLater(() -> alert method?);
+					Platform.runLater(() -> getAlert("could not connect"));
 					e.printStackTrace();
 				}
 			}).start();
@@ -78,7 +78,7 @@ public class ClientController {
 					String data = sockin.readLine();
 					dataCollection.add(data);
 				} catch(Exception e) {
-					//TODO Platform.runLater(() -> alert method?);
+					Platform.runLater(() -> getAlert("could not confirm connection"));
 					e.printStackTrace();
 				}
 			}
@@ -105,10 +105,7 @@ public class ClientController {
 				e.printStackTrace();
 			}
 		} else {
-
-			Alert alert = new Alert(AlertType.ERROR, "invalid project name", ButtonType.OK);
-			alert.showAndWait();
-
+			getAlert("invalid project name");
 		}
 	}
 
@@ -139,5 +136,10 @@ public class ClientController {
 
 		public void setUsername(String username) {
 			currentUsername = username;
+		}
+		
+		private void getAlert(String message) {
+			Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
+			alert.showAndWait();
 		}
 }

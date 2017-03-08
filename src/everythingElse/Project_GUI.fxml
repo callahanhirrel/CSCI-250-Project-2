@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="369.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="everythingElse.ProjectGuiController">
 
    <children>
@@ -23,14 +22,14 @@
                <content>
                   <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="335.0" prefWidth="601.0">
                      <children>
-                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="479.0" translateX="5.0" translateY="5.0">
+                        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="37.0" prefWidth="598.0" translateX="5.0" translateY="5.0">
                            <children>
                               <Label text="Collaborators:" underline="true">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
                               </Label>
-                              <Label text="lol none right now" translateX="5.0">
+                              <Label fx:id="collaboraters" prefHeight="19.0" prefWidth="478.0" translateX="5.0">
                                  <font>
                                     <Font size="15.0" />
                                  </font>
@@ -39,7 +38,7 @@
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label text="You can play back any audio file listed by simply clicking on it. (except not)" translateX="5.0" />
+                              <Label translateX="5.0" />
                            </children>
                         </HBox>
                         <HBox prefHeight="285.0" prefWidth="600.0">
@@ -53,13 +52,17 @@
                                        </content></ScrollPane>
                                     <HBox prefHeight="49.0" prefWidth="207.0">
                                        <children>
-                                          <Button fx:id="addFile" mnemonicParsing="false" onMouseClicked="#add_file" text="Add a File" />
-                                          <Button mnemonicParsing="false" text="Remove a File" />
+                                          <Button fx:id="addFile" mnemonicParsing="false" onMouseClicked="#add_file" prefHeight="27.0" prefWidth="64.0" text="Add" />
+                                          <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="77.0" text="Remove" />
+                                          <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="70.0" text="Send" />
                                        </children>
                                     </HBox>
                                  </children>
                               </VBox>
-                              <VBox prefHeight="282.0" prefWidth="100.0" />
+                              <VBox alignment="CENTER" prefHeight="282.0" prefWidth="100.0">
+                                 <children>
+                                    <Button mnemonicParsing="false" text="Play Audio" />
+                                 </children></VBox>
                               <VBox prefHeight="282.0" prefWidth="228.0">
                                  <children>
                                     <Label text="Files you have received:" />
@@ -92,7 +95,7 @@
                               <Button fx:id="connect" alignment="CENTER" mnemonicParsing="false" onAction="#connect" prefHeight="26.0" prefWidth="77.0" text="Connect" textAlignment="CENTER" translateX="15.0" translateY="10.0" wrapText="true" />
                            </children>
                         </HBox>
-                        <Label fx:id="message" layoutX="10.0" layoutY="56.0" text="You are now connected with (username)">
+                        <Label fx:id="message" layoutX="10.0" layoutY="56.0" prefHeight="19.0" prefWidth="580.0" text=" ">
                            <font>
                               <Font size="15.0" />
                            </font>

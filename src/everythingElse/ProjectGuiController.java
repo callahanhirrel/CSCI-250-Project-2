@@ -5,10 +5,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+//import java.nio.file.Files;
+//import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
@@ -34,7 +38,7 @@ import javafx.stage.Stage;
 public class ProjectGuiController {
 	//public List<File> arrays = new ArrayList<>();
 	//private ArrayList<String> transfer = new ArrayList<>();
-
+	FileChecker fileChecker = new FileChecker();
 	@FXML VBox fileContainer;
 	@FXML Button addFile;
 	@FXML Button rmFile;
@@ -42,16 +46,18 @@ public class ProjectGuiController {
 	@FXML TextField ip;
 	@FXML Label message;
 	@FXML Button connect;
-	ArrayBlockingQueue<String> dataCollection = new ArrayBlockingQueue<>(20);
+	@FXML Label collaboraters;
+	ArrayBlockingQueue<NetworkData> dataCollection = new ArrayBlockingQueue<>(20);
 	HashMap<String, String> users = new HashMap<>(); // maps usernames to the IP addresses they came from
+	private String projectName;
 
 
 	public void initialize() throws IOException {
 		new Thread(() -> {
 			for (;;) {
 				try {
-					String data = dataCollection.take();
-					useData(data);
+					NetworkData data = dataCollection.take();
+					unpackageData(data);
 				} catch(Exception e) {
 					Platform.runLater(() -> getError(e.getMessage()));
 					e.printStackTrace();
@@ -65,33 +71,34 @@ public class ProjectGuiController {
 	 *
 	 * @param data	the next piece of data from the blocking queue
 	 */
-	private void useData(String data) {
-		System.out.print(data);
-		if (data.toLowerCase().equals("connection open")) {
-			Platform.runLater(() -> {message.setText(confirmConnection());});
+	private void unpackageData(NetworkData data) {
+		if (data.getTag().equals(NetworkData.USERNAME_TAG)) {
+			Platform.runLater(() -> {message.setText(confirmConnection(data));});
 		}
+	}
+
+	@FXML
+	void collaborators() {
+		String userReturn = "";
+		for (String user : users.keySet()) {
+			userReturn = userReturn.concat(user);
+		}
+		collaboraters.setText(userReturn);
 	}
 
 	/**
 	 * This method is called upon initial connection with a peer.
 	 * The peer's username and IP address are added to a HashMap field
 	 *
+	 * @param	a NetworkData object
 	 * @return	a confirmation message to be displayed in the GUI
 	 */
-	private String confirmConnection() {
-		String message = "ERROR: PLEASE TRY AGAIN";
-		String connectedWith;
-		try {
-			System.out.print(dataCollection.toString());
-			connectedWith = dataCollection.take();
-			System.out.println("made it here");
-			message = "You are now connected with " + connectedWith;
-			users.put(connectedWith, ip.getText()); // save the username and IP for later use
-		} catch (InterruptedException e) {
-			Platform.runLater(() -> getError(e.getMessage()));
-			e.printStackTrace();
-		}
-		return message;
+	private String confirmConnection(NetworkData data) {
+		String connectedWith = data.getUsername();
+		String msg = "You are now connected with " + connectedWith;
+		users.put(connectedWith, ip.getText()); // save the username and IP for later use
+		collaborators();
+		return msg;
 	}
 
 	/**
@@ -102,14 +109,22 @@ public class ProjectGuiController {
 		new Thread(() -> {
 			try {
 				Socket target = new Socket(ip.getText(), MainGUIController.PORT);
-				sendRequest(target, "requesting connection");
+				NetworkData request = new NetworkData(NetworkData.MSG_TAG,
+						MainGUIController.USERNAME, "requesting connection");
+				sendRequest(target, request);
 				receiveData(target);
 				target.close();
+
 			} catch (Exception e) {
 				Platform.runLater(() -> getError(e.getMessage()));
 				e.printStackTrace();
 			}
 		}).start();
+	}
+
+	@FXML
+	public void sendFile() {
+
 	}
 
 	/**
@@ -119,11 +134,11 @@ public class ProjectGuiController {
 	 * @param request	the data/request being sent
 	 * @throws IOException
 	 */
-	private void sendRequest(Socket target, String request) throws IOException {
-		PrintWriter sockout = new PrintWriter(target.getOutputStream());
-		sockout.println(request);
+	private void sendRequest(Socket target, NetworkData request) throws IOException {
+		ObjectOutputStream sockout = new ObjectOutputStream(target.getOutputStream());
+		sockout.writeObject(request);
 		sockout.flush();
-		System.out.println("Client: Sent [" + request + "]");
+		System.out.println("Client: Sent [" + request.getMsg() + "]");
 	}
 
 	/**
@@ -134,33 +149,43 @@ public class ProjectGuiController {
 	 * @throws IOException
 	 */
 	private void receiveData(Socket target) throws IOException {
-		BufferedReader sockin = new BufferedReader(new InputStreamReader(target.getInputStream()));
-		while (!sockin.ready()) {}
-		while (sockin.ready()) {
-			try {
-				String data = sockin.readLine();
-				System.out.println("Client: Received [" + data + "]");
-				dataCollection.add(data);
-				System.out.print(dataCollection.toString());
-			} catch(Exception e) {
-				Platform.runLater(() -> getError(e.getMessage()));
-				e.printStackTrace();
-			}
+		ObjectInputStream sockin = new ObjectInputStream(target.getInputStream());
+		try {
+			NetworkData data = (NetworkData) sockin.readObject();
+			System.out.println("Client: Received [" + data.getTag() + "]");
+			dataCollection.add(data);
+		} catch(Exception e) {
+			Platform.runLater(() -> getError(e.getMessage()));
+			e.printStackTrace();
 		}
+
+//		BufferedReader sockin = new BufferedReader(new InputStreamReader(target.getInputStream()));
+//		while (!sockin.ready()) {}
+//		while (sockin.ready()) {
+//			try {
+//				String data = sockin.readLine();
+//				System.out.println("Client: Received [" + data + "]");
+//				dataCollection.add(data);
+//				System.out.print(dataCollection.toString());
+//			} catch(Exception e) {
+//				Platform.runLater(() -> getError(e.getMessage()));
+//				e.printStackTrace();
+//			}
+//		}
 	}
-	
+
 	private void getError(String error) {
 		Alert alert = new Alert(AlertType.ERROR, error, ButtonType.OK);
 		alert.showAndWait();
 	}
-	
+
 	public void show_file(String filename) {
 		Label label = new Label(filename);
 		fileContainer.getChildren().add(label);
 	}
 
 	// TODO split this method up into smaller helper methods
-	
+
 	@FXML
 	void add_file() {
 		addFile.getScene().getWindow().hide();
@@ -172,12 +197,12 @@ public class ProjectGuiController {
 				trans.add(arrays.get(j));
 			}
 			*/
-			
+
 			FXMLLoader loader2 = new FXMLLoader();
-			
+
 			loader2.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
 			AnchorPane root2 = (AnchorPane) loader2.load();
-			
+
 
 			MainGUIController Client = (MainGUIController)loader2.getController();
 			/*
@@ -208,9 +233,7 @@ public class ProjectGuiController {
 			List<File> list = fileChooser.showOpenMultipleDialog(stage);
 
 			if (list != null) {
-				File dir = new File("new_folder");
-				dir.mkdir();
-				System.out.println(dir);
+				//System.out.println(dir);
 				//add.add(file.getName());
 				/*
 				for (int k = 0; k < trans2.size(); k++) {
@@ -226,12 +249,15 @@ public class ProjectGuiController {
 					AnchorPane root = (AnchorPane) loader.load();
 					ProjectGuiController pgc = (ProjectGuiController)loader.getController();
 					Client.new_tab(root, name);
-					
+					File dir = new File(name);
+					dir.mkdir();
+
 					File f = new File(name + ".txt");
 					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
 
 					for (File file : list) {
-						Files.copy(file.toPath(), (new File(dir.getPath() + "/" + file.getName())).toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+						System.out.println(fileChecker.check_file(file, dir));
+						Files.copy(file.toPath(), (new File(dir.getPath() + "/" + fileChecker.check_file(file, dir))).toPath(), StandardCopyOption.REPLACE_EXISTING);
 						printer.println(file.getName());
 
 					}
@@ -252,16 +278,17 @@ public class ProjectGuiController {
 					} catch (Exception exc) {
 						exc.printStackTrace();
 					}
-					
+
 				}
-				
-				
+
+
 			}
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
 
 	}
+<<<<<<< HEAD
 	
 	@FXML
 	void openAudioPlaybackWindow() {
@@ -280,5 +307,10 @@ public class ProjectGuiController {
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
+=======
+
+	public void setProjectName(String name) {
+		this.projectName = name;
+>>>>>>> origin/master
 	}
 }

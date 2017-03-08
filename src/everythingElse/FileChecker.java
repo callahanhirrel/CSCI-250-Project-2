@@ -2,16 +2,20 @@ package everythingElse;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.Scanner;
 
 public class FileChecker {
-	public Boolean check_existence(String filename, String string) throws FileNotFoundException {
+	public Boolean check_existence(String filename, String file) throws FileNotFoundException {
 		File f = new File(filename);
 		Scanner scan = new Scanner(f);
 		while (scan.hasNextLine()) {
 			String x = scan.nextLine();
-			if (x == string) {
+			if (x .equals(file)) {
 				scan.close();
+				System.out.println(x);
 				return true;
 			}
 		}
@@ -19,4 +23,19 @@ public class FileChecker {
 		return false;
 	}
 
+	public String check_file(File file, File direct) throws IOException {
+		FileChecker fileChecker = new FileChecker();
+		Integer i = 0;
+		String p = direct.getPath();
+		File x = new File(p);
+		File[] list = x.listFiles();
+		while (list.length != i) {
+			if (list[i].getName().equals(file.getName())) {
+				File new_filename = new File("D" + file.getName());
+				return fileChecker.check_file(new_filename, direct);
+			}
+			i++;
+		}
+		return file.getName();
+	}
 }

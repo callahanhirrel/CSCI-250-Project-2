@@ -1,11 +1,18 @@
 package everythingElse;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 
 // This class is heavily based on Dr. Ferrer's Server class from his network
 // programming tutorial.
@@ -43,45 +50,53 @@ public class Server {
 
 		public void run() {
 			try {
-				PrintWriter writer = new PrintWriter(socket.getOutputStream());
-				String data = getData();
-				printToConsole(true, data);
-				sendData(writer, data);
+				ObjectOutputStream sockout = new ObjectOutputStream(socket.getOutputStream());
+				NetworkData data = getData();
+				printToConsole("Received", data);
+				unpackageData(sockout, data);
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 
-		private void sendData(PrintWriter writer, String justReceived) {
-			if (justReceived.equals("requesting connection")) {
-				writer.println("connection open");
-				printToConsole(false, "connection open");
-
-				writer.println(username);
-				printToConsole(false, username);
+		private void unpackageData(ObjectOutputStream sockout, NetworkData justReceived) throws IOException {
+			if (justReceived.getTag().equals(NetworkData.MSG_TAG)) {
+				NetworkData toSend = new NetworkData(NetworkData.USERNAME_TAG, username, "connection open");
+				sockout.writeObject(toSend);
+				printToConsole("Sent", toSend);
+			} else if (justReceived.getTag().equals(NetworkData.FILE_TAG)) {
+				saveFile(justReceived);
 			}
-			writer.flush();
+			sockout.flush();
 		}
 
-		private void printToConsole(boolean received, String txt) {
-			String toPrint = "Server: ";
-			if (received) {
-				toPrint += "Received ";
-			} else {
-				toPrint += "Sent ";
+		private void saveFile(NetworkData justReceived) {
+			try {
+				Path path = Paths.get(System.getProperty("user.dir"), "/receivedFiles/");
+				Files.write(path, justReceived.getFileContents(), StandardOpenOption.CREATE);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			toPrint += "[" + txt + "]";
+		}
+
+		private void printToConsole(String action, NetworkData data) {
+			String toPrint = "Server: " + action;
+			toPrint += ": [" + data.getTag() + "]";
 			System.out.println(toPrint);
 		}
 
-		private String getData() throws IOException {
-			BufferedReader responses = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			String toReturn = "";
-			while(!responses.ready()) {}
-			while(responses.ready()) {
-				toReturn += responses.readLine() + "\n";
-			}
-			return toReturn.trim(); // to get rid of the last newline
+		private NetworkData getData() throws IOException, ClassNotFoundException {
+			ObjectInputStream sockin = new ObjectInputStream(socket.getInputStream());
+			NetworkData data = (NetworkData) sockin.readObject();
+			return data;
+//			BufferedReader responses = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+//			String toReturn = "";
+//			while(!responses.ready()) {}
+//			while(responses.ready()) {
+//				toReturn += responses.readLine() + "\n";
+//			}
+//			return toReturn.trim(); // to get rid of the last newline
 		}
 	}
 
