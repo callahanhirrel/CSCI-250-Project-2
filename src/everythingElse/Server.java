@@ -73,7 +73,7 @@ public class Server {
 
 		private void saveFile(NetworkData justReceived) {
 			try {
-				String path = System.getProperty("user.dir") + "/receivedFiles/";
+				String path = System.getProperty("user.dir") + "/receivedFiles/" + justReceived.getFilename();
 				FileOutputStream writer = new FileOutputStream(path);
 				writer.write(justReceived.getFileContents());
 				writer.close();

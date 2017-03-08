@@ -14,6 +14,7 @@ public class NetworkData implements Serializable {
 	private String tag; // instruction for the server/client
 	private String msg;
 	private String username;
+	private String filename;
 	private File file;
 	private byte[] fileContents;
 	static String USERNAME_TAG = "USERNAME";
@@ -31,7 +32,8 @@ public class NetworkData implements Serializable {
 		if (tag.equals(NetworkData.USERNAME_TAG)) {
 			this.msg = data;
 		} else if (tag.equals(NetworkData.FILE_TAG)) {
-			this.file = new File(System.getProperty("user.dir") + data);
+			this.file = new File(System.getProperty("user.dir") + "/new_folder/" + data);
+			this.filename = data;
 			convertToBytes(data);
 		}
 	}
@@ -47,6 +49,10 @@ public class NetworkData implements Serializable {
 
 	public String getUsername() {
 		return this.username;
+	}
+
+	public String getFilename() {
+		return this.filename;
 	}
 
 	public File getFile() {
