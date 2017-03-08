@@ -28,11 +28,11 @@ import javafx.scene.layout.AnchorPane;
 
 public class MainGUIController {
 		FileChecker fileChecker = new FileChecker();
-		
+
 		@FXML Button createProject;
 		@FXML TextField projectName;
 		@FXML TabPane projects;
-		String username;
+		static String USERNAME;
 		Server server;
 		static int PORT = 8881; // gonna use 8881 as the port for now
 
@@ -40,8 +40,8 @@ public class MainGUIController {
 		public void initialize(String username) throws IOException {
 			new Thread(() -> {
 				try {
-					this.username = username;
-					server = new Server(MainGUIController.PORT, this.username);
+					MainGUIController.USERNAME = username;
+					server = new Server(MainGUIController.PORT, MainGUIController.USERNAME);
 					server.listen();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -52,14 +52,14 @@ public class MainGUIController {
 
 	@FXML
 	void createNewProject() {
-		if (!projectName.getText().equals("") || !projects.getTabs().toString().contains(projectName.getText())) {
-			System.out.print(projects.getTabs().toString());
+		if (!projectName.getText().equals("")) {
 			try {
 				File f = new File("Test_Store.txt");
 				PrintWriter printer = new PrintWriter(new FileWriter(f, true));
 				//System.out.println(fileChecker.check_existence("Test_Store.txt", projectName.getText()));
 				if (fileChecker.check_existence("Test_Store.txt", projectName.getText()) == true) {
 					printer.close();
+					createAlert("Invalid Project Name");
 				} else {
 					printer.println(projectName.getText());
 					printer.close();
@@ -77,17 +77,21 @@ public class MainGUIController {
 					newProjectSetup(projCtrl);
 				}
 			} catch (IOException e) {
+				createAlert("Invalid Project Name");
 				e.printStackTrace();
 			}
 		} else {
-			Alert alert = createAlert("Invalid Project Name");
-			alert.showAndWait();
+			createAlert("Invalid Project Name");
 		}
 	}
+<<<<<<< HEAD
+
+=======
 	
-	private Alert createAlert(String message) {
+>>>>>>> origin/master
+	private void createAlert(String message) {
 		Alert alert = new Alert(AlertType.ERROR, message, ButtonType.OK);
-		return alert;
+		alert.showAndWait();
 	}
 
 	public void new_tab(AnchorPane root, String project_name) {
@@ -96,7 +100,7 @@ public class MainGUIController {
 			newProject.setContent(root);
 			projects.getTabs().add(projects.getTabs().size() - 1, newProject);
 	}
-		
+
 	public Scanner get_tabs() throws FileNotFoundException {
 		File f = new File("Test_Store.txt");
 		Scanner input = new Scanner(f);
@@ -110,6 +114,6 @@ public class MainGUIController {
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.USERNAME = username;
 	}
 }

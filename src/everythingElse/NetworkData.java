@@ -1,37 +1,65 @@
 package everythingElse;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.Path;
 
-public class NetworkData {
+public class NetworkData implements Serializable {
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private String tag; // instruction for the server/client
-	private String msg; // data being sent
-	private byte[] file; // byte array of sound file
+	private String msg;
+	private String username;
+	private File file;
+	private byte[] fileContents;
+	static String USERNAME_TAG = "USERNAME";
+	static String FILE_TAG = "FILE";
+	static String MSG_TAG = "MSG";
 
-	public NetworkData(String tag, String data) {
+
+	public NetworkData(String tag, String username, String data) {
 		this.tag = tag;
+		this.username = username;
 		placeData(data);
 	}
 
-	public NetworkData(String packet) {
-
-	}
-
 	private void placeData(String data) {
-		if (tag.equals("USERNAME")) {
+		if (tag.equals(NetworkData.USERNAME_TAG)) {
 			this.msg = data;
-		} else if (tag.equals("FILE")) {
+		} else if (tag.equals(NetworkData.FILE_TAG)) {
+			this.file = new File(System.getProperty("user.dir") + "/new_folder/" + data);
 			convertToBytes(data);
 		}
 	}
 
+
+	public String getTag() {
+		return this.tag;
+	}
+
+	public String getMsg() {
+		return this.msg;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public File getFile() {
+		return this.file;
+	}
+
+	public byte[] getFileContents() {
+		return this.getFileContents();
+	}
+
 	private void convertToBytes(String data) {
-		Path path = (Path) Paths.get(System.getProperty("user.dir"), "/new_folder/" + data);
 		try {
-			this.file = Files.readAllBytes(path);
+			this.fileContents = Files.readAllBytes(this.file.toPath());
 		} catch (IOException e) {
 			// TODO run an alert
 			e.printStackTrace();
