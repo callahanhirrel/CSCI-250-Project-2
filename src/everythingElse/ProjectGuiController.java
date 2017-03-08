@@ -133,7 +133,8 @@ public class ProjectGuiController {
 	@FXML
 	public void sendFile() {
 		new Thread (() -> {
-			for (Node filename : fileContainer.getChildren()) {
+			for (Node item : fileContainer.getChildren()) {
+				Label filename = (Label) item;
 				filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 					@Override
@@ -248,7 +249,7 @@ public class ProjectGuiController {
 //				AnchorPane root1 = (AnchorPane) loader1.load();
 //				ProjectGuiController pgc1 = (ProjectGuiController)loader1.getController();
 //				Client.new_tab(root1, name1);
-//				
+//
 //				File f1 = new File(name1 + ".txt");
 //				try {
 //					Scanner input1 = new Scanner(f1);
@@ -265,7 +266,7 @@ public class ProjectGuiController {
 //					exc.printStackTrace();
 //				}
 //			}
-//			
+//
 //			Stage stage = new Stage();
 //			Scene scene = new Scene(root2);
 //			stage.setScene(scene);
@@ -310,7 +311,7 @@ public class ProjectGuiController {
 
 					File f = new File("save.txt");
 					PrintWriter printer = new PrintWriter(new FileWriter(f, true));
-					
+
 					//if (project_name.isSelected()) {
 
 						for (File file : list) {
@@ -322,7 +323,7 @@ public class ProjectGuiController {
 							printer.println(filename);
 
 						}
-						
+
 						printer.close();
 //
 //						try {
@@ -339,7 +340,7 @@ public class ProjectGuiController {
 //						} catch (Exception exc) {
 //							exc.printStackTrace();
 //						}
-					
+
 //					} else {
 //						printer.close();
 //						try {
@@ -357,15 +358,15 @@ public class ProjectGuiController {
 //							exc.printStackTrace();
 //						}
 //					}
-					
+
 //				}
 //				scan.close();
 			}
-			
+
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
-		
+
 
 	}
 
