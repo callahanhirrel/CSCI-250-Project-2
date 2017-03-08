@@ -453,22 +453,22 @@ public class ProjectGuiController {
 //<<<<<<< HEAD
 	
 	@FXML
-//	public void playAudioFile() {
-//		new Thread (() -> {
-//			for (Node item : fileContainer.getChildren()) {
-//				Label filename = (Label) item;
-//				filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//
-//					@Override
-//					public void handle(MouseEvent event) {
-//						Media media = new Media(new File(System.getProperty("user.dir") + "/new_folder/" + filename.getText()).toURI().toString());
-//						MediaPlayer mediaPlayer = new MediaPlayer(media);
-//						mediaPlayer.play();
-//					}
-//				});
-//			}
-//		}).start();
-//=======
+	public void playAudioFile() {
+		new Thread (() -> {
+			for (Node item : fileContainer.getChildren()) {
+				Label filename = (Label) item;
+				filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+					@Override
+					public void handle(MouseEvent event) {
+						Media media = new Media(new File(System.getProperty("user.dir") + "/new_folder/" + filename.getText()).toURI().toString());
+						MediaPlayer mediaPlayer = new MediaPlayer(media);
+						mediaPlayer.play();
+					}
+				});
+			}
+		}).start();
+	}
 
 	public void playAudioFile(String fileName) {
 		Media media = new Media(new File(fileName).toURI().toString());
