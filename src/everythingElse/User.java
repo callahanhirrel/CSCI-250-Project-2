@@ -36,6 +36,10 @@ public class User implements Serializable {
 		}
 	}
 	
+	public String getPassword(String username) {
+		return users.get(username);
+	}
+	
 	public HashMap<String, String> getHashMap() {
 		return users;
 	}

@@ -78,18 +78,17 @@ public class LoginGuiController {
 	void SignIn() {
 		if (users.containsUser(username.getText())) {
 			String signInPassword = password.getText();
-			String usernamePassword = users.getHashMap().get(username.getText());
+			String usernamePassword = users.getPassword(username.getText());
 
 			if (passwordsEqual(signInPassword, usernamePassword)) {
-				currentUser.setText(username.getText());
-				Output.setText(username.getText() + " successfully logged in");
 				Username = username.getText();
+				Output.setText(Username + " successfully logged in");
 				setSignInTextBlank();
 				createMainGuiWindow();
+			} else {
+				setSignInTextBlank();
+				Output.setText("Incorrect Password");
 			}
-			setSignInTextBlank();
-			currentUser.setText("");
-			Output.setText("");
 
 		} else {
 			setSignInTextBlank();
