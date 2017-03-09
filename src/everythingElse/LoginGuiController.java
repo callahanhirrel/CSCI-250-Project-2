@@ -54,18 +54,8 @@ public class LoginGuiController {
 	}
 
 	@FXML
-	void LogOut() {
-		if (currentUser.getText().equals("")) {
-			Output.setText("No user logged in");
-		} else {
-			Output.setText(currentUser.getText() + " logged out");
-			currentUser.setText("");
-		}
-	}
-
-	@FXML
 	void SignUp() {
-		if (setUsername.getText().equals("")) {
+		if (isEmptyString(setUsername)) {
 			Output.setText("Invalid Username");
 		} else {
 			if (users.containsUser(setUsername.getText())) {
@@ -86,50 +76,33 @@ public class LoginGuiController {
 
 	@FXML
 	void SignIn() {
-		if (!userSignedIn()) {
-			if (users.containsUser(username.getText())) {
-				String signInPassword = password.getText();
-				String usernamePassword = users.getHashMap().get(username.getText());
+		if (users.containsUser(username.getText())) {
+			String signInPassword = password.getText();
+			String usernamePassword = users.getHashMap().get(username.getText());
 
-				if (signInPassword.equals(usernamePassword)) {
-					currentUser.setText(username.getText());
-					Output.setText(username.getText() + " successfully logged in");
-					Username = username.getText();
-					setSignInTextBlank();
-					try {
-
-						FXMLLoader loader = new FXMLLoader();
-						loader.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
-						AnchorPane root = (AnchorPane) loader.load();
-						everythingElse.MainGUIController Client = (everythingElse.MainGUIController) loader.getController();
-						Stage ClientStage = new Stage();
-						Scene scene = new Scene(root);
-						Client.initialize(Username);
-						Client.setUsername(Username);
-						ClientStage.setScene(scene);
-						ClientStage.show();
-
-						signIn.getScene().getWindow().hide();
-
-					} catch (Exception exc) {
-						exc.printStackTrace();
-					}
-				}
+			if (passwordsEqual(signInPassword, usernamePassword)) {
+				currentUser.setText(username.getText());
+				Output.setText(username.getText() + " successfully logged in");
+				Username = username.getText();
 				setSignInTextBlank();
-				currentUser.setText("");
-				Output.setText("");
-
-			} else {
-				setSignInTextBlank();
-				Output.setText("Invalid sign in information");
+				createMainGuiWindow();
 			}
+			setSignInTextBlank();
+			currentUser.setText("");
+			Output.setText("");
+
 		} else {
-			Output.setText("User already signed in");
+			setSignInTextBlank();
+			Output.setText("Invalid sign in information");
 		}
 	}
-
-	public boolean userSignedIn() {
-		return !currentUser.getText().equals("");
+	
+	private boolean passwordsEqual(String signInPassword, String usernamePassword) {
+		return signInPassword.equals(usernamePassword);
+	}
+	
+	private boolean isEmptyString(TextField field) {
+		return field.getText().equals("");
 	}
 
 	private void setSignInTextBlank() {
@@ -142,5 +115,23 @@ public class LoginGuiController {
 		setPassword.setText("");
 		confirmPassword.setText("");
 	}
+	
+	private void createMainGuiWindow() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(LoginGuiController.class.getResource("Main_GUI.fxml"));
+			AnchorPane root = (AnchorPane) loader.load();
+			everythingElse.MainGUIController Client = (everythingElse.MainGUIController) loader.getController();
+			Stage ClientStage = new Stage();
+			Scene scene = new Scene(root);
+			Client.initialize(Username);
+			Client.setUsername(Username);
+			ClientStage.setScene(scene);
+			ClientStage.show();
+			signIn.getScene().getWindow().hide();
 
+		} catch (Exception exc) {
+			exc.printStackTrace();
+		}
+	}
 }
