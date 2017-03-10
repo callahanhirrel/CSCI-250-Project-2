@@ -1,53 +1,37 @@
 package everythingElse;
 
-//import java.io.BufferedReader;
 import java.io.File;
-//import java.io.FileWriter;
 import java.io.IOException;
-//import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-//import java.io.PrintWriter;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-//import java.nio.file.Files;
-//import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
-//import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import javafx.application.Platform;
-//import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-//import javafx.scene.control.Labeled;
 import javafx.scene.control.ScrollPane;
-//import javafx.scene.control.Tab;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Stage;
-
 
 public class ProjectGuiController {
-	//public List<File> arrays = new ArrayList<>();
-	//private ArrayList<String> transfer = new ArrayList<>();
+
 	FileChecker fileChecker = new FileChecker();
 	File dir = new File("new_folder");
 	//@FXML Tab tabMaster;
@@ -79,6 +63,8 @@ public class ProjectGuiController {
 				}
 			}
 		}).start();
+
+		// displayReceived(); this is currently broken
 	}
 
 	/**
@@ -152,6 +138,7 @@ public class ProjectGuiController {
 										MainGUIController.USERNAME, filename.getText());
 								sendRequest(target, request);
 								target.close();
+								confirmFileSent();
 							} catch (Exception e) {
 								Platform.runLater(() -> getError(e.getMessage()));
 								e.printStackTrace();
@@ -162,7 +149,6 @@ public class ProjectGuiController {
 			}
 		}).start();
 	}
-
 
 	/**
 	 * Sends a request to a peer's server
@@ -195,20 +181,43 @@ public class ProjectGuiController {
 			Platform.runLater(() -> getError(e.getMessage()));
 			e.printStackTrace();
 		}
+
 	}
 
-	private void displayReceived() {
-		new Thread(() -> {
-			for (;;) {
-				String path = System.getProperty("user.dir") + "/receivedFiles/";
-				File dir = new File(path);
-				File[] directoryListing = dir.listFiles();
-				String name = directoryListing[directoryListing.length - 1].getName();
-				Label toDisplay = new Label(name);
-				receivedFiles.getChildren().add(toDisplay);
-			}
-		}).start();
-	}
+// Currently broken
+//	@FXML
+//	private void displayReceived() {
+//		new Thread(() -> {
+//			for (;;) {
+//				String path = System.getProperty("user.dir") + "/receivedFiles/";
+//				File dir = new File(path);
+//				File[] directoryListing = dir.listFiles();
+//				for (int i = 0; i < directoryListing.length; i++) {
+//					String name = directoryListing[i].getName();
+//					Label toDisplay = new Label(name);
+//					//System.out.println(directoryListing[i]);
+//					if ((!inReceivedFiles(name)) && name.endsWith(".aif")) {
+//						//System.out.println("yo");
+//						Platform.runLater(() -> receivedFiles.getChildren().add(toDisplay));
+//					}
+//				}
+//			}
+//		}).start();
+//	}
+//
+//	private boolean inReceivedFiles(String name) {
+//		for (Node n : receivedFiles.getChildren()) {
+//			Label label = (Label) n;
+//			String[] nameArray = name.split("/");
+//			System.out.println(nameArray[nameArray.length - 1]);
+//			System.out.println(label.getText());
+//			if (label.getText().equals(nameArray[nameArray.length - 1])) {
+//				return true;
+//			}
+//		}
+//		return false;
+//	}
+
 
 	private void getError(String error) {
 		Alert alert = new Alert(AlertType.ERROR, error, ButtonType.OK);
@@ -223,10 +232,17 @@ public class ProjectGuiController {
 		fileContainer.getChildren().add(label);
 	}
 
-	// TODO split this method up into smaller helper methods
-
 	@FXML
 	void add_file() {
+
+		try {
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle(addFile.getText());
+			fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Audio Files", "*.aif"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		try{
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle(addFile.getText());
@@ -236,8 +252,17 @@ public class ProjectGuiController {
 					//new ExtensionFilter("WAV", "*.wav")
 					);
 			List<File> list = fileChooser.showOpenMultipleDialog(addFile.getScene().getWindow());
-
 			if (list != null) {
+
+				File dir = new File("new_folder");
+				dir.mkdir();
+				for (File file : list) {
+					String filename = fileChecker.check_file(file, dir);
+					Files.copy(file.toPath(), (new File(dir.getPath() + "/" + filename)).toPath(),
+							StandardCopyOption.REPLACE_EXISTING);
+					Label label = new Label(filename);
+					fileContainer.getChildren().add(label);
+				}
 					dir.mkdir();
 
 						for (File file : list) {
@@ -254,10 +279,8 @@ public class ProjectGuiController {
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
-
-
 	}
-	
+
 	@FXML
 	ArrayList<String> getAddedFiles() {
 		ArrayList<String> addedFiles = new ArrayList<String>();
@@ -271,32 +294,12 @@ public class ProjectGuiController {
 	}
 
 	@FXML
-	void openAudioPlaybackWindow() {
-		ArrayList<String> addedFiles = getAddedFiles();
-		ArrayList<String> receivedFiles = new ArrayList<String>();
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(audioPlaybackGUIController.class.getResource("audioPlaybackGUI.fxml"));
-			AnchorPane root = (AnchorPane) loader.load();
-			everythingElse.audioPlaybackGUIController apgc = (everythingElse.audioPlaybackGUIController) loader.getController();
-			Stage stage = new Stage();
-			Scene scene = new Scene(root);
-			apgc.initialize(addedFiles, receivedFiles);
-			stage.setScene(scene);
-			stage.show();
-		} catch (Exception exc) {
-			exc.printStackTrace();
-		}
-	}
-
-	
-	@FXML
 	void rmFile() {
 		for (Node filename : fileContainer.getChildren()) {
 			//System.out.println(fileContainer.getChildren().size());
 			//System.out.println(filename);
-			filename.setOnMouseClicked(new EventHandler<MouseEvent>() {			
-				
+			filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
 				@Override
 				public void handle(MouseEvent e) {
 					//System.out.println("clicked!");
@@ -311,28 +314,32 @@ public class ProjectGuiController {
 					}
 					fileContainer.getChildren().remove(filename);
 				}
-				
+
 			});
 		}
 	}
-	
-
-	
-//>>>>>>> master
 	public void setProjectName(String name) {
 		this.projectName = name;
 	}
 
 	@FXML
+	void confirmFileSent() {
+		Alert alert = new Alert(AlertType.CONFIRMATION, "File Successfully Sent", ButtonType.OK);
+		alert.showAndWait();
+	}
+
+	@FXML
 	public void playAudioFile() {
-		new Thread (() -> {
+		new Thread(() -> {
 			for (Node item : fileContainer.getChildren()) {
 				Label filename = (Label) item;
 				filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 					@Override
 					public void handle(MouseEvent event) {
-						Media media = new Media(new File(System.getProperty("user.dir") + "/new_folder/" + filename.getText()).toURI().toString());
+						Media media = new Media(
+								new File(System.getProperty("user.dir") + "/new_folder/" + filename.getText()).toURI()
+										.toString());
 						MediaPlayer mediaPlayer = new MediaPlayer(media);
 						mediaPlayer.play();
 						playButton.setText("Stop Audio");
