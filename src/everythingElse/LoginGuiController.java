@@ -92,7 +92,7 @@ public class LoginGuiController {
 
 		} else {
 			setSignInTextBlank();
-			Output.setText("Invalid sign in information");
+			Output.setText("Invalid Username");
 		}
 	}
 	
