@@ -234,28 +234,14 @@ public class ProjectGuiController {
 
 	@FXML
 	void add_file() {
-
-		try {
-			FileChooser fileChooser = new FileChooser();
-			fileChooser.setTitle(addFile.getText());
-			fileChooser.getExtensionFilters().addAll(new ExtensionFilter("Audio Files", "*.aif"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 		try{
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle(addFile.getText());
 			fileChooser.getExtensionFilters().addAll(
 					new ExtensionFilter("Audio Files", "*.aif", "*.mp3")
-					//new ExtensionFilter("MP3", "*.mp3"),
-					//new ExtensionFilter("WAV", "*.wav")
 					);
 			List<File> list = fileChooser.showOpenMultipleDialog(addFile.getScene().getWindow());
 			if (list != null) {
-
-				File dir = new File("new_folder");
-				dir.mkdir();
 				for (File file : list) {
 					String filename = fileChecker.check_file(file, dir);
 					Files.copy(file.toPath(), (new File(dir.getPath() + "/" + filename)).toPath(),
@@ -263,17 +249,6 @@ public class ProjectGuiController {
 					Label label = new Label(filename);
 					fileContainer.getChildren().add(label);
 				}
-					dir.mkdir();
-
-						for (File file : list) {
-						//System.out.println(fileChecker.check_file(file, dir));
-							String filename = fileChecker.check_file(file, dir);
-							Files.copy(file.toPath(), (new File(dir.getPath() + "/" + filename)).toPath(), StandardCopyOption.REPLACE_EXISTING);
-							Label label = new Label(filename);
-							fileContainer.getChildren().add(label);
-//							printer.println(filename);
-
-						}
 			}
 
 		} catch (Exception exc) {
@@ -296,20 +271,14 @@ public class ProjectGuiController {
 	@FXML
 	void rmFile() {
 		for (Node filename : fileContainer.getChildren()) {
-			//System.out.println(fileContainer.getChildren().size());
-			//System.out.println(filename);
 			filename.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 				@Override
 				public void handle(MouseEvent e) {
-					//System.out.println("clicked!");
 					String[] list = filename.toString().split("'");
-					System.out.println(list[1]);
-					System.out.println(dir.getPath());
 					try {
 						fileChecker.check_new_file(new File(list[1]), dir);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					fileContainer.getChildren().remove(filename);
@@ -318,6 +287,7 @@ public class ProjectGuiController {
 			});
 		}
 	}
+	
 	public void setProjectName(String name) {
 		this.projectName = name;
 	}
