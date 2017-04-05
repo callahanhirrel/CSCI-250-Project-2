@@ -62,7 +62,7 @@ public class LoginGuiController {
 				Output.setText("Username is taken");
 				setSignUpTextBlank();
 			} else {
-				if (setPassword.getText().equals(confirmPassword.getText())) {
+				if (passwordsEqual(setPassword.getText(), confirmPassword.getText())) {
 					users.add(setUsername.getText(), confirmPassword.getText());
 					Output.setText("Account Successfully Created");
 				} else {
