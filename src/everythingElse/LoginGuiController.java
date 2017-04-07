@@ -18,7 +18,7 @@ public class LoginGuiController {
 	@FXML
 	Label currentUser;
 
-	String Username = "";
+	String username = "";
 
 	boolean userLoggedIn;
 
@@ -26,7 +26,7 @@ public class LoginGuiController {
 	TextField Output;
 
 	@FXML
-	TextField username;
+	TextField usernameField;
 
 	@FXML
 	PasswordField password;
@@ -76,24 +76,20 @@ public class LoginGuiController {
 
 	@FXML
 	void SignIn() {
-		if (users.containsUser(username.getText())) {
+		if (users.containsUser(usernameField.getText())) {
 			String signInPassword = password.getText();
-			String usernamePassword = users.getPassword(username.getText());
-
+			String usernamePassword = users.getPassword(usernameField.getText());
 			if (passwordsEqual(signInPassword, usernamePassword)) {
-				Username = username.getText();
-				Output.setText(Username + " successfully logged in");
-				setSignInTextBlank();
+				username = usernameField.getText();
+				Output.setText(username + " successfully logged in");
 				createMainGuiWindow();
 			} else {
-				setSignInTextBlank();
 				Output.setText("Incorrect Password");
 			}
-
 		} else {
-			setSignInTextBlank();
 			Output.setText("Invalid Username");
 		}
+		setSignInTextBlank();
 	}
 	
 	private boolean passwordsEqual(String signInPassword, String usernamePassword) {
@@ -105,7 +101,7 @@ public class LoginGuiController {
 	}
 
 	private void setSignInTextBlank() {
-		username.setText("");
+		usernameField.setText("");
 		password.setText("");
 	}
 
@@ -123,8 +119,8 @@ public class LoginGuiController {
 			everythingElse.MainGUIController Client = (everythingElse.MainGUIController) loader.getController();
 			Stage ClientStage = new Stage();
 			Scene scene = new Scene(root);
-			Client.initialize(Username);
-			Client.setUsername(Username);
+			Client.initialize(username);
+			Client.setUsername(username);
 			ClientStage.setScene(scene);
 			ClientStage.show();
 			signIn.getScene().getWindow().hide();
