@@ -241,6 +241,7 @@ public class ProjectGuiController {
 					new ExtensionFilter("Audio Files", "*.aif", "*.mp3")
 					);
 			List<File> list = fileChooser.showOpenMultipleDialog(addFile.getScene().getWindow());
+			dir.mkdir();
 			if (list != null) {
 				for (File file : list) {
 					String filename = fileChecker.check_file(file, dir);
@@ -275,6 +276,7 @@ public class ProjectGuiController {
 
 				@Override
 				public void handle(MouseEvent e) {
+					System.out.println(filename);
 					String[] list = filename.toString().split("'");
 					try {
 						fileChecker.check_new_file(new File(list[1]), dir);
